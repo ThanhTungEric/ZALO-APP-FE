@@ -9,6 +9,7 @@ import Contacts from "../Screens/Contacts";
 import Discovery from "../Screens/Discovery";
 import Timeline from "../Screens/Timeline";
 import Me from "../Screens/Me";
+import Setting from "../Screens/setting/Setting"
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -83,6 +84,7 @@ const AppNavigation = () => (
     <NavigationContainer>
         <Stack.Navigator>
             <Stack.Screen name="Home" component={TabNavigator} options={{ headerShown: false }} />
+            <Stack.Screen name="Setting" component={Setting} options={{ headerShown: false}} />
         </Stack.Navigator>
     </NavigationContainer>
 );

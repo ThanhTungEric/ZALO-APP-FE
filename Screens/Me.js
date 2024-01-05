@@ -8,7 +8,7 @@ const Me = ({ navigation }) => {
             <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#0091FF', height: 40}}>
               <AntDesign name="search1" size={22} color="white" style={{right: 35}} />
               <Text style={{fontSize: 15, color: 'white', right: 110}}>Tìm kiếm</Text>
-              <Pressable onPress={()=> navigation.navigate('CaiDat')}>
+              <Pressable onPress={()=> navigation.navigate('Setting')}>
                 <AntDesign name="setting" size={22} color="white" style={{left: 35}} />
               </Pressable>
             </View>
