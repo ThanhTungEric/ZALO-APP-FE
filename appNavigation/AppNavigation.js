@@ -10,6 +10,8 @@ import Discovery from "../Screens/Discovery";
 import Timeline from "../Screens/Timeline";
 import Me from "../Screens/Me";
 import Setting from "../Screens/setting/Setting"
+import About from "../Screens/setting/About";
+import SwitchAccount from "../Screens/setting/SwitchAccount";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -85,6 +87,8 @@ const AppNavigation = () => (
         <Stack.Navigator>
             <Stack.Screen name="Home" component={TabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="Setting" component={Setting} options={{ headerShown: false}} />
+            <Stack.Screen name="About" component={About} options={{ headerShown: false}} />
+            <Stack.Screen name="SwitchAccount" component={SwitchAccount} options={{ headerShown: false}} />
         </Stack.Navigator>
     </NavigationContainer>
 );

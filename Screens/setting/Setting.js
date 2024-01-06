@@ -81,7 +81,9 @@ const Setting = ({ navigation }) => {
                 </View>
 
                 <View style={{ height: 140, backgroundColor: '#fff', marginTop: 10}}>
-                    <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
+                    <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}} 
+                        onPress={()=> navigation.navigate('About')}
+                    >
                         <AntDesign name="infocirlceo" size={20} color="#0091FF" style={{left: 20}} />
                         <Text style={{left: 40 }}>Thông tin về Zalo</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 230}}/>
@@ -89,11 +91,15 @@ const Setting = ({ navigation }) => {
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
                         <AntDesign name="questioncircleo" size={20} color="#0091FF" style={{left: 20}} />
                         <Text style={{left: 40 }}>Liên hệ hỗ trợ</Text>
-                        <AntDesign name="right" size={18} color="#7A7E86" style={{left: 250}}/>
+                        <View style={{display: 'flex', width: 30, height: 30, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: '50%', left:240}}>
+                            <AntDesign name="message1" size={18} color="black" />
+                        </View>
                     </Pressable>
                 </View>
                 <View style={{ height: 140, backgroundColor: '#fff', marginTop: 10}}>
-                    <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
+                    <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}
+                        onPress={()=> navigation.navigate('SwitchAccount')}
+                    >
                         <Feather name="user-plus" size={20} color="#0091FF" style={{left : 20}} />
                         <Text style={{left: 40 }}>Chuyển tài khoản</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 225}}/>
