@@ -108,7 +108,6 @@ const QuyenRiengTu = ({navigation}) => {
 
 
           <Pressable
-            onPress={() => navigation.navigate('DoiMK')} 
             style={{height:60,
             width:'100%',
             borderBottomWidth:1,
@@ -130,7 +129,6 @@ const QuyenRiengTu = ({navigation}) => {
           </Pressable>
 
           <Pressable
-            onPress={() => navigation.navigate('DoiMK')} 
             style={{height:60,
             width:'100%',
             borderBottomWidth:1,
@@ -157,7 +155,6 @@ const QuyenRiengTu = ({navigation}) => {
                 <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Nhật kỹ</Text>
             </View>
             <Pressable
-            onPress={() => navigation.navigate('DoiMK')} 
             style={{height:60,
             width:'100%',
             borderBottomWidth:1,
@@ -181,7 +178,6 @@ const QuyenRiengTu = ({navigation}) => {
 
         <View style={{width:'100%', height:'auto',backgroundColor:"#fff",marginTop:10}}>
         <Pressable
-            onPress={() => navigation.navigate('DoiMK')} 
             style={{height:60,
             width:'100%',
             borderBottomWidth:1,
@@ -236,7 +232,6 @@ const QuyenRiengTu = ({navigation}) => {
             </View>
 
             <Pressable
-            onPress={() => navigation.navigate('DoiMK')} 
             style={{height:60,
             width:'100%',
             borderBottomWidth:1,
@@ -263,7 +258,6 @@ const QuyenRiengTu = ({navigation}) => {
                 <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Quyền của tiện ích và ứng dụng</Text>
             </View>
             <Pressable
-            onPress={() => navigation.navigate('DoiMK')} 
             style={{height:60,
             width:'100%',
             borderBottomWidth:1,
@@ -286,7 +280,6 @@ const QuyenRiengTu = ({navigation}) => {
 
 
           <Pressable
-            onPress={() => navigation.navigate('DoiMK')} 
             style={{height:60,
             width:'100%',
             borderBottomWidth:1,
