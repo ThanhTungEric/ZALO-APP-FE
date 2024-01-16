@@ -56,12 +56,16 @@ const Me = ({ navigation }) => {
                 </Pressable>
 
                 <View style={{ height: 140, backgroundColor: '#fff', marginTop: 10 }}>
-                  <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
+                  <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}
+                    onPress={()=> navigation.navigate('AccountSecurity')}
+                  >
                     <MaterialIcons name="security" size={20} color="#0091FF" style={{left: 20}} />
                     <Text style={{left: 40 }}>Tài khoản và bảo mật</Text>
                     <AntDesign name="right" size={18} color="#7A7E86" style={{left: 205}}/>
                   </Pressable>
-                  <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
+                  <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}
+                    onPress={()=> navigation.navigate('Privacy')}
+                  >
                     <Entypo name="lock" size={20} color="#0091FF" style={{left: 20}} />
                     <Text style={{left: 40 }}>Quyền riêng tư</Text>
                     <AntDesign name="right" size={18} color="#7A7E86" style={{left: 245}}/>

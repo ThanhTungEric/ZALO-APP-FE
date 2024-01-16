@@ -13,7 +13,7 @@ const About = ({ navigation }) => {
             </View>
 
             <ScrollView>
-                <Pressable style={{ flexDirection: 'row', alignItems: 'center', height: 70, backgroundColor: '#fff', marginTop: 10}}>
+                <Pressable style={{ flexDirection: 'row', alignItems: 'center', height: 70, backgroundColor: '#fff'}}>
                     <View style={{left: 20}}>
                         <View style={{flexDirection:'row'}}>
                             <Text>Phiên bản 23.12.02</Text>
