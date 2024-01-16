@@ -52,17 +52,23 @@ const Setting = ({ navigation }) => {
 
 
                 <View style={{ height: 420, backgroundColor: '#fff', marginTop: 10}}>
-                    <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
+                    <Pressable 
+                    onPress={()=> navigation.navigate('ThongBao')}
+                    style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
                         <FontAwesome5 name="bell" size={20} color="#0091FF" style={{left: 20}} />
                         <Text style={{left: 40}}>Thông báo</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 275}}/>
                     </Pressable>
-                    <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}>
+                    <Pressable 
+                    onPress={()=> navigation.navigate('TinNhan')}
+                    style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}>
                         <AntDesign name="message1" size={20} color="#0091FF" style={{left: 20}} />
                         <Text style={{left: 40}}>Tin nhắn</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 285}}/>
                     </Pressable>
-                    <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}>
+                    <Pressable 
+                    onPress={()=> navigation.navigate('CuocGoi')}
+                    style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}>
                         <Ionicons name="md-call-outline" size={20} color="#0091FF" style={{left: 20}} />
                         <Text style={{left: 40}}>Cuộc gọi</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 285}}/>
