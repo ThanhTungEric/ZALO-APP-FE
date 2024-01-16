@@ -8,6 +8,9 @@ import DoiSDT1 from "./DoiSDT1";
 import Setting from "./Setting";
 import QuyenRiengTu from "./QuyenRiengTu/QuyenRiengTu";
 import SinhNhat from "./QuyenRiengTu/SinhNhat";
+import ThongBao from "./ThongBao/ThongBao";
+import TinNhan from "./TinNhan/TinNhan";
+import CuocGoi from "./CuocGoi/CuocGoi";
 
 const Stack = createNativeStackNavigator();
 const Navigation = () => (
@@ -48,6 +51,23 @@ const Navigation = () => (
           component={SinhNhat}
           options={{ headerShown: false }}>
         </Stack.Screen>
+        <Stack.Screen
+          name="ThongBao"
+          component={ThongBao}
+          options={{ headerShown: false }}>
+        </Stack.Screen>
+
+        <Stack.Screen
+          name="TinNhan"
+          component={TinNhan}
+          options={{ headerShown: false }}
+        >
+        </Stack.Screen>
+        <Stack.Screen
+          name="CuocGoi"
+          component={CuocGoi}
+          options={{ headerShown: false }}
+        ></Stack.Screen>
 
       </Stack.Navigator>
     </NavigationContainer>
