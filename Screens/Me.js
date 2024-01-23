@@ -1,15 +1,17 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View, Image, ScrollView } from "react-native";
+import { Pressable, StyleSheet, Text, View, Image, ScrollView, TextInput } from "react-native";
 import { AntDesign, Feather,Entypo, MaterialIcons } from '@expo/vector-icons';
 
 const Me = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 40}}>
-              <AntDesign name="search1" size={22} color="white" style={{right: 35}} />
-              <Text style={{fontSize: 15, color: 'white', right: 110}}>Tìm kiếm</Text>
+              <AntDesign name="search1" size={22} color="white"/>
+              <TextInput placeholder="Tìm kiếm" placeholderTextColor={'#D9D9D9'}
+                style={{width: 260, height:40, color: "white"}}
+              />
               <Pressable onPress={()=> navigation.navigate('Setting')}>
-                <AntDesign name="setting" size={22} color="white" style={{left: 35}} />
+                <AntDesign name="setting" size={22} color="white" />
               </Pressable>
             </View>
 
