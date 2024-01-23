@@ -5,7 +5,7 @@ import { AntDesign, Entypo, Feather, MaterialCommunityIcons, FontAwesome5, Ionic
 const Setting = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#0091FF', height: 40}}>
+            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 40}}>
                 <Pressable onPress={()=> navigation.navigate('Cá nhân')}>
                     <AntDesign name="left" size={22} color="white" style={{right: 35}} />
                 </Pressable>
@@ -18,14 +18,14 @@ const Setting = ({ navigation }) => {
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}
                         onPress={()=> navigation.navigate('AccountSecurity')}
                     >
-                        <MaterialIcons name="security" size={20} color="#0091FF" style={{left: 20}} />
+                        <MaterialIcons name="security" size={20} color="#574E92" style={{left: 20}} />
                         <Text style={{left: 40 }}>Tài khoản và bảo mật</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 205}}/>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}
                         onPress={()=> navigation.navigate('Privacy')}
                     >
-                        <Entypo name="lock" size={20} color="#0091FF" style={{left: 20}} />
+                        <Entypo name="lock" size={20} color="#574E92" style={{left: 20}} />
                         <Text style={{left: 40 }}>Quyền riêng tư</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 245}}/>
                     </Pressable>
@@ -33,7 +33,7 @@ const Setting = ({ navigation }) => {
 
                 <View style={{ height: 140, backgroundColor: '#fff', marginTop: 10}}>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
-                        <Entypo name="time-slot" size={20} color="#0091FF" style={{left: 20}}/>
+                        <Entypo name="time-slot" size={20} color="#574E92" style={{left: 20}}/>
                         <View style={{left: 40}}>
                             <Text>Dung lượng và dữ liệu</Text>
                             <Text style={{fontSize: 13, color:'grey'}}>Quản lý dữ liệu Zalo của bạn</Text>
@@ -41,7 +41,7 @@ const Setting = ({ navigation }) => {
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 175}}/>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}>
-                        <AntDesign name="cloudo" size={20} color="#0091FF" style={{left: 20}} />
+                        <AntDesign name="cloudo" size={20} color="#574E92" style={{left: 20}} />
                         <View style={{left: 40}}>
                             <Text>Sao lưu và khôi phục</Text>
                             <Text style={{fontSize: 13, color:'grey'}}>Bảo vệ tin nhắn khi đổi máy hoặc cài lại Zalo</Text>
@@ -55,42 +55,42 @@ const Setting = ({ navigation }) => {
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}
                         onPress={()=> navigation.navigate('Notification')}
                     >
-                        <FontAwesome5 name="bell" size={20} color="#0091FF" style={{left: 20}} />
+                        <FontAwesome5 name="bell" size={20} color="#574E92" style={{left: 20}} />
                         <Text style={{left: 40}}>Thông báo</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 275}}/>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}
                         onPress={()=> navigation.navigate('Message')}
                     >
-                        <AntDesign name="message1" size={20} color="#0091FF" style={{left: 20}} />
+                        <AntDesign name="message1" size={20} color="#574E92" style={{left: 20}} />
                         <Text style={{left: 40}}>Tin nhắn</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 285}}/>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}
                         onPress={()=> navigation.navigate('Calls')}
                     >
-                        <Ionicons name="md-call-outline" size={20} color="#0091FF" style={{left: 20}} />
+                        <Ionicons name="md-call-outline" size={20} color="#574E92" style={{left: 20}} />
                         <Text style={{left: 40}}>Cuộc gọi</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 285}}/>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}
                         onPress={()=> navigation.navigate('Timeline1')}
                     >
-                        <MaterialCommunityIcons name="clock-time-seven-outline" size={20} color="#0091FF" style={{left: 20}} />
+                        <MaterialCommunityIcons name="clock-time-seven-outline" size={20} color="#574E92" style={{left: 20}} />
                         <Text style={{left: 40}}>Nhật ký</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 290}}/>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}
                         onPress={()=> navigation.navigate('Contact')}
                     >
-                        <AntDesign name="contacts" size={20} color="#0091FF" style={{left: 20}} />
+                        <AntDesign name="contacts" size={20} color="#574E92" style={{left: 20}} />
                         <Text style={{left: 40}}>Danh bạ</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 285}}/>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}
                         onPress={()=> navigation.navigate('Theme')}
                     >
-                        <Octicons name="paintbrush" size={20} color="#0091FF" style={{left: 20}} />
+                        <Octicons name="paintbrush" size={20} color="#574E92" style={{left: 20}} />
                         <Text style={{left: 40}}>Giao diện và ngôn ngữ</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 195}}/>
                     </Pressable>
@@ -100,12 +100,12 @@ const Setting = ({ navigation }) => {
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}} 
                         onPress={()=> navigation.navigate('About')}
                     >
-                        <AntDesign name="infocirlceo" size={20} color="#0091FF" style={{left: 20}} />
+                        <AntDesign name="infocirlceo" size={20} color="#574E92" style={{left: 20}} />
                         <Text style={{left: 40 }}>Thông tin về Zalo</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 230}}/>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
-                        <AntDesign name="questioncircleo" size={20} color="#0091FF" style={{left: 20}} />
+                        <AntDesign name="questioncircleo" size={20} color="#574E92" style={{left: 20}} />
                         <Text style={{left: 40 }}>Liên hệ hỗ trợ</Text>
                         <View style={{display: 'flex', width: 30, height: 30, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: '50%', left:240}}>
                             <AntDesign name="message1" size={18} color="black" />
@@ -116,7 +116,7 @@ const Setting = ({ navigation }) => {
                     <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}
                         onPress={()=> navigation.navigate('SwitchAccount')}
                     >
-                        <Feather name="user-plus" size={20} color="#0091FF" style={{left : 20}} />
+                        <Feather name="user-plus" size={20} color="#574E92" style={{left : 20}} />
                         <Text style={{left: 40 }}>Chuyển tài khoản</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 225}}/>
                     </Pressable>

@@ -7,11 +7,11 @@ import React, { useState } from "react";
 const ChangePhone = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <View style={{width:'100%', height:50,backgroundColor:"#18A0FB",flexDirection:'row',alignItems:'center'}}>
+            <View style={{width:'100%', height:40,backgroundColor:"#574E92",flexDirection:'row',alignItems:'center'}}>
                 <Pressable style={{width:50, height:50, left: 10,justifyContent:'center',alignItems:'center'}}>
                     <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()}/>
                 </Pressable>
-                <Text style={{fontWeight:'600',color:'white',left:20,fontSize:18}}>Đổi số điện thoại</Text>
+                <Text style={{color:'white',left:20,fontSize:18}}>Đổi số điện thoại</Text>
             </View>
             <View style={{width:'80%',height:60,left:20}}>
                 <Text style={{fontSize:20, fontWeight:'600'}}>Đổi số điện thoại mới cho tài khoản</Text>
@@ -44,8 +44,8 @@ const ChangePhone = ({ navigation }) => {
                
             }}>
                 
-                <Text style={{color:'#18A0FB',fontWeight:500,width:'67%',fontSize:18}}>Bắt đầu đổi số điện thoại</Text>
-                <AntDesign name="right" size={16} color="#18A0FB" />
+                <Text style={{color:'#574E92',fontWeight:500,width:'67%',fontSize:18}}>Bắt đầu đổi số điện thoại</Text>
+                <AntDesign name="right" size={16} color="#574E92" />
             </Pressable>
         </View>
     )

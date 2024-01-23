@@ -14,16 +14,16 @@ const Calls = ({ navigation }) => {
     };
     return (
         <View style={styles.container}>
-            <View style={{ width: '100%', height: 50, backgroundColor: "#18A0FB", flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ width: '100%', height: 40, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center' }}>
                 <Pressable style={{ width: 50, height: 50, left: 10, justifyContent: 'center', alignItems: 'center' }}>
-                    <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()} />
+                    <AntDesign name="arrowleft" size={22} color="white" onPress={() => navigation.goBack()} />
                 </Pressable>
-                <Text style={{ fontWeight: '600', color: 'white', left: 20, fontSize: 18 }}>Cuộc gọi</Text>
+                <Text style={{color: 'white', left: 20, fontSize: 18}}>Cuộc gọi</Text>
             </View>
             <ScrollView style={{ width: '100%' }}>
                 <View style={{ width: '100%', height: 'auto', backgroundColor: "#fff" }}>
                     <View style={{ height: 30 }}>
-                        <Text style={{ color: 'blue', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Âm thanh</Text>
+                        <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Âm thanh</Text>
                     </View>
                     <Pressable
 
@@ -39,7 +39,7 @@ const Calls = ({ navigation }) => {
                         }}>
                         <View style={{ width: '90%' }}>
                             <View style={{ height: 20 }}>
-                                <Text style={{ fontSize: 16, fontWeight: '600' }}>Nhạc chuông</Text>
+                                <Text>Nhạc chuông</Text>
                             </View>
                         </View>
                         <View
@@ -60,7 +60,7 @@ const Calls = ({ navigation }) => {
                         }}>
                         <View style={{ width: '90%' }}>
                             <View style={{ height: 20 }}>
-                                <Text style={{ fontSize: 16, fontWeight: '600' }}>Nhạc chờ</Text>
+                                <Text>Nhạc chờ</Text>
                             </View>
                         </View>
                         <View
@@ -72,7 +72,7 @@ const Calls = ({ navigation }) => {
 
                 <View style={{ width: '100%', height: 'auto', backgroundColor: "#fff", marginTop: 10 }}>
                     <View style={{ height: 30 }}>
-                        <Text style={{ color: 'blue', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Lịch sử cuộc gọi</Text>
+                        <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Lịch sử cuộc gọi</Text>
                     </View>
 
                     <View
@@ -87,7 +87,7 @@ const Calls = ({ navigation }) => {
                         }}>
                         <View style={{ width: '80%', }}>
                             <View style={{ height: 20 }}>
-                                <Text style={{ fontSize: 16, fontWeight: '600' }}>Thông báo cuộc gọi nhỡ từ điện thoại</Text>
+                                <Text>Thông báo cuộc gọi nhỡ từ điện thoại</Text>
                             </View>
                         </View>
                         <View style={{ width: 'auto' }}>
@@ -112,7 +112,7 @@ const Calls = ({ navigation }) => {
                         }}>
                         <View style={{ width: '80%', }}>
                             <View style={{ height: 20 }}>
-                                <Text style={{ fontSize: 16, fontWeight: '600' }}>Đồng bộ thông tin cuộc gọi từ điện thoại</Text>
+                                <Text>Đồng bộ thông tin cuộc gọi từ điện thoại</Text>
                             </View>
                         </View>
                         <View style={{ width: 'auto' }}>
@@ -129,7 +129,7 @@ const Calls = ({ navigation }) => {
 
                 <View style={{ width: '100%', height: 'auto', backgroundColor: "#fff", marginTop: 10 }}>
                     <View style={{ height: 30 }}>
-                        <Text style={{ color: 'blue', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Cuộc gọi video</Text>
+                        <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Cuộc gọi video</Text>
                     </View>
 
                     <View
@@ -144,7 +144,7 @@ const Calls = ({ navigation }) => {
                         }}>
                         <View style={{ width: '80%', }}>
                             <View style={{ height: 20 }}>
-                                <Text style={{ fontSize: 16, fontWeight: '600' }}>Thu nhỏ màn hình khi gọi video</Text>
+                                <Text>Thu nhỏ màn hình khi gọi video</Text>
                             </View>
                         </View>
                         <View style={{ width: 'auto' }}>
@@ -160,7 +160,7 @@ const Calls = ({ navigation }) => {
 
                 <View style={{ width: '100%', height: 'auto', backgroundColor: "#fff", marginTop: 10 }}>
                     <View style={{ height: 30 }}>
-                        <Text style={{ color: 'blue', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Cuộc gọi</Text>
+                        <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Cuộc gọi</Text>
                     </View>
 
                     <View
@@ -175,7 +175,7 @@ const Calls = ({ navigation }) => {
                         }}>
                         <View style={{ width: '80%', }}>
                             <View style={{ height: 20 }}>
-                                <Text style={{ fontSize: 16, fontWeight: '600' }}>Thông báo cuộc gọi đến</Text>
+                                <Text>Thông báo cuộc gọi đến</Text>
                             </View>
                         </View>
                         <View style={{ width: 'auto' }}>
@@ -202,7 +202,7 @@ const Calls = ({ navigation }) => {
                         }}>
                         <View style={{ width: '90%' }}>
                             <View style={{ height: 20 }}>
-                                <Text style={{ fontSize: 16, fontWeight: '600' }}>Tắt thông báo cuộc gọi từ bạn bè</Text>
+                                <Text>Tắt thông báo cuộc gọi từ bạn bè</Text>
                             </View>
                         </View>
                         <View
@@ -212,7 +212,7 @@ const Calls = ({ navigation }) => {
 
                 <View style={{ width: '100%', height: 'auto', backgroundColor: "#fff", marginTop: 10 }}>
                     <View style={{ height: 30 }}>
-                        <Text style={{ color: 'blue', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Quyền riêng tư</Text>
+                        <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Quyền riêng tư</Text>
                     </View>
 
                     <Pressable
@@ -229,7 +229,7 @@ const Calls = ({ navigation }) => {
                         }}>
                         <View style={{ width: '90%' }}>
                             <View style={{ height: 20 }}>
-                                <Text style={{ fontSize: 16, fontWeight: '600' }}>Cho phép gọi điện</Text>
+                                <Text>Cho phép gọi điện</Text>
                             </View>
                         </View>
                         <View
@@ -250,7 +250,7 @@ const Calls = ({ navigation }) => {
                         }}>
                         <View style={{ width: '90%' }}>
                             <View style={{ height: 20 }}>
-                                <Text style={{ fontSize: 16, fontWeight: '600' }}>Chặn cuộc gọi</Text>
+                                <Text>Chặn cuộc gọi</Text>
                             </View>
                         </View>
                         <View

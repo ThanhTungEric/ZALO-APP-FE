@@ -7,11 +7,11 @@ import React, { useState } from "react";
 const ChangePassword = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <View style={{width:'100%', height:50,backgroundColor:"#18A0FB",flexDirection:'row',alignItems:'center'}}>
+            <View style={{width:'100%', height:40,backgroundColor:"#574E92",flexDirection:'row',alignItems:'center'}}>
                 <Pressable style={{width:50, height:50, left: 10,justifyContent:'center',alignItems:'center'}}>
                     <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()}/>
                 </Pressable>
-                <Text style={{fontWeight:'600',color:'white',left:20,fontSize:18}}>Đổi mật khẩu</Text>
+                <Text style={{color:'white',left:20,fontSize:18}}>Đổi mật khẩu</Text>
             </View>
 
             <View style={{width:'100%', height:50,backgroundColor:"#D9D9D9",flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
@@ -46,7 +46,7 @@ const ChangePassword = ({ navigation }) => {
                 ></TextInput>
             </View>
             <View style={{width:'100%', height:40, alignItems:'center', justifyContent:'center',marginTop:20}}>
-                <View style={{width:'30%',height:40, backgroundColor:'#18A0FB',borderRadius:20}}>
+                <View style={{width:'30%',height:40, backgroundColor:'#574E92',borderRadius:20}}>
                     <Text style={{color:'white',textAlign:'center',marginTop:10}}>CẬP NHẬT</Text>
                 </View>
             </View>

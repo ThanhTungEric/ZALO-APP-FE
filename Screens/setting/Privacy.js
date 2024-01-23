@@ -11,16 +11,16 @@ const Privacy = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
-      <View style={{width:'100%', height:50,backgroundColor:"#18A0FB",flexDirection:'row',alignItems:'center'}}>
+      <View style={{width:'100%', height:40,backgroundColor:"#574E92",flexDirection:'row',alignItems:'center'}}>
             <Pressable style={{width:50, height:50, left: 10,justifyContent:'center',alignItems:'center'}}>
                 <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()}/>
             </Pressable>
-            <Text style={{fontWeight:'600',color:'white',left:20,fontSize:18}}>Quyền riêng tư</Text>
+            <Text style={{color:'white',left:20,fontSize:18}}>Quyền riêng tư</Text>
         </View>
         <ScrollView style={{height:'auto',width:'100%'}}>
         <View style={{width:'100%', height:'auto',backgroundColor:"#fff"}}>
             <View style={{height:30}}>
-                <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Cá nhân</Text>
+                <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Cá nhân</Text>
             </View>
             <Pressable
             onPress={() => navigation.navigate('Birthday')} 
@@ -37,7 +37,7 @@ const Privacy = ({navigation}) => {
             <View style={{width:'80%',left:10}}>
                 
                 <View style={{height:20}}>
-                    <Text style={{fontSize:16,fontWeight:'600'}}>Sinh nhật</Text>
+                    <Text>Sinh nhật</Text>
                 </View>
             </View>
             <View 
@@ -58,7 +58,7 @@ const Privacy = ({navigation}) => {
                 <View style={{width:'70%',left:10}}>
                     
                     <View style={{height:20}}>
-                        <Text style={{fontSize:16,fontWeight:'600'}}>Hiện trạng thái truy cập</Text>
+                        <Text>Hiện trạng thái truy cập</Text>
                     </View>
                 </View>
                 <View style={{width:'auto'}}>
@@ -76,7 +76,7 @@ const Privacy = ({navigation}) => {
         </View>
         <View style={{width:'100%', height:'auto',backgroundColor:"#fff",marginTop:10}}>
             <View style={{height:30}}>
-                <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Tin nhắn và cuộc gọi</Text>
+                <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Tin nhắn và cuộc gọi</Text>
             </View>
             <View
             style={{height:60,
@@ -92,7 +92,7 @@ const Privacy = ({navigation}) => {
                 <View style={{width:'70%',left:10}}>
                     
                     <View style={{height:20}}>
-                        <Text style={{fontSize:16,fontWeight:'600'}}>Hiện trạng thái "Đã xem"</Text>
+                        <Text>Hiện trạng thái "Đã xem"</Text>
                     </View>
                 </View>
                 <View style={{width:'auto'}}>
@@ -121,7 +121,7 @@ const Privacy = ({navigation}) => {
             <View style={{width:'80%',left:10}}>
                 
                 <View style={{height:20}}>
-                    <Text style={{fontSize:16,fontWeight:'600'}}>Cho phép nhắn tin</Text>
+                    <Text>Cho phép nhắn tin</Text>
                 </View>
             </View>
             <View 
@@ -142,7 +142,7 @@ const Privacy = ({navigation}) => {
             <View style={{width:'80%',left:10}}>
                 
                 <View style={{height:20}}>
-                    <Text style={{fontSize:16,fontWeight:'600'}}>Cho phép gọi điện</Text>
+                    <Text>Cho phép gọi điện</Text>
                 </View>
             </View>
             <View 
@@ -152,7 +152,7 @@ const Privacy = ({navigation}) => {
 
         <View style={{width:'100%', height:'auto',backgroundColor:"#fff",marginTop:10}}>
             <View style={{height:30}}>
-                <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Nhật ký</Text>
+                <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Nhật ký</Text>
             </View>
             <Pressable
             style={{height:60,
@@ -168,7 +168,7 @@ const Privacy = ({navigation}) => {
             <View style={{width:'80%',left:10}}>
                 
                 <View style={{height:20}}>
-                    <Text style={{fontSize:16,fontWeight:'600'}}>Cho phép xem và bình luận</Text>
+                    <Text>Cho phép xem và bình luận</Text>
                 </View>
             </View>
             <View 
@@ -192,7 +192,7 @@ const Privacy = ({navigation}) => {
             <View style={{width:'80%',left:10}}>
                 
                 <View style={{height:20}}>
-                    <Text style={{fontSize:16,fontWeight:'600'}}>Chặn và ẩn</Text>
+                    <Text>Chặn và ẩn</Text>
                 </View>
             </View>
             <View 
@@ -202,7 +202,7 @@ const Privacy = ({navigation}) => {
 
             <View style={{width:'100%', height:'auto',backgroundColor:"#fff",marginTop:10}}>
                 <View style={{height:30}}>
-                    <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Nguồn tìm kiếm và kết bạn</Text>
+                    <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Nguồn tìm kiếm và kết bạn</Text>
                 </View>
                 <View
                 style={{height:60,
@@ -218,7 +218,7 @@ const Privacy = ({navigation}) => {
                 <View style={{width:'70%',left:10}}>
                     
                     <View style={{height:20}}>
-                        <Text style={{fontSize:16,fontWeight:'600'}}>Tự động kết bạn từ danh bạ máy</Text>
+                        <Text>Tự động kết bạn từ danh bạ máy</Text>
                     </View>
                 </View>
                 <View style={{width:'auto'}}>
@@ -245,7 +245,7 @@ const Privacy = ({navigation}) => {
             <View style={{width:'80%',left:10}}>
                 
                 <View style={{height:20}}>
-                    <Text style={{fontSize:16,fontWeight:'600'}}>Quản lý nguồn tìm kiếm và kết bạn</Text>
+                    <Text>Quản lý nguồn tìm kiếm và kết bạn</Text>
                 </View>
             </View>
             <View 
@@ -255,7 +255,7 @@ const Privacy = ({navigation}) => {
 
         <View style={{width:'100%', height:'auto',backgroundColor:"#fff",marginTop:10}}>
             <View style={{height:30}}>
-                <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Quyền của tiện ích và ứng dụng</Text>
+                <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Quyền của tiện ích và ứng dụng</Text>
             </View>
             <Pressable
             style={{height:60,
@@ -271,7 +271,7 @@ const Privacy = ({navigation}) => {
             <View style={{width:'80%',left:10}}>
                 
                 <View style={{height:20}}>
-                    <Text style={{fontSize:16,fontWeight:'600'}}>Tiện ích</Text>
+                    <Text>Tiện ích</Text>
                 </View>
             </View>
             <View 
@@ -293,7 +293,7 @@ const Privacy = ({navigation}) => {
             <View style={{width:'80%',left:10}}>
                 
                 <View style={{height:20}}>
-                    <Text style={{fontSize:16,fontWeight:'600'}}>Ứng dụng</Text>
+                    <Text>Ứng dụng</Text>
                 </View>
             </View>
             <View 

@@ -36,7 +36,7 @@ const TabNavigator = () => (
             tabBarIcon: ({focused}) => { 
             return (
                 <View style={{alignItems:'center', justifyContent: 'center'}}>
-                    <AntDesign name="message1" size={20} color={focused ? "#3685E4" : "#bababa"} />
+                    <AntDesign name="message1" size={20} color={focused ? "#574E92" : "#bababa"} />
                 </View>
             );
             },
@@ -48,7 +48,7 @@ const TabNavigator = () => (
             tabBarIcon: ({focused}) => { 
             return (
                 <View style={{alignItems:'center', justifyContent: 'center'}}>
-                    <AntDesign name="contacts" size={20} color={focused ? "#3685E4" : "#bababa"} />
+                    <AntDesign name="contacts" size={20} color={focused ? "#574E92" : "#bababa"} />
                 </View>
             );
             },
@@ -60,7 +60,7 @@ const TabNavigator = () => (
             tabBarIcon: ({focused}) => { 
             return (
                 <View style={{alignItems:'center', justifyContent: 'center'}}>
-                    <AntDesign name="appstore-o" size={20} color={focused ? "#3685E4" : "#bababa"} />
+                    <AntDesign name="appstore-o" size={20} color={focused ? "#574E92" : "#bababa"} />
                 </View>
             );
             },
@@ -72,7 +72,7 @@ const TabNavigator = () => (
             tabBarIcon: ({focused}) => { 
             return (
                 <View style={{alignItems:'center', justifyContent: 'center'}}>
-                    <MaterialCommunityIcons name="clock-time-seven-outline" size={20} color={focused ? "#3685E4" : "#bababa"} />
+                    <MaterialCommunityIcons name="clock-time-seven-outline" size={20} color={focused ? "#574E92" : "#bababa"} />
                 </View>
             );
             },
@@ -84,7 +84,7 @@ const TabNavigator = () => (
             tabBarIcon: ({focused}) => { 
             return (
                 <View style={{alignItems:'center', justifyContent: 'center'}}>
-                    <AntDesign name="user" size={20} color={focused ? "#3685E4" : "#bababa"} />
+                    <AntDesign name="user" size={20} color={focused ? "#574E92" : "#bababa"} />
                 </View>
             );
             },

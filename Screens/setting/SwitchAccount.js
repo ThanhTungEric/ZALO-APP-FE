@@ -5,7 +5,7 @@ import { AntDesign, Entypo } from '@expo/vector-icons';
 const SwitchAccount = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#0091FF', height: 40}}>
+            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 40}}>
                 <Pressable onPress={()=> navigation.navigate('Setting')}>
                     <AntDesign name="left" size={22} color="white" style={{right: 50}} />
                 </Pressable>
@@ -26,9 +26,9 @@ const SwitchAccount = ({ navigation }) => {
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row'}}>
                         <View style={{width: 45, height: 45, borderRadius: '50%', backgroundColor:'#E9ECF4', alignItems: 'center', justifyContent:'center', left: 10}}>
-                            <Entypo name="plus" size={20} color="#6BAEF5" />
+                            <Entypo name="plus" size={20} color="#574E92" />
                         </View>
-                        <Text style={{left:25, color:'#6BAEF5' }}>Thêm tài khoản</Text>
+                        <Text style={{left:25, color:'#574E92' }}>Thêm tài khoản</Text>
                     </Pressable>
                 </View>
 

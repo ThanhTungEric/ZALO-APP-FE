@@ -18,16 +18,16 @@ const Notification = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-        <View style={{width:'100%', height:50,backgroundColor:"#18A0FB",flexDirection:'row',alignItems:'center'}}>
-                <Pressable style={{width:50, height:50, left: 10,justifyContent:'center',alignItems:'center'}}>
+        <View style={{width:'100%', height:40, backgroundColor:"#574E92", flexDirection:'row', alignItems:'center'}}>
+                <Pressable style={{width:50, height:50, left: 10, justifyContent:'center', alignItems:'center'}}>
                     <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()}/>
                 </Pressable>
-                <Text style={{fontWeight:'600',color:'white',left:20,fontSize:18}}>Thông báo</Text>
+                <Text style={{color:'white',left:20,fontSize:18}}>Thông báo</Text>
         </View> 
             <ScrollView style={{width:'100%'}}>
             <View style={{width:'100%', height:'auto',backgroundColor:"#fff"}}>
             <View style={{height:30}}>
-                <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Trò chuyện 2 người</Text>
+                <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Trò chuyện 2 người</Text>
             </View>
             <View
                 style={{height:60,
@@ -41,7 +41,7 @@ const Notification = ({ navigation }) => {
             }}>
                     <View style={{width:'80%',left:10}}>
                         <View style={{height:30}}>
-                            <Text style={{fontSize:16,fontWeight:'600'}}>Báo tin nhắn mới từ trò chuyện 2<br></br>người</Text>
+                            <Text>Báo tin nhắn mới từ trò chuyện 2<br></br>người</Text>
                         </View>
                     </View>
                     <View style={{width:'auto'}}>
@@ -66,7 +66,7 @@ const Notification = ({ navigation }) => {
             }}>
                     <View style={{width:'80%',left:10}}>
                         <View style={{height:30}}>
-                            <Text style={{fontSize:16,fontWeight:'600'}}>Xem trước tin nhắn từ trò chuyện 2<br></br>người</Text>
+                            <Text>Xem trước tin nhắn từ trò chuyện 2<br></br>người</Text>
                         </View>
                     </View>
                     <View style={{width:'auto'}}>
@@ -80,7 +80,7 @@ const Notification = ({ navigation }) => {
                 </View>
             </View> 
                 <View style={{width:'100%', height:'auto',backgroundColor:"#fff", marginTop: 10}}>
-                    <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Trò chuyện nhóm</Text>
+                    <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Trò chuyện nhóm</Text>
                     <View
                     style={{height:60,
                     width:'100%',
@@ -92,7 +92,7 @@ const Notification = ({ navigation }) => {
                     }}>
                         <View style={{width:'80%',left:10}}>
                             <View style={{height:20}}>
-                                <Text style={{fontSize:16,fontWeight:'600'}}>Báo tin nhắn mới từ nhóm</Text>
+                                <Text>Báo tin nhắn mới từ nhóm</Text>
                             </View>
                         </View>
                         <View style={{width:'auto'}}>
@@ -106,7 +106,7 @@ const Notification = ({ navigation }) => {
                 </View>
 
                 <View style={{width:'100%', height:'auto',backgroundColor:"#fff", marginTop: 10}}>
-                    <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Cuộc gọi</Text>
+                    <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Cuộc gọi</Text>
                     <View
                     style={{height:60,
                     width:'100%',
@@ -118,7 +118,7 @@ const Notification = ({ navigation }) => {
                     }}>
                         <View style={{width:'80%',left:10}}>
                             <View style={{height:20}}>
-                                <Text style={{fontSize:16,fontWeight:'600'}}>Báo cuộc gọi đến</Text>
+                                <Text>Báo cuộc gọi đến</Text>
                             </View>
                         </View>
                         <View style={{width:'auto'}}>
@@ -142,7 +142,7 @@ const Notification = ({ navigation }) => {
                     }}>
                         <View style={{width:'80%',left:10}}>
                             <View style={{height:20}}>
-                                <Text style={{fontSize:16,fontWeight:'600'}}>Tắt thông báo cuộc gọi từ bạn bè</Text>
+                                <Text>Tắt thông báo cuộc gọi từ bạn bè</Text>
                             </View>
                         </View>
                         <View style={{width:'auto'}}>
@@ -155,7 +155,7 @@ const Notification = ({ navigation }) => {
             </View>
 
             <View style={{width:'100%', height:'auto',backgroundColor:"#fff", marginTop: 10}}>
-                    <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Sự kiện</Text>
+                    <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Sự kiện</Text>
                     <View
                     style={{height:60,
                     width:'100%',
@@ -167,7 +167,7 @@ const Notification = ({ navigation }) => {
                     }}>
                         <View style={{width:'80%',left:10}}>
                             <View style={{height:20}}>
-                                <Text style={{fontSize:16,fontWeight:'600'}}>Báo cho tôi về sinh nhật của bạn bè</Text>
+                                <Text>Báo cho tôi về sinh nhật của bạn bè</Text>
                             </View>
                         </View>
                         <View style={{width:'auto'}}>
@@ -181,7 +181,7 @@ const Notification = ({ navigation }) => {
                 </View>
             </View>
             <View style={{width:'100%', height:'auto',backgroundColor:"#fff", marginTop: 10}}>
-                    <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Thông báo</Text>
+                    <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Thông báo</Text>
                     <View
                     style={{height:60,
                     width:'100%',
@@ -193,7 +193,7 @@ const Notification = ({ navigation }) => {
                     }}>
                         <View style={{width:'80%',left:10}}>
                             <View style={{height:20}}>
-                                <Text style={{fontSize:16,fontWeight:'600'}}>Phát âm báo khi có tin nhắn mới</Text>
+                                <Text>Phát âm báo khi có tin nhắn mới</Text>
                             </View>
                         </View>
                         <View style={{width:'auto'}}>
@@ -216,7 +216,7 @@ const Notification = ({ navigation }) => {
                     }}>
                         <View style={{width:'80%',left:10}}>
                             <View style={{height:20}}>
-                                <Text style={{fontSize:16,fontWeight:'600'}}>Rung khi có tin nhắn mới</Text>
+                                <Text>Rung khi có tin nhắn mới</Text>
                             </View>
                         </View>
                         <View style={{width:'auto'}}>
@@ -239,7 +239,7 @@ const Notification = ({ navigation }) => {
                     }}>
                         <View style={{width:'80%',left:10}}>
                             <View style={{height:20}}>
-                                <Text style={{fontSize:16,fontWeight:'600'}}>Xem trước tin nhắn mới</Text>
+                                <Text>Xem trước tin nhắn mới</Text>
                             </View>
                         </View>
                         <View style={{width:'auto'}}>

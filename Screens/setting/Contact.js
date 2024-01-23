@@ -12,7 +12,7 @@ const Contact = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#0091FF', height: 40}}>
+            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 40}}>
                 <Pressable onPress={()=> navigation.navigate('Setting')}>
                     <AntDesign name="left" size={22} color="white" style={{right: 60}} />
                 </Pressable>

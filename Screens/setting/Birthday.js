@@ -9,11 +9,11 @@ const Birthday = ({ navigation }) => {
     };
     return(
         <View style={styles.container}>
-            <View style={{width:'100%', height:50,backgroundColor:"#18A0FB",flexDirection:'row',alignItems:'center'}}>
+            <View style={{width:'100%', height:40,backgroundColor:"#574E92",flexDirection:'row',alignItems:'center'}}>
                 <Pressable style={{width:50, height:50, left: 10,justifyContent:'center',alignItems:'center'}}>
                     <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()}/>
                 </Pressable>
-                <Text style={{fontWeight:'600',color:'white',left:20,fontSize:18}}>Sinh nhật</Text>
+                <Text style={{color:'white',left:20,fontSize:18}}>Sinh nhật</Text>
             </View> 
             <View 
             style={{
@@ -22,7 +22,7 @@ const Birthday = ({ navigation }) => {
             backgroundColor:"#fff",
             }}>
                 <View style={{height:30}}>
-                    <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Hiện ngày sinh</Text>
+                    <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Hiện ngày sinh</Text>
                 </View>
                 <Pressable
                     
@@ -39,7 +39,7 @@ const Birthday = ({ navigation }) => {
                     <View style={{width:'90%',left:10}}>
                         
                         <View style={{height:20}}>
-                            <Text style={{fontSize:16,fontWeight:'600'}}>Không hiện</Text>
+                            <Text>Không hiện</Text>
                         </View>
                     </View>
                     </Pressable>
@@ -59,7 +59,7 @@ const Birthday = ({ navigation }) => {
                     <View style={{width:'90%',left:10}}>
                         
                         <View style={{height:20}}>
-                            <Text style={{fontSize:16,fontWeight:'600'}}>Hiện đầy đủ ngày, tháng, năm</Text>
+                            <Text>Hiện đầy đủ ngày, tháng, năm</Text>
                         </View>
                     </View>
                 </Pressable>
@@ -79,7 +79,7 @@ const Birthday = ({ navigation }) => {
                     <View style={{width:'90%',left:10}}>
                         
                         <View style={{height:20}}>
-                            <Text style={{fontSize:16,fontWeight:'600'}}>Chỉ hiện ngày tháng</Text>
+                            <Text>Chỉ hiện ngày tháng</Text>
                         </View>
                     </View>
                 </Pressable>
@@ -92,7 +92,7 @@ const Birthday = ({ navigation }) => {
             marginTop:10
             }}>
                 <View style={{height:30}}>
-                    <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Thông báo</Text>
+                    <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Thông báo</Text>
                 </View>
                 <View
             style={{height:60,
@@ -107,7 +107,7 @@ const Birthday = ({ navigation }) => {
                 <View style={{width:'80%',left:10}}>
                     
                     <View style={{height:20}}>
-                        <Text style={{fontSize:16,fontWeight:'600'}}>Báo cho bạn bè về sinh nhật cảu bạn</Text>
+                        <Text>Báo cho bạn bè về sinh nhật cảu bạn</Text>
                     </View>
                 </View>
                 <View style={{width:'auto'}}>

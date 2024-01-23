@@ -10,15 +10,15 @@ const AccountSecurity = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-        <View style={{width:'100%', height:50,backgroundColor:"#18A0FB",flexDirection:'row',alignItems:'center'}}>
+        <View style={{width:'100%', height:40,backgroundColor:"#574E92",flexDirection:'row',alignItems:'center'}}>
             <Pressable style={{width:50, height:50, left: 10,justifyContent:'center',alignItems:'center'}}>
                 <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()}/>
             </Pressable>
-            <Text style={{fontWeight:'600',color:'white',left:20,fontSize:18}}>Tài khoản và bảo mật</Text>
+            <Text style={{color:'white',left:20,fontSize:18}}>Tài khoản và bảo mật</Text>
         </View>
         <View style={{width:'100%', height:210,backgroundColor:"#fff"}}>
           <View style={{height:30}}>
-            <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Tài khoản</Text>
+            <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Tài khoản</Text>
           </View>
 
           <Pressable 
@@ -33,10 +33,10 @@ const AccountSecurity = ({ navigation }) => {
           justifyContent:'center'}}>
             <View style={{width:'90%'}}>
               <View style={{height:20}}>
-                  <Text style={{fontSize:16,fontWeight:'600'}}>Đổi số điện thoại</Text>
+                  <Text>Đổi số điện thoại</Text>
               </View>
               <View style={{height:20}}>
-                  <Text>+84 XXX XXX XXX</Text>
+                  <Text style={{fontSize: 13, color:'grey'}}>+84 XXX XXX XXX</Text>
               </View>
             </View>
             <View style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="black" /></View>
@@ -55,7 +55,7 @@ const AccountSecurity = ({ navigation }) => {
           }}>
             <View style={{width:'90%'}}>
               <View style={{height:20}}>
-                  <Text style={{fontSize:16,fontWeight:'600'}}>Đổi mật khẩu</Text>
+                  <Text>Đổi mật khẩu</Text>
               </View>
             </View>
             <View 
@@ -74,7 +74,7 @@ const AccountSecurity = ({ navigation }) => {
           }}>
             <View style={{width:'90%'}}>
               <View style={{height:20}}>
-                  <Text style={{fontSize:16,fontWeight:'600'}}>Xác thực tài khoản</Text>
+                  <Text>Xác thực tài khoản</Text>
               </View>
             </View>
             <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="black" /></Pressable>
@@ -92,7 +92,7 @@ const AccountSecurity = ({ navigation }) => {
           }}>
             <View style={{width:'90%'}}>
               <View style={{height:20}}>
-                  <Text style={{fontSize:16,fontWeight:'600'}}>Xóa tài khoản</Text>
+                  <Text>Xóa tài khoản</Text>
               </View>
             </View>
             <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="black" /></Pressable>
@@ -103,7 +103,7 @@ const AccountSecurity = ({ navigation }) => {
       
       <View style={{width:'100%', height:290,backgroundColor:"#fff",marginTop:10}}>
           <View style={{height:30}}>
-            <Text style={{color:'blue',fontWeight:'bold',left:'20px',marginTop:10}}>Bảo mật</Text>
+            <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Bảo mật</Text>
           </View>
 
           <View 
@@ -117,10 +117,10 @@ const AccountSecurity = ({ navigation }) => {
           justifyContent:'center'}}>
             <View style={{width:'90%'}}>
               <View style={{height:20}}>
-                  <Text style={{fontSize:16,fontWeight:'600'}}>Kiểm tra bảo mật</Text>
+                  <Text>Kiểm tra bảo mật</Text>
               </View>
               <View style={{height:20}}>
-                  <Text>Theo dõi tình trạng bảo mật và xủa lý các vấn đề liên quan đến tài khoản</Text>
+                  <Text style={{fontSize: 13, color:'grey'}}>Theo dõi tình trạng bảo mật và xủa lý các vấn đề liên quan đến tài khoản</Text>
               </View>
             </View>
             <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="black" /></Pressable>
@@ -137,10 +137,10 @@ const AccountSecurity = ({ navigation }) => {
           justifyContent:'center'}}>
             <View style={{width:'90%'}}>
               <View style={{height:20}}>
-                  <Text style={{fontSize:16,fontWeight:'600'}}>Quản lý thiết bị đăng nhập</Text>
+                  <Text >Quản lý thiết bị đăng nhập</Text>
               </View>
               <View style={{height:20}}>
-                  <Text>Quản lý các thiết bị bạn sử dụng để đăng nhập Zalo</Text>
+                  <Text style={{fontSize: 13, color:'grey'}}>Quản lý các thiết bị bạn sử dụng để đăng nhập Zalo</Text>
               </View>
             </View>
             <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="black" /></Pressable>
@@ -158,7 +158,7 @@ const AccountSecurity = ({ navigation }) => {
           }}>
             <View style={{width:'90%'}}>
               <View style={{height:20}}>
-                  <Text style={{fontSize:16,fontWeight:'600'}}>Khóa Zalo</Text>
+                  <Text>Khóa Zalo</Text>
               </View>
             </View>
             <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="black" /></Pressable>
@@ -176,7 +176,7 @@ const AccountSecurity = ({ navigation }) => {
           }}>
             <View style={{width:'80%'}}>
               <View style={{height:20}}>
-                  <Text style={{fontSize:16,fontWeight:'600'}}>Bảo mật 2 lớp</Text>
+                  <Text>Bảo mật 2 lớp</Text>
               </View>
             </View>
             <View style={{width:'10%'}}>
