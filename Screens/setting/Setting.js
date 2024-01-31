@@ -120,7 +120,9 @@ const Setting = ({ navigation }) => {
                         <Text style={{left: 40 }}>Chuyển tài khoản</Text>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 225}}/>
                     </Pressable>
-                    <Pressable style={{ alignItems: 'center', justifyContent:'center', height: 80, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
+                    <Pressable style={{ alignItems: 'center', justifyContent:'center', height: 80, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}
+                        onPress={()=> navigation.navigate('Login')}
+                    >
                         <View style={{flexDirection:'row',display: "flex", width: 350, height: 50, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 30}}>
                             <FontAwesome name="sign-out" size={24} color="black" />
                             <Text style={{fontWeight: 'bold', left: 10}}>Đăng xuất</Text>

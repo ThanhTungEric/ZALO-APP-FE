@@ -24,12 +24,14 @@ import AccountSecurity from "../Screens/setting/AccountSecurity";
 import ChangePhone from "../Screens/setting/ChangePhone";
 import ChangePhone1 from "../Screens/setting/ChangePhone1";
 import ChangePassword from "../Screens/setting/ChangePassword";
+import Login from "../Screens/login/Login";
+import Signup from "../Screens/login/Signup";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => (
-    <Tab.Navigator initialRouteName="Tin nhắn">
+    <Tab.Navigator >
         <Tab.Screen name="Tin nhắn" component={Messages}
         options={{
             headerShown: false, 
@@ -96,7 +98,7 @@ const TabNavigator = () => (
 
 const AppNavigation = () => (
     <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="Login">
             <Stack.Screen name="Home" component={TabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="Setting" component={Setting} options={{ headerShown: false}} />
             <Stack.Screen name="About" component={About} options={{ headerShown: false}} />
@@ -113,6 +115,8 @@ const AppNavigation = () => (
             <Stack.Screen name="ChangePhone" component={ChangePhone} options={{ headerShown: false}} />
             <Stack.Screen name="ChangePhone1" component={ChangePhone1} options={{ headerShown: false}} />
             <Stack.Screen name="ChangePassword" component={ChangePassword} options={{ headerShown: false}} />
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false}} />
+            <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false}} />
         </Stack.Navigator>
     </NavigationContainer>
 );
