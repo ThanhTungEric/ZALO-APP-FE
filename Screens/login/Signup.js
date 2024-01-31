@@ -41,7 +41,7 @@ const Signup = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-             <View style={{ width: '100%', height: 50, backgroundColor: "#18A0FB", flexDirection: 'row', alignItems: 'center' }}>
+             <View style={{ width: '100%', height: 50, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center' }}>
                 <Pressable style={{ width: 50, height: 50, left: 10, justifyContent: 'center', alignItems: 'center' }}>
                     <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()} />
                 </Pressable>
@@ -49,35 +49,35 @@ const Signup = ({ navigation }) => {
             </View>
             <TextInput
                 placeholder='Họ và tên'
-                placeholderTextColor={'#18A0FB'}
+                placeholderTextColor={'#574E92'}
                 style={styles.input}
                 onChangeText={(text) => setFullName(text)}
             />
 
             <TextInput
                 placeholder='Số điện thoại'
-                placeholderTextColor={'#18A0FB'}
+                placeholderTextColor={'#574E92'}
                 style={styles.input}
                 onChangeText={(text) => setPhoneNumber(text)}
             />
 
             <TextInput
                 placeholder='Email'
-                placeholderTextColor={'#18A0FB'}
+                placeholderTextColor={'#574E92'}
                 style={styles.input}
                 onChangeText={(text) => setEmail(text)}
             />
 
             <TextInput
                 placeholder='Ngày sinh'
-                placeholderTextColor={'#18A0FB'}
+                placeholderTextColor={'#574E92'}
                 style={styles.input}
                 onChangeText={(text) => setBirthDate(text)}
             />
 
             <TextInput
                 placeholder='Mật khẩu'
-                placeholderTextColor={'#18A0FB'}
+                placeholderTextColor={'#574E92'}
                 style={styles.input}
                 secureTextEntry={true}
                 onChangeText={(text) => setPassword(text)}
@@ -85,7 +85,7 @@ const Signup = ({ navigation }) => {
 
             <TextInput
                 placeholder='Trạng thái'
-                placeholderTextColor={'#18A0FB'}
+                placeholderTextColor={'#574E92'}
                 style={styles.input}
                 onChangeText={(text) => setStatus(text)}
             />
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     button: {
         width: '90%',
         height: 50,
-        backgroundColor: '#18A0FB',
+        backgroundColor: '#574E92',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
