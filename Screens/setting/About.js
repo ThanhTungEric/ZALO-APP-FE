@@ -5,7 +5,7 @@ import { AntDesign, Feather } from '@expo/vector-icons';
 const About = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#0091FF', height: 40}}>
+            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 40}}>
                 <Pressable onPress={()=> navigation.navigate('Setting')}>
                     <AntDesign name="left" size={22} color="white" style={{right: 50}} />
                 </Pressable>
@@ -13,7 +13,7 @@ const About = ({ navigation }) => {
             </View>
 
             <ScrollView>
-                <Pressable style={{ flexDirection: 'row', alignItems: 'center', height: 70, backgroundColor: '#fff', marginTop: 10}}>
+                <Pressable style={{ flexDirection: 'row', alignItems: 'center', height: 70, backgroundColor: '#fff'}}>
                     <View style={{left: 20}}>
                         <View style={{flexDirection:'row'}}>
                             <Text>Phiên bản 23.12.02</Text>
