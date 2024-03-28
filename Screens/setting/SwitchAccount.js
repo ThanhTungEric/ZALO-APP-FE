@@ -24,7 +24,7 @@ const SwitchAccount = ({ navigation }) => {
                         <Text style={{fontSize: 12, color:'grey'}}>Đã đăng nhập</Text>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row'}}>
-                        <View style={{width: 45, height: 45, borderRadius: '50%', backgroundColor:'#E9ECF4', alignItems: 'center', justifyContent:'center', left: 10}}>
+                        <View style={{width: 45, height: 45, borderRadius: 22.5, backgroundColor:'#E9ECF4', alignItems: 'center', justifyContent:'center', left: 10}}>
                             <Entypo name="plus" size={20} color="#574E92" />
                         </View>
                         <Text style={{left:25, color:'#574E92' }}>Thêm tài khoản</Text>

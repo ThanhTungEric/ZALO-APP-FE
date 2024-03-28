@@ -25,13 +25,13 @@ const About = ({ navigation }) => {
                 <View style={{ height: 210, backgroundColor: '#fff', marginTop: 10}}>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
                         <Text style={{left: 20 }}>Zalo A-Z: Hướng dẫn sử dụng</Text>
-                        <View style={{display: 'flex', width: 30, height: 30, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: '50%', left:155}}>
+                        <View style={{display: 'flex', width: 30, height: 30, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 22.5, left:155}}>
                             <Feather name="external-link" size={20} color="black" />
                         </View>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
                         <Text style={{left: 20 }}>Liên hệ hỗ trợ</Text>
-                        <View style={{display: 'flex', width: 30, height: 30, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: '50%', left:250}}>
+                        <View style={{display: 'flex', width: 30, height: 30, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 22.5 , left:250}}>
                             <AntDesign name="message1" size={20} color="black" />
                         </View>
                     </Pressable>

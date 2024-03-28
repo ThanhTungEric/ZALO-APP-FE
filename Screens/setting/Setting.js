@@ -107,7 +107,7 @@ const Setting = ({ navigation }) => {
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
                         <AntDesign name="questioncircleo" size={20} color="#574E92" style={{left: 20}} />
                         <Text style={{left: 40 }}>Liên hệ hỗ trợ</Text>
-                        <View style={{display: 'flex', width: 30, height: 30, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: '50%', left:210}}>
+                        <View style={{display: 'flex', width: 30, height: 30, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 22.5, left:210}}>
                             <AntDesign name="message1" size={18} color="black" />
                         </View>
                     </Pressable>

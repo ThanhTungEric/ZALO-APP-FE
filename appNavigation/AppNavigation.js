@@ -4,11 +4,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { View } from 'react-native';
-import Messages from "../Screens/Messages";
-import Contacts from "../Screens/Contacts";
-import Discovery from "../Screens/Discovery";
-import Me from "../Screens/Me";
-import Setting from "../Screens/Setting"
+import Messages from "../Screens/messages/Messages";
+import Contacts from "../Screens/contacts/Contacts";
+import Discovery from "../Screens/discovery/Discovery";
+import Me from "../Screens/me/Me";
+import Setting from "../Screens/setting/Setting";
 import About from "../Screens/setting/About";
 import SwitchAccount from "../Screens/setting/SwitchAccount";
 import Timeline from "../Screens/setting/Timeline";
@@ -26,6 +26,7 @@ import ChangePassword from "../Screens/setting/ChangePassword";
 import Login from "../Screens/login/Login";
 import Signup from "../Screens/login/Signup";
 import Forgotpw from "../Screens/login/Forgotpw"
+import FriendRequest from "../Screens/friendrequest/FriendRequest";
 import AuthenOTP from "../Screens/otp/AuthenOTP";
 
 const Stack = createNativeStackNavigator();
@@ -119,6 +120,7 @@ const AppNavigation = () => (
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false}} />
             <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false}} />
             <Stack.Screen name="Forgotpw" component={Forgotpw} options={{ headerShown: false}} />
+            <Stack.Screen name="FriendRequest" component={FriendRequest} options={{ headerShown: false}} />
             <Stack.Screen name="AuthenOTP" component={AuthenOTP} options={{ headerShown: false}} />
         </Stack.Navigator>
     </NavigationContainer>
