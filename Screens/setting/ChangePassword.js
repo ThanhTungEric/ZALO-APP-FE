@@ -6,8 +6,8 @@ import React, { useState } from "react";
 
 const ChangePassword = ({ navigation }) => {
     return (
-        <View style={styles.container}>
-            <View style={{width:'100%', height:40,backgroundColor:"#574E92",flexDirection:'row',alignItems:'center'}}>
+        <View style={styles.container}> 
+            <View style={{width:'100%', height:50,backgroundColor:"#574E92",flexDirection:'row',alignItems:'center'}}>
                 <Pressable style={{width:50, height:50, left: 10,justifyContent:'center',alignItems:'center'}}>
                     <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()}/>
                 </Pressable>
@@ -15,7 +15,7 @@ const ChangePassword = ({ navigation }) => {
             </View>
 
             <View style={{width:'100%', height:50,backgroundColor:"#D9D9D9",flexDirection:'row',alignItems:'center',justifyContent:'center'}}>
-                <Text style={{fontWeight:'400',fontSize:17}}><center>Mật khẩu phải bao gồm chữ số, không được chứa năm sinh, username và tên Zalo của bạn</center></Text>
+                <Text style={{fontWeight:'400',fontSize:14, textAlign: 'center'}}>Mật khẩu phải bao gồm chữ số, không được chứa năm sinh, username và tên Zalo của bạn</Text>
             </View>
             <View style={{flexDirection:'row'}}>
                 <View style={{width:'80%'}}>
@@ -31,7 +31,7 @@ const ChangePassword = ({ navigation }) => {
 
             <View style={{flexDirection:'row',marginTop:20}}>
                 
-                    <Text style={{left:'5%'}}>Mật khẩu mới:</Text>
+                    <Text style={{left: 15}}>Mật khẩu mới:</Text>
                 
                 
             </View>
@@ -56,6 +56,7 @@ const ChangePassword = ({ navigation }) => {
 export default ChangePassword;
 const styles = StyleSheet.create({
     container: {
+        marginTop: 20,
         flex: 1,
         backgroundColor: '#fff',
     },

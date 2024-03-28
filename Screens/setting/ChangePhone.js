@@ -7,17 +7,17 @@ import React, { useState } from "react";
 const ChangePhone = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <View style={{width:'100%', height:40,backgroundColor:"#574E92",flexDirection:'row',alignItems:'center'}}>
+            <View style={{width:'100%', height:50,backgroundColor:"#574E92",flexDirection:'row',alignItems:'center'}}>
                 <Pressable style={{width:50, height:50, left: 10,justifyContent:'center',alignItems:'center'}}>
                     <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()}/>
                 </Pressable>
                 <Text style={{color:'white',left:20,fontSize:18}}>Đổi số điện thoại</Text>
             </View>
-            <View style={{width:'80%',height:60,left:20}}>
-                <Text style={{fontSize:20, fontWeight:'600'}}>Đổi số điện thoại mới cho tài khoản</Text>
+            <View style={{width:'80%',height:60, marginTop: 10}}>
+                <Text style={{fontSize:18, fontWeight:'500', textAlign: 'center'}}>Đổi số điện thoại mới cho tài khoản</Text>
             </View>
 
-            <View style={{width:'80%',height:50,flexDirection:'row',marginTop:20}}>
+            <View style={{width:'80%',height:50,flexDirection:'row',marginTop:10}}>
                 <AntDesign name="infocirlce" size={24} color="#18A0FB" />
                 <Text style={{marginLeft:10,fontWeight:500}}>Số điện thoại mới sẽ gắn với thông tin, dữ liệu và nhật ký của tài khoản</Text>
             </View>
@@ -29,7 +29,7 @@ const ChangePhone = ({ navigation }) => {
 
             <View style={{width:'80%',height:40,flexDirection:'row',marginTop:20}}>
                 <AntDesign name="infocirlce" size={24} color="#FBBB18" />
-                <Text style={{marginLeft:10,fontWeight:500}}><b>Lưu ý: </b>Một số điện thoại chỉ được phép gắn với một tài khoản Zalo</Text>
+                <Text style={{marginLeft:10,fontWeight:500}}>Lưu ý: Một số điện thoại chỉ được phép gắn với một tài khoản Zalo</Text>
             </View>
 
             <Pressable 
@@ -53,6 +53,7 @@ const ChangePhone = ({ navigation }) => {
 export default ChangePhone;
 const styles = StyleSheet.create({
     container: {
+        marginTop: 20,
         flex: 1,
         backgroundColor: '#fff',
         alignItems:'center',

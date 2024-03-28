@@ -10,7 +10,7 @@ const AccountSecurity = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-        <View style={{width:'100%', height:40,backgroundColor:"#574E92",flexDirection:'row',alignItems:'center'}}>
+        <View style={{width:'100%', height:50,backgroundColor:"#574E92",flexDirection:'row',alignItems:'center'}}>
             <Pressable style={{width:50, height:50, left: 10,justifyContent:'center',alignItems:'center'}}>
                 <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()}/>
             </Pressable>
@@ -18,7 +18,7 @@ const AccountSecurity = ({ navigation }) => {
         </View>
         <View style={{width:'100%', height:210,backgroundColor:"#fff"}}>
           <View style={{height:30}}>
-            <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Tài khoản</Text>
+            <Text style={{color:'#2F62AB',fontWeight:'bold',left: 20,marginTop:10}}>Tài khoản</Text>
           </View>
 
           <Pressable 
@@ -39,7 +39,7 @@ const AccountSecurity = ({ navigation }) => {
                   <Text style={{fontSize: 13, color:'grey'}}>+84 XXX XXX XXX</Text>
               </View>
             </View>
-            <View style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="black" /></View>
+            <View style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="#7A7E86" /></View>
           </Pressable>
 
           <Pressable
@@ -59,7 +59,7 @@ const AccountSecurity = ({ navigation }) => {
               </View>
             </View>
             <View 
-            style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="black" /></View>
+            style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="#7A7E86" /></View>
           </Pressable>
 
           <View 
@@ -77,7 +77,7 @@ const AccountSecurity = ({ navigation }) => {
                   <Text>Xác thực tài khoản</Text>
               </View>
             </View>
-            <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="black" /></Pressable>
+            <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="#7A7E86" /></Pressable>
           </View>
 
           <View 
@@ -95,7 +95,7 @@ const AccountSecurity = ({ navigation }) => {
                   <Text>Xóa tài khoản</Text>
               </View>
             </View>
-            <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="black" /></Pressable>
+            <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="#7A7E86" /></Pressable>
           </View>
 
       </View>
@@ -103,7 +103,7 @@ const AccountSecurity = ({ navigation }) => {
       
       <View style={{width:'100%', height:290,backgroundColor:"#fff",marginTop:10}}>
           <View style={{height:30}}>
-            <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Bảo mật</Text>
+            <Text style={{color:'#2F62AB',fontWeight:'bold',left: 20,marginTop:10}}>Bảo mật</Text>
           </View>
 
           <View 
@@ -120,10 +120,11 @@ const AccountSecurity = ({ navigation }) => {
                   <Text>Kiểm tra bảo mật</Text>
               </View>
               <View style={{height:20}}>
-                  <Text style={{fontSize: 13, color:'grey'}}>Theo dõi tình trạng bảo mật và xủa lý các vấn đề liên quan đến tài khoản</Text>
+                  <Text style={{fontSize: 13, color:'grey'}}>Theo dõi tình trạng bảo mật và xử lý các vấn đề liên</Text>
+                  <Text style={{fontSize: 13, color:'grey'}}>quan đến tài khoản</Text>
               </View>
             </View>
-            <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="black" /></Pressable>
+            <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="#7A7E86" /></Pressable>
           </View>
 
           <View 
@@ -143,7 +144,7 @@ const AccountSecurity = ({ navigation }) => {
                   <Text style={{fontSize: 13, color:'grey'}}>Quản lý các thiết bị bạn sử dụng để đăng nhập Zalo</Text>
               </View>
             </View>
-            <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="black" /></Pressable>
+            <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="#7A7E86" /></Pressable>
           </View>
 
           <View 
@@ -161,7 +162,7 @@ const AccountSecurity = ({ navigation }) => {
                   <Text>Khóa Zalo</Text>
               </View>
             </View>
-            <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="black" /></Pressable>
+            <Pressable style={{width:40,height:40,right:20,justifyContent:'center',alignItems:'center'}}><AntDesign name="right" size={20} color="#7A7E86" /></Pressable>
           </View>
 
           <View 
@@ -199,31 +200,31 @@ export default AccountSecurity;
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 20,
     flex: 1,
     backgroundColor: '#D9D9D9',
     alignItems: 'center',
     //justifyContent: 'center',
   },
   toggleBtn: {
-    width: 40,
-    height: 20,
+    width: 50,
+    height: 30,
     borderRadius: 20,
     backgroundColor: "#ccc",
     marginLeft: "auto",
     justifyContent: "center",
   },
   circle: {
-    width: 20,
-    height: 20,
-    borderRadius: 15,
+    width: 25,
+    height: 25,
+    borderRadius: 20,
     backgroundColor: "#fff",
-    marginHorizontal: 2,
   },
   activeBtn: {
-    backgroundColor: '#3388E7',
+    backgroundColor: '#574E92',
     color: '#fff',
   },
   activeCircle: {
-    transform: [{ translateX: 16 }],
+    transform: [{ translateX: 22 }],
   },
 });

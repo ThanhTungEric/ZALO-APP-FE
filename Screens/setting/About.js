@@ -5,13 +5,12 @@ import { AntDesign, Feather } from '@expo/vector-icons';
 const About = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 40}}>
-                <Pressable onPress={()=> navigation.navigate('Setting')}>
-                    <AntDesign name="left" size={22} color="white" style={{right: 50}} />
+            <View style={{ width: '100%', height: 50, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center' }}>
+                <Pressable style={{ width: 50, height: 50, left: 10, justifyContent: 'center', alignItems: 'center' }}>
+                    <AntDesign name="arrowleft" size={22} color="white" onPress={() => navigation.goBack()} />
                 </Pressable>
-                <Text style={{fontSize: 18, color: 'white', right: 150}}>Thông tin về Zalo</Text>
+                <Text style={{color: 'white', left: 20, fontSize: 18}}>Thông tin về Zalo</Text>
             </View>
-
             <ScrollView>
                 <Pressable style={{ flexDirection: 'row', alignItems: 'center', height: 70, backgroundColor: '#fff'}}>
                     <View style={{left: 20}}>
@@ -26,13 +25,13 @@ const About = ({ navigation }) => {
                 <View style={{ height: 210, backgroundColor: '#fff', marginTop: 10}}>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
                         <Text style={{left: 20 }}>Zalo A-Z: Hướng dẫn sử dụng</Text>
-                        <View style={{display: 'flex', width: 30, height: 30, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: '50%', left:155}}>
+                        <View style={{display: 'flex', width: 30, height: 30, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 22.5, left:155}}>
                             <Feather name="external-link" size={20} color="black" />
                         </View>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
                         <Text style={{left: 20 }}>Liên hệ hỗ trợ</Text>
-                        <View style={{display: 'flex', width: 30, height: 30, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: '50%', left:250}}>
+                        <View style={{display: 'flex', width: 30, height: 30, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 22.5 , left:250}}>
                             <AntDesign name="message1" size={20} color="black" />
                         </View>
                     </Pressable>
@@ -54,6 +53,7 @@ const About = ({ navigation }) => {
 export default About;
 const styles = StyleSheet.create({
     container: {
+        marginTop: 20,
         backgroundColor: '#E8ECF4',
         height: 670,
     },

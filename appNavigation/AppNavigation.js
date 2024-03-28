@@ -2,17 +2,16 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { View } from 'react-native';
-import Messages from "../Screens/Messages";
-import Contacts from "../Screens/Contacts";
-import Discovery from "../Screens/Discovery";
-import Timeline from "../Screens/Timeline";
-import Me from "../Screens/Me";
-import Setting from "../Screens/setting/Setting"
+import Messages from "../Screens/messages/Messages";
+import Contacts from "../Screens/contacts/Contacts";
+import Discovery from "../Screens/discovery/Discovery";
+import Me from "../Screens/me/Me";
+import Setting from "../Screens/setting/Setting";
 import About from "../Screens/setting/About";
 import SwitchAccount from "../Screens/setting/SwitchAccount";
-import Timeline1 from "../Screens/setting/Timeline1";
+import Timeline from "../Screens/setting/Timeline";
 import Contact from "../Screens/setting/Contact";
 import Theme from "../Screens/setting/Theme";
 import Calls from "../Screens/setting/Calls";
@@ -26,8 +25,9 @@ import ChangePhone1 from "../Screens/setting/ChangePhone1";
 import ChangePassword from "../Screens/setting/ChangePassword";
 import Login from "../Screens/login/Login";
 import Signup from "../Screens/login/Signup";
-import OTP from "../Screens/login/OTP";
-import ChatBox from "../Screens/chat/Chat";
+import Forgotpw from "../Screens/login/Forgotpw"
+import FriendRequest from "../Screens/friendrequest/FriendRequest";
+import AuthenOTP from "../Screens/otp/AuthenOTP";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -70,18 +70,6 @@ const TabNavigator = () => (
             },
         }}
         />
-        <Tab.Screen name="Nhật ký" component={Timeline} 
-        options={{
-            headerShown: false, 
-            tabBarIcon: ({focused}) => { 
-            return (
-                <View style={{alignItems:'center', justifyContent: 'center'}}>
-                    <MaterialCommunityIcons name="clock-time-seven-outline" size={20} color={focused ? "#574E92" : "#bababa"} />
-                </View>
-            );
-            },
-        }}
-        />
         <Tab.Screen name="Cá nhân" component={Me} 
         options={{
             headerShown: false, 
@@ -89,6 +77,18 @@ const TabNavigator = () => (
             return (
                 <View style={{alignItems:'center', justifyContent: 'center'}}>
                     <AntDesign name="user" size={20} color={focused ? "#574E92" : "#bababa"} />
+                </View>
+            );
+            },
+        }}
+        />
+        <Tab.Screen name="Thêm" component={Setting} 
+        options={{
+            headerShown: false, 
+            tabBarIcon: ({focused}) => { 
+            return (
+                <View style={{alignItems:'center', justifyContent: 'center'}}>
+                    <MaterialIcons name="more-horiz" size={20} color={focused ? "#574E92" : "#bababa"} />
                 </View>
             );
             },
@@ -105,7 +105,7 @@ const AppNavigation = () => (
             <Stack.Screen name="Setting" component={Setting} options={{ headerShown: false}} />
             <Stack.Screen name="About" component={About} options={{ headerShown: false}} />
             <Stack.Screen name="SwitchAccount" component={SwitchAccount} options={{ headerShown: false}} />
-            <Stack.Screen name="Timeline1" component={Timeline1} options={{ headerShown: false}} />
+            <Stack.Screen name="Timeline" component={Timeline} options={{ headerShown: false}} />
             <Stack.Screen name="Contact" component={Contact} options={{ headerShown: false}} />
             <Stack.Screen name="Theme" component={Theme} options={{ headerShown: false}} />
             <Stack.Screen name="Calls" component={Calls} options={{ headerShown: false}} />
@@ -119,8 +119,9 @@ const AppNavigation = () => (
             <Stack.Screen name="ChangePassword" component={ChangePassword} options={{ headerShown: false}} />
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false}} />
             <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false}} />
-            <Stack.Screen name="OTP" component={OTP} options={{ headerShown: false}} />
-            <Stack.Screen name="ChatBox" component={ChatBox} options={{ headerShown: false}} />
+            <Stack.Screen name="Forgotpw" component={Forgotpw} options={{ headerShown: false}} />
+            <Stack.Screen name="FriendRequest" component={FriendRequest} options={{ headerShown: false}} />
+            <Stack.Screen name="AuthenOTP" component={AuthenOTP} options={{ headerShown: false}} />
         </Stack.Navigator>
     </NavigationContainer>
 );

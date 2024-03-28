@@ -12,13 +12,12 @@ const Theme = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 40}}>
-                <Pressable onPress={()=> navigation.navigate('Setting')}>
-                    <AntDesign name="left" size={22} color="white" style={{right: 60}} />
+            <View style={{ width: '100%', height: 50, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center' }}>
+                <Pressable style={{ width: 50, height: 50, left: 10, justifyContent: 'center', alignItems: 'center' }}>
+                    <AntDesign name="arrowleft" size={22} color="white" onPress={() => navigation.goBack()} />
                 </Pressable>
-                <Text style={{fontSize: 18, color: 'white', right: 200}}>Giao diện</Text>
+                <Text style={{color: 'white', left: 20, fontSize: 18}}>Giao diện</Text>
             </View>
-
             <ScrollView>
                 <View style={{ height: 190, backgroundColor: '#fff'}}>
                     <Pressable style={{ alignItems: 'center', height: 30, flexDirection:'row'}}>
@@ -40,7 +39,7 @@ const Theme = ({ navigation }) => {
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row'}}>
                         <Text style={{left: 20 }}>Thay đổi ngôn ngữ</Text>
-                        <Image source={require('../../assets/vietnam.png')} style={{ width: 25, height: 25, borderRadius: '50%', left: 155 }}/>
+                        <Image source={require('../../assets/vietnam.png')} style={{ width: 25, height: 25, borderRadius: 22.5, left: 155 }}/>
                         <Text style={{left: 160, color:'grey'}}>Tiếng việt</Text>
                     </Pressable>
                 </View>
@@ -51,6 +50,7 @@ const Theme = ({ navigation }) => {
 export default Theme;
 const styles = StyleSheet.create({
     container: {
+        marginTop: 20,
         backgroundColor: '#E8ECF4',
         height: 670,
     },

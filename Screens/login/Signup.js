@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput } from 'react-native';
-import { AntDesign, MaterialCommunityIcons, Ionicons, Feather, SimpleLineIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { AntDesign} from '@expo/vector-icons';
 import React, { useState } from "react";
 import axios from 'axios';  
 
@@ -41,11 +41,10 @@ const Signup = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-             <View style={{ width: '100%', height: 50, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center' }}>
+             <View style={{ width: '100%', height: 50, backgroundColor: "#fff", flexDirection: 'row', alignItems: 'center' }}>
                 <Pressable style={{ width: 50, height: 50, left: 10, justifyContent: 'center', alignItems: 'center' }}>
-                    <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()} />
+                    <AntDesign name="arrowleft" size={24} color="black" onPress={() => navigation.goBack()} />
                 </Pressable>
-                <Text style={{ fontWeight: '600', color: 'white', left: 20, fontSize: 18 }}>Đăng ký</Text>
             </View>
             <TextInput
                 placeholder='Họ và tên'
@@ -88,8 +87,8 @@ const Signup = ({ navigation }) => {
                 placeholderTextColor={'#574E92'}
                 style={styles.input}
                 onChangeText={(text) => setStatus(text)}
-            />
-
+            /> 
+            
             <TouchableOpacity
                 onPress={handleSignup}
                 style={styles.button}>
@@ -106,14 +105,15 @@ export default Signup;
 
 const styles = StyleSheet.create({
     container: {
+        marginTop: 20,
         flex: 1,
-        backgroundColor: '#D9D9D9',
+        backgroundColor: '#fff',
         alignItems: 'center',
     },
     input: {
         backgroundColor: 'white',
-        borderWidth: 3,
-        borderRadius: 10,
+        borderBottomWidth: 3,
+        borderBottomColor: '#E8ECF4',
         height: 50,
         width: '90%',
         marginTop: 10,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     },
     button: {
         width: '90%',
-        height: 50,
+        height: 40,
         backgroundColor: '#574E92',
         justifyContent: 'center',
         alignItems: 'center',
