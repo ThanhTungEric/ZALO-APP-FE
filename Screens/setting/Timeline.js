@@ -2,23 +2,22 @@ import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View, ScrollView, TouchableOpacity } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 
-const Timeline1 = ({ navigation }) => {
+const Timeline = ({ navigation }) => {
 
     const [suggestToggle, setSuggestToggle] = useState(false);
 
     const toggleButton = (toggleFunction) => {
         toggleFunction((prevState) => !prevState);
-      };
+    };
 
     return (
         <View style={styles.container}>
-            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 40}}>
-                <Pressable onPress={()=> navigation.navigate('Setting')}>
-                    <AntDesign name="left" size={22} color="white" style={{right: 60}} />
+            <View style={{ width: '100%', height: 50, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center' }}>
+                <Pressable style={{ width: 50, height: 50, left: 10, justifyContent: 'center', alignItems: 'center' }}>
+                    <AntDesign name="arrowleft" size={22} color="white" onPress={() => navigation.goBack()} />
                 </Pressable>
-                <Text style={{fontSize: 18, color: 'white', right: 200}}>Nhật ký</Text>
+                <Text style={{color: 'white', left: 20, fontSize: 18}}>Nhật ký</Text>
             </View>
-
             <ScrollView>
                 <View style={{ height: 100, backgroundColor: '#fff'}}>
                     <Pressable style={{ alignItems: 'center', height: 50, flexDirection:'row'}}>
@@ -35,11 +34,11 @@ const Timeline1 = ({ navigation }) => {
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row'}}>
                         <Text style={{left: 20 }}>Tự động phát video</Text>
-                        <Text style={{left: 150, color: 'grey', fontSize: 13}}>Luôn tự động phát</Text>
+                        <Text style={{left: 130, color: 'grey', fontSize: 13}}>Luôn tự động phát</Text>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
                         <Text style={{left: 20 }}>Tự động phát bài hát</Text>
-                        <Text style={{left: 140, color: 'grey', fontSize: 13}}>Luôn tự động phát</Text>
+                        <Text style={{left: 120, color: 'grey', fontSize: 13}}>Luôn tự động phát</Text>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
                         <Text style={{left: 20 }}>Gợi ý sticker khi bình luận</Text>
@@ -57,15 +56,15 @@ const Timeline1 = ({ navigation }) => {
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row'}}>
                         <Text style={{left: 20 }}>Chặn xem nhật ký</Text>
-                        <AntDesign name="right" size={18} color="#7A7E86" style={{left: 245}}/>
+                        <AntDesign name="right" size={18} color="#7A7E86" style={{left: 225}}/>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
                         <Text style={{left: 20 }}>Chặn xem khoảnh khắc</Text>
-                        <AntDesign name="right" size={18} color="#7A7E86" style={{left: 210}}/>
+                        <AntDesign name="right" size={18} color="#7A7E86" style={{left: 190}}/>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
                         <Text style={{left: 20 }}>Ẩn khỏi nhật ký</Text>
-                        <AntDesign name="right" size={18} color="#7A7E86" style={{left: 255}}/>
+                        <AntDesign name="right" size={18} color="#7A7E86" style={{left: 240}}/>
                     </Pressable>
                 </View>
             
@@ -73,9 +72,10 @@ const Timeline1 = ({ navigation }) => {
         </View>
     );
 }
-export default Timeline1;
+export default Timeline;
 const styles = StyleSheet.create({
     container: {
+        marginTop: 20,
         backgroundColor: '#E8ECF4',
         height: 670,
     },
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: "#ccc",
         justifyContent: "center",
-        marginLeft: 170,
+        marginLeft: 150,
       },
     circle: {
         width: 25,
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
     },
     activeBtn: {
-        backgroundColor: '#3388E7',
+        backgroundColor: '#574E92',
         color: '#fff',
     },
     activeCircle: {

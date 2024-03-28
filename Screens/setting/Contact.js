@@ -8,17 +8,16 @@ const Contact = ({ navigation }) => {
 
     const toggleButton = (toggleFunction) => {
         toggleFunction((prevState) => !prevState);
-      };
+    };
 
     return (
         <View style={styles.container}>
-            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 40}}>
-                <Pressable onPress={()=> navigation.navigate('Setting')}>
-                    <AntDesign name="left" size={22} color="white" style={{right: 60}} />
+            <View style={{ width: '100%', height: 50, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center' }}>
+                <Pressable style={{ width: 50, height: 50, left: 10, justifyContent: 'center', alignItems: 'center' }}>
+                    <AntDesign name="arrowleft" size={22} color="white" onPress={() => navigation.goBack()} />
                 </Pressable>
-                <Text style={{fontSize: 18, color: 'white', right: 200}}>Danh bạ</Text>
+                <Text style={{color: 'white', left: 20, fontSize: 18}}>Danh bạ</Text>
             </View>
-
             <ScrollView>
                 <View style={{ height: 100, backgroundColor: '#fff'}}>
                     <Pressable style={{ alignItems: 'center', height: 50, flexDirection:'row'}}>
@@ -26,7 +25,7 @@ const Contact = ({ navigation }) => {
                             <Text style={{left: 20}}>Cập nhật danh bạ Zalo</Text>
                             <Text style={{left: 20, color:'grey', fontSize: 13}}>Lần gần nhất: 11/01/2024 13:00</Text>
                         </View>
-                        <Text style={{left: 140, color: 'grey', fontSize: 13}}>Tự động</Text>
+                        <Text style={{left: 110, color: 'grey', fontSize: 13}}>Tự động</Text>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', height: 50, flexDirection:'row', justifyContent: 'space-between', borderWidth: 1, borderColor: '#E8ECF4'}}>
                         <Text style={{left: 20 }}>Hiện liên hệ trong danh bạ</Text>
@@ -40,7 +39,6 @@ const Contact = ({ navigation }) => {
                     <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row'}}>
                         <View>
                             <Text style={{left: 20 }}>Tự động kết bạn từ danh bạ máy</Text>
-                            <Text style={{left: 20, fontSize:13, color:'grey'}}>Thêm liên hệ vào danh bạ Zalo khi cả 2 đều lưu<br></br>số nhau trên máy</Text>
                         </View>
                         <TouchableOpacity
                             style={[styles.toggleBtn, suggestToggle ? styles.activeBtn : null]}
@@ -63,6 +61,7 @@ const Contact = ({ navigation }) => {
 export default Contact;
 const styles = StyleSheet.create({
     container: {
+        marginTop: 20,
         backgroundColor: '#E8ECF4',
         height: 670,
     },
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: "#ccc",
         justifyContent: "center",
-        marginLeft: 50,
+        marginLeft: 110,
       },
     circle: {
         width: 25,
@@ -81,7 +80,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
     },
     activeBtn: {
-        backgroundColor: '#3388E7',
+        backgroundColor: '#574E92',
         color: '#fff',
     },
     activeCircle: {

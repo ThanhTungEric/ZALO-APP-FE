@@ -37,19 +37,19 @@ function FriendScreen() {
         <ScrollView>
           <View style={{ height: 180, backgroundColor: '#fff'}}>
             <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row'}}>
-              <View style={{display: 'flex', width: 45, height: 45, backgroundColor: "#7E57C2", alignItems: "center", justifyContent: "center", borderRadius: '50%', left: 10}}>
+              <View style={{display: 'flex', width: 45, height: 45, backgroundColor: "#7E57C2", alignItems: "center", justifyContent: "center", borderRadius: 22.5, left: 10}}>
                 <MaterialIcons name="group" size={24} color="white" />
               </View>
               <Text style={{left: 25 }}>Lời mời kết bạn</Text>
             </Pressable>
             <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row'}}>
-              <View style={{display: 'flex', width: 45, height: 45, backgroundColor: "#7E57C2", alignItems: "center", justifyContent: "center", borderRadius: '50%', left: 10}}>
+              <View style={{display: 'flex', width: 45, height: 45, backgroundColor: "#7E57C2", alignItems: "center", justifyContent: "center", borderRadius: 22.5, left: 10}}>
                 <AntDesign name="contacts" size={24} color= "white" />
               </View>
               <Text style={{left: 25 }}>Danh bạ máy</Text>
             </Pressable>
             <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row'}}>
-              <View style={{display: 'flex', width: 45, height: 45, backgroundColor: "#7E57C2", alignItems: "center", justifyContent: "center", borderRadius: '50%', left: 10, }}>
+              <View style={{display: 'flex', width: 45, height: 45, backgroundColor: "#7E57C2", alignItems: "center", justifyContent: "center", borderRadius: 22.5, left: 10, }}>
                 <FontAwesome name="birthday-cake" size={24} color="white" />
               </View>
               <Text style={{left: 25 }}>Lịch sinh nhật</Text>
@@ -97,7 +97,7 @@ function FriendScreen() {
         <ScrollView>
           <View style={{ height: 70, backgroundColor: '#fff'}}>
             <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
-              <View style={{display: 'flex', width: 40, height: 40, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: '50%', left:15}}>
+              <View style={{display: 'flex', width: 40, height: 40, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 22.5, left:15}}>
                 <AntDesign name="addusergroup" size={24} color="#2F62AB" />
               </View>
               <Text style={{left: 30, color: '#2F62AB'  }}>Tạo nhóm mới</Text>
@@ -109,20 +109,20 @@ function FriendScreen() {
             </Pressable>
             <Pressable style={{ alignItems: 'center', height: 80, flexDirection:'row', justifyContent: 'space-around', alignItems: 'center'}}>
               <View style={{alignItems: 'center'}}>
-                <View style={{display: 'flex', width: 50, height: 50, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: '50%'}}>
-                  <Image source={require('../assets/calendar.png')} style={{ width: 50, height: 50, borderRadius: '50%'}}/>
+                <View style={{display: 'flex', width: 50, height: 50, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 22.5}}>
+                  <Image source={require('../assets/calendar.png')} style={{ width: 50, height: 50, borderRadius: 22.5}}/>
                 </View>
                 <Text style={{color: 'grey'}}>Lịch</Text>
               </View>  
               <View style={{alignItems: 'center'}}>
-                <View style={{display: 'flex', width: 50, height: 50, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: '50%'}}>
-                  <Image source={require('../assets/clock.png')} style={{ width: 50, height: 50, borderRadius: '50%'}}/>
+                <View style={{display: 'flex', width: 50, height: 50, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 22.5}}>
+                  <Image source={require('../assets/clock.png')} style={{ width: 50, height: 50, borderRadius: 22.5}}/>
                 </View>
                 <Text style={{color: 'grey'}}>Nhắc hẹn</Text>
               </View>
               <View style={{alignItems: 'center'}}>
-                <View style={{display: 'flex', width: 50, height: 50, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: '50%'}}>
-                  <Image source={require('../assets/group.png')} style={{ width: 50, height: 50, borderRadius: '50%'}}/>
+                <View style={{display: 'flex', width: 50, height: 50, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 22.5}}>
+                  <Image source={require('../assets/group.png')} style={{ width: 50, height: 50, borderRadius: 22.5}}/>
                 </View>
                 <Text style={{color: 'grey'}}>Nhóm offline</Text>
               </View>
@@ -157,7 +157,7 @@ function FriendScreen() {
         <ScrollView>
           <View style={{ height: 70, backgroundColor: '#fff'}}>
             <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
-              <Image source={require('../assets/music.png')} style={{ width: 45, height: 45, borderRadius: '50%', left: 15 }}/>
+              <Image source={require('../assets/music.png')} style={{ width: 45, height: 45, borderRadius: 22.5, left: 15 }}/>
               <Text style={{left: 30 }}>Tìm thêm Official Account</Text>
             </Pressable>
           </View>
@@ -166,27 +166,27 @@ function FriendScreen() {
               <Text style={{left: 20, color: 'black', fontSize: 16}}>Official Account đang quan tâm</Text>
             </Pressable>
             <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row'}}>
-              <Image source={require('../assets/newspaper.png')} style={{ width: 45, height: 45, borderRadius: '50%', left: 15 }}/>
+              <Image source={require('../assets/newspaper.png')} style={{ width: 45, height: 45, borderRadius: 22.5, left: 15 }}/>
               <Text style={{left: 30}}>Báo mới</Text>
             </Pressable>
             <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}>
-              <Image source={require('../assets/cloud.png')} style={{ width: 45, height: 45, borderRadius: '50%', left: 15 }}/>        
+              <Image source={require('../assets/cloud.png')} style={{ width: 45, height: 45, borderRadius: 22.5, left: 15 }}/>        
               <Text style={{left: 30}}>Thời tiết</Text>
             </Pressable>
             <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}>
-              <Image source={require('../assets/zalopay.png')} style={{ width: 45, height: 45, borderRadius: '50%', left: 15 }}/> 
+              <Image source={require('../assets/zalopay.png')} style={{ width: 45, height: 45, borderRadius: 22.5, left: 15 }}/> 
               <Text style={{left: 30}}>ZaloPay</Text>
             </Pressable>
             <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}>
-              <Image source={require('../assets/zalo.png')} style={{ width: 45, height: 45, borderRadius: '50%', left: 15 }}/> 
+              <Image source={require('../assets/zalo.png')} style={{ width: 45, height: 45, borderRadius: 22.5, left: 15 }}/> 
               <Text style={{left: 30}}>Zalo Hỗ Trợ IOS</Text>
             </Pressable>
             <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}>
-              <Image source={require('../assets/zalosticker.png')} style={{ width: 45, height: 45, borderRadius: '50%', left: 15 }}/>
+              <Image source={require('../assets/zalosticker.png')} style={{ width: 45, height: 45, borderRadius: 22.5, left: 15 }}/>
               <Text style={{left: 30}}>Zalo Sticker</Text>
             </Pressable>
             <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}>
-              <Image source={require('../assets/zingmp3.png')} style={{ width: 45, height: 45, borderRadius: '50%', left: 15 }}/> 
+              <Image source={require('../assets/zingmp3.png')} style={{ width: 45, height: 45, borderRadius: 22.5, left: 15 }}/> 
               <Text style={{left: 30}}>Zing MP3</Text>
             </Pressable>
           </View>
@@ -200,8 +200,8 @@ function Contacts() {
     
 
     return (
-        <View style={styles.container}>
-            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 40}}>
+        <View style={{marginTop:20, backgroundColor: '#E8ECF4', height: 670,}}>
+            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 50}}>
               <AntDesign name="search1" size={22} color="white"/>
               <TextInput placeholder="Tìm kiếm" placeholderTextColor={'#D9D9D9'}
                 style={{width: 260, height:40, color: "white"}}

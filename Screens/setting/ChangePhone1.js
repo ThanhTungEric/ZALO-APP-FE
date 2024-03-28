@@ -7,13 +7,13 @@ import React, { useState } from "react";
 const ChangePhone1 = ({ navigation }) => {
     return(
         <View style={styles.container}>
-            <View style={{width:'100%', height:40,backgroundColor:"#574E92",flexDirection:'row',alignItems:'center'}}>
+            <View style={{width:'100%', height:50,backgroundColor:"#574E92",flexDirection:'row',alignItems:'center'}}>
                 <Pressable style={{width:50, height:50, left: 10,justifyContent:'center',alignItems:'center'}}>
                     <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()}/>
                 </Pressable>
                 <Text style={{color:'white',left:20,fontSize:18}}>Đổi số điện thoại</Text>
             </View>
-            <View style={{width:'90%',height:60,left:10}}>
+            <View style={{width:'90%',height:60,left:10, marginTop: 10}}>
                 <Text style={{fontSize:20, fontWeight:'600'}}>Nhập số điện thoại mới</Text>
                 <Text style={{fontSize:16, fontWeight:'400'}}>Bạn sẽ nhận được mã xác thực (OTP) từ cuộc gọi hoặc tin nhắn qua số điện thoại mới</Text>
             </View>
@@ -36,6 +36,7 @@ const ChangePhone1 = ({ navigation }) => {
 export default ChangePhone1;
 const styles = StyleSheet.create({
     container: {
+        marginTop: 20,
         flex: 1,
         backgroundColor: '#fff',
         alignItems:'center',

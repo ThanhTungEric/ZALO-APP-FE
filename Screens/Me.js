@@ -5,19 +5,17 @@ import { AntDesign, Feather,Entypo, MaterialIcons } from '@expo/vector-icons';
 const Me = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 40}}>
+            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 50}}>
               <AntDesign name="search1" size={22} color="white"/>
               <TextInput placeholder="Tìm kiếm" placeholderTextColor={'#D9D9D9'}
                 style={{width: 260, height:40, color: "white"}}
               />
-              <Pressable onPress={()=> navigation.navigate('Setting')}>
-                <AntDesign name="setting" size={22} color="white" />
-              </Pressable>
+              <AntDesign name="user" size={22} color="white" />
             </View>
 
             <ScrollView>
                 <Pressable style={{ flexDirection: 'row', alignItems: 'center', justifyContent:'space-around', height: 70, backgroundColor: '#fff',}}>
-                  <Image source={require('../assets/dog.png')} style={{ width: 45, height: 45, borderRadius: '50%', right: 20 }}/>
+                  <Image source={require('../assets/dog.png')} style={{ width: 45, height: 45, borderRadius: 22.5, right: 20 }}/>
                   <View style={{ right: 70}}>
                     <Text>Lê Quang Trung</Text>
                     <Text style={{fontSize: 10, color:'grey'}}>Xem trang cá nhân</Text>
@@ -44,7 +42,7 @@ const Me = ({ navigation }) => {
                   <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
                     <AntDesign name="cloudo" size={20} color="#574E92" style={{left: 20}} />
                     <Text style={{left: 40 }}>Cloud của tôi</Text>
-                    <AntDesign name="right" size={18} color="#7A7E86" style={{left: 255}}/>
+                    <AntDesign name="right" size={18} color="#7A7E86" style={{left: 225}}/>
                   </Pressable>
                 </View>
 
@@ -54,7 +52,7 @@ const Me = ({ navigation }) => {
                     <Text>Dung lượng và dữ liệu</Text>
                     <Text style={{fontSize: 10, color:'grey'}}>Quản lý dữ liệu Zalo của bạn</Text>
                   </View>
-                  <AntDesign name="right" size={18} color="#7A7E86" style={{left: 200}} />
+                  <AntDesign name="right" size={18} color="#7A7E86" style={{left: 170}} />
                 </Pressable>
 
                 <View style={{ height: 140, backgroundColor: '#fff', marginTop: 10 }}>
@@ -63,14 +61,14 @@ const Me = ({ navigation }) => {
                   >
                     <MaterialIcons name="security" size={20} color="#574E92" style={{left: 20}} />
                     <Text style={{left: 40 }}>Tài khoản và bảo mật</Text>
-                    <AntDesign name="right" size={18} color="#7A7E86" style={{left: 205}}/>
+                    <AntDesign name="right" size={18} color="#7A7E86" style={{left: 175}}/>
                   </Pressable>
                   <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}
                     onPress={()=> navigation.navigate('Privacy')}
                   >
                     <Entypo name="lock" size={20} color="#574E92" style={{left: 20}} />
                     <Text style={{left: 40 }}>Quyền riêng tư</Text>
-                    <AntDesign name="right" size={18} color="#7A7E86" style={{left: 245}}/>
+                    <AntDesign name="right" size={18} color="#7A7E86" style={{left: 215}}/>
                   </Pressable>
                 </View>
 
@@ -81,6 +79,7 @@ const Me = ({ navigation }) => {
 export default Me;
 const styles = StyleSheet.create({
     container: {
+        marginTop: 20,
         backgroundColor: '#E8ECF4',
         height: 670,
     },
