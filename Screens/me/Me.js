@@ -1,20 +1,22 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View, Image, ScrollView, TextInput } from "react-native";
 import { AntDesign, Feather,Entypo, MaterialIcons } from '@expo/vector-icons';
+import { styles} from '../../CSS/styles';
+import { StatusBar } from 'expo-status-bar';
 
 const Me = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 50}}>
-        <AntDesign name="search1" size={22} color="white"/>
-        <TextInput placeholder="Tìm kiếm" placeholderTextColor={'#D9D9D9'} style={{width: 260, height:40, color: "white"}}/>
+      <View style={styles.header}>
+        <AntDesign name="search1" size={22} color="white" style={styles.searchIcon}/>
+        <TextInput placeholder="Tìm kiếm" placeholderTextColor={'#D9D9D9'} style={styles.searchInput}/>
         <AntDesign name="user" size={22} color="white" />
       </View>
       <ScrollView>
         <Pressable style={{ flexDirection: 'row', alignItems: 'center', justifyContent:'space-around', height: 70, backgroundColor: '#fff',}}>
-          <Image source={require('../../assets/dog.png')} style={{ width: 45, height: 45, borderRadius: 22.5, right: 20 }}/>
-          <View style={{ right: 70}}>
+          <Image source={require('../../assets/dog.png')} style={{ width: 45, height: 45, borderRadius: 22.5, right: 15 }}/>
+          <View style={{ right: 60}}>
             <Text>Lê Quang Trung</Text>
             <Text style={{fontSize: 10, color:'grey'}}>Xem trang cá nhân</Text>
           </View>
@@ -64,15 +66,9 @@ const Me = ({ navigation }) => {
           </Pressable>
         </View>
       </ScrollView>
+      <StatusBar style="auto" />
     </View>
   );
 }
 
 export default Me;
-const styles = StyleSheet.create({
-    container: {
-        marginTop: 20,
-        backgroundColor: '#E8ECF4',
-        height: 670,
-    },
-});

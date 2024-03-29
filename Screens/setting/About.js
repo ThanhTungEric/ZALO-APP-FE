@@ -1,15 +1,15 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View, ScrollView } from "react-native";
 import { AntDesign, Feather } from '@expo/vector-icons';
+import { StatusBar } from 'expo-status-bar';
+import { styles } from '../../CSS/styles';
 
 const About = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <View style={{ width: '100%', height: 50, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center' }}>
-                <Pressable style={{ width: 50, height: 50, left: 10, justifyContent: 'center', alignItems: 'center' }}>
-                    <AntDesign name="arrowleft" size={22} color="white" onPress={() => navigation.goBack()} />
-                </Pressable>
-                <Text style={{color: 'white', left: 20, fontSize: 18}}>Thông tin về Zalo</Text>
+            <View style={styles.header}>
+                <AntDesign name="arrowleft" size={22} color="white" onPress={() => navigation.goBack()} style={styles.searchIcon} />
+                <Text style={styles.title}>Thông tin về Zalo</Text>
             </View>
             <ScrollView>
                 <Pressable style={{ flexDirection: 'row', alignItems: 'center', height: 70, backgroundColor: '#fff'}}>
@@ -47,14 +47,8 @@ const About = ({ navigation }) => {
                 </Pressable>
             
             </ScrollView>
+            <StatusBar style="auto" />
         </View>
     );
 }
 export default About;
-const styles = StyleSheet.create({
-    container: {
-        marginTop: 20,
-        backgroundColor: '#E8ECF4',
-        height: 670,
-    },
-});

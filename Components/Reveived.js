@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, ScrollView, TextInput, Pressable,  Image, FlatL
 import { StatusBar } from 'expo-status-bar';
 
 const data = [
-    {image: require('../../assets/ava1.png'), name: 'Chí Thanh IUH', text: 'Xin chào, mình là Chí Thanh IUH. Thấy bạn trong nhóm T2_7_9_KTTKPM_N1_HK2_23_24 nên mình muốn kết bạn!'},
-    {image: require('../../assets/ava3.png'), name: 'Thanh Tùng', text: 'Xin chào, mình là Thanh Tùng. Thấy bạn trong nhóm T2_7_9_KTTKPM_N1_HK2_23_24 nên mình muốn kết bạn!'},
+    {image: require('../assets/ava1.png'), name: 'Chí Thanh IUH', text: 'Xin chào, mình là Chí Thanh IUH. Thấy bạn trong nhóm T2_7_9_KTTKPM_N1_HK2_23_24 nên mình muốn kết bạn!'},
+    {image: require('../assets/ava3.png'), name: 'Thanh Tùng', text: 'Xin chào, mình là Thanh Tùng. Thấy bạn trong nhóm T2_7_9_KTTKPM_N1_HK2_23_24 nên mình muốn kết bạn!'},
 ]
 
 function Received() {
@@ -16,7 +16,7 @@ function Received() {
                     numColumns={1}
                     data={data}
                     renderItem={({item}) =>
-                    <Pressable style={{height: 230, flexDirection:'row', borderColor: '#E8ECF4', top: 10}}>    
+                    <Pressable style={{height: 260, flexDirection:'row', borderColor: '#E8ECF4', top: 10}}>    
                         <Image source={item.image}  style={{borderRadius: 22.5, width: 50, height: 50, left: 20}}></Image>
                         <View style={{ bottome: 20, left: 30}}>
                             <Text>{item.name}</Text>
@@ -24,7 +24,7 @@ function Received() {
                             <TextInput
                                 multiline={true}
                                 numberOfLines={5}
-                                style={{ width: 280, height:80, textAlignVertical: 'top', borderRadius: 10, borderWidth: 1, top: 10 }}>
+                                style={{ width: 280, height:130, textAlignVertical: 'top', borderRadius: 10, borderWidth: 1, top: 10 }}>
                                 {item.text}
                             </TextInput>
                             <View style={{flexDirection:'row', top: 20}}>

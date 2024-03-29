@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, ScrollView, TextInput, Pressable, Image, FlatList } from 'react-native';
 import { AntDesign, MaterialCommunityIcons  } from '@expo/vector-icons';
-
+import { StatusBar } from 'expo-status-bar';
+import { styles } from '../../CSS/styles'
 const array = [
   {image: require('../../assets/ava1.png'), name: 'Chí Thanh IUH'},
   {image: require('../../assets/group1.png'), name: 'N3_NHÓM CÔNG NGHỆ MỚI'},
@@ -17,16 +18,16 @@ const array = [
 export default function Messages() {
   return (
     <View style={styles.container}>
-      <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 50}}>
-        <AntDesign name="search1" size={22} color="white" style={{left: 5.5}}/>
+      <View style={styles.header}>
+        <AntDesign name="search1" size={22} color="white" style={styles.searchIcon}/>
         <TextInput placeholder="Tìm kiếm" placeholderTextColor={'#D9D9D9'}
-          style={{left: 17.5, width: 260, height:40, color: "white"}}
+          style={{ width: "65%", height:40, color: "white"}}
         />
         <MaterialCommunityIcons name="qrcode-scan" size={22} color="white" />
         <AntDesign name="plus" size={22} color="white" />
       </View>
       <ScrollView>
-        <View style={{ height: 710, backgroundColor: '#fff'}}>
+        <View style={{ backgroundColor: '#fff'}}>
           <Pressable style={{ alignItems: 'center', height: 30, flexDirection:'row'}}>
             <Text style={{left: 10, color: 'black', fontSize: 16}}>Tất cả</Text>
             <AntDesign name="filter" size={24} color="grey" style={{left: 240}}  />
@@ -45,14 +46,7 @@ export default function Messages() {
           </FlatList>   
         </View>    
       </ScrollView>   
+      <StatusBar style="auto" />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-      marginTop: 20,
-      backgroundColor: '#E8ECF4',
-      height: 670,
-  },
-});

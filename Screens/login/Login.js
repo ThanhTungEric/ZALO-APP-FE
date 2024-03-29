@@ -33,18 +33,18 @@ const Login = ({ navigation, route }) => {
     return (
         <View style={styles.container}>
             <View>
-                <Image source={require('../../assets/login.png')} resizeMode='contain' style={{ width: 300, height: 200,  }}/>
+                <Image source={require('../../assets/login.png')} resizeMode='contain' style={{width: 200, height: 100 }}/>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                     <Text style={{ fontWeight: '600', color: '#574E92', fontSize: 25 }}>ZooLaa</Text>
                 </View>
             </View>
             <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
-                <TextInput placeholder='Phone Number' placeholderTextColor={'#574E92'} 
+                <TextInput placeholder='Nhập số điện thoại' placeholderTextColor={'#574E92'} 
                 value={phoneNumber}
                 style={{backgroundColor:'white', borderBottomWidth: 1, borderBottomColor: '#E8ECF4', height:50,width:'90%'}}
                 onChangeText={(text) => setPhoneNumber(text)}
                 ></TextInput>
-                <TextInput placeholder='Password' placeholderTextColor={'#574E92'} 
+                <TextInput placeholder='Nhập mật khẩu' placeholderTextColor={'#574E92'} 
                 secureTextEntry={true}
                 style={{backgroundColor:'white', borderBottomWidth: 1, borderBottomColor: '#E8ECF4', height:50,width:'90%',marginTop:10}} 
                 onChangeText={(text) => setPassword(text)} 
@@ -54,8 +54,8 @@ const Login = ({ navigation, route }) => {
                 <TouchableOpacity 
                 //onPress={handleLogin}
                 onPress={()=> navigation.navigate('Home')}
-                style={{ width: '70%', height: 40, backgroundColor: '#574E92', justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}>
-                    <Text style={{ fontWeight: '600', color: 'white', fontSize: 18 }}>Đăng nhập</Text>
+                style={{ width: '40%', height: 45, backgroundColor: '#574E92', justifyContent: 'center', alignItems: 'center', borderRadius: 20 }}>
+                    <Text style={{ color: 'white', fontSize: 16 }}>Đăng nhập</Text>
                 </TouchableOpacity>
             </View>
             <View style={{ width: '100%', height: 50, justifyContent: 'center', alignItems: 'center',marginTop:20 }}>
@@ -72,8 +72,6 @@ const Login = ({ navigation, route }) => {
                     <Text style={{ fontWeight: '600', color: 'white', fontSize: 18 }}>Đăng ký</Text>
                 </TouchableOpacity>
             </View>
-            
-            
         </View>
     )
 
@@ -81,7 +79,6 @@ const Login = ({ navigation, route }) => {
 export default Login;
 const styles = StyleSheet.create({
     container: {
-        marginTop: 20,
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',

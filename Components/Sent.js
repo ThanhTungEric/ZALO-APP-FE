@@ -3,10 +3,10 @@ import { StyleSheet, Text, View, ScrollView, Pressable,  Image, FlatList} from '
 import { StatusBar } from 'expo-status-bar';
 
 const array = [
-    {image: require('../../assets/dog.png'), name: 'Lê Quang Trung'},
-    {image: require('../../assets/ava1.png'), name: 'Chí Thanh IUH'},
-    {image: require('../../assets/ava3.png'), name: 'Thanh Tùng'},
-    {image: require('../../assets/ava2.png'), name: 'Võ Hoàng Minh Sang'},
+    {image: require('../assets/dog.png'), name: 'Lê Quang Trung'},
+    {image: require('../assets/ava1.png'), name: 'Chí Thanh IUH'},
+    {image: require('../assets/ava3.png'), name: 'Thanh Tùng'},
+    {image: require('../assets/ava2.png'), name: 'Võ Hoàng Minh Sang'},
   ]
 
 function Sent() {
