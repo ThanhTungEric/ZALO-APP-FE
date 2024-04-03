@@ -3,32 +3,38 @@ import { Pressable, StyleSheet, Text, View, TouchableOpacity, ScrollView, TextIn
 import { AntDesign, MaterialCommunityIcons, Ionicons, Feather, SimpleLineIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import React, { useState } from "react";
 import axios from 'axios';  
+import {login} from '../../router/APIRouter';
 
 const Login = ({ navigation, route }) => {
     const [phoneNumber, setPhoneNumber] = useState(route.params?.phoneNumber || '');
     const [password, setPassword] = useState('');
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        const data = {
+            phoneNumber: phoneNumber,
+            password: password
+        };
+
         try {
-            const response = await axios.post('http://localhost:8080/user/login', {
-                phoneNumber,
-                password,
+            const response = await fetch(`${login}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify(data)
             });
-    
-            if (response.status === 200) {
-                
-                console.log('Đăng nhập thành công', response.data);
+            if (response.ok) {
+                const userData = await response.json();
+                console.log(userData);
                 navigation.navigate('Home');
-                // Chuyển hướng đến màn hình tiếp theo hoặc thực hiện các xử lý khác
             } else {
-                
-                console.error('Đăng nhập thất bại', response.data);
+                console.error('Login failed');
             }
         } catch (error) {
-           
-            console.error('Đã xảy ra lỗi:', error.message);
+            console.error('Error:', error);
         }
     };
+
 
     return (
         <View style={styles.container}>
@@ -52,8 +58,7 @@ const Login = ({ navigation, route }) => {
             </View>
             <View style={{ width: '100%', height: 50, justifyContent: 'center', alignItems: 'center',marginTop:20 }}>
                 <TouchableOpacity 
-                //onPress={handleLogin}
-                onPress={()=> navigation.navigate('Home')}
+                onPress={handleLogin}
                 style={{ width: '40%', height: 45, backgroundColor: '#574E92', justifyContent: 'center', alignItems: 'center', borderRadius: 20 }}>
                     <Text style={{ color: 'white', fontSize: 16 }}>Đăng nhập</Text>
                 </TouchableOpacity>

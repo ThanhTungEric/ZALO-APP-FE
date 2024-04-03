@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View, TouchableOpacity, ScrollView, TextIn
 import { AntDesign} from '@expo/vector-icons';
 import React, { useState } from "react";
 import axios from 'axios';  
+import { register } from '../../router/APIRouter';
 
 const Signup = ({ navigation }) => {
     const [fullName, setFullName] = useState('');
@@ -10,17 +11,15 @@ const Signup = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [birthDate, setBirthDate] = useState('');
     const [password, setPassword] = useState('');
-    const [status, setStatus] = useState('');
 
     const handleSignup = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/user/', {
+            const response = await axios.post(`${register}`, {
                 fullName,
                 phoneNumber,
                 email,
                 birthDate,
                 password,
-                status,
             });
 
             if (response.status === 201) {
@@ -38,7 +37,6 @@ const Signup = ({ navigation }) => {
             console.error('Đã xảy ra lỗi:', error.message);
         }
     };
-
     return (
         <View style={styles.container}>
              <View style={{ width: '100%', height: 50, backgroundColor: "#fff", flexDirection: 'row', alignItems: 'center' }}>
@@ -81,14 +79,6 @@ const Signup = ({ navigation }) => {
                 secureTextEntry={true}
                 onChangeText={(text) => setPassword(text)}
             />
-
-            <TextInput
-                placeholder='Trạng thái'
-                placeholderTextColor={'#574E92'}
-                style={styles.input}
-                onChangeText={(text) => setStatus(text)}
-            /> 
-            
             <TouchableOpacity
                 onPress={handleSignup}
                 style={styles.button}>
