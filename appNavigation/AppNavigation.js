@@ -28,6 +28,7 @@ import Signup from "../Screens/login/Signup";
 import Forgotpw from "../Screens/login/Forgotpw"
 import FriendRequest from "../Screens/friendrequest/FriendRequest";
 import AuthenOTP from "../Screens/otp/AuthenOTP";
+import Welcome from "../Screens/login/Welcome";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -100,7 +101,7 @@ const TabNavigator = () => (
 
 const AppNavigation = () => (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Welcome">
             <Stack.Screen name="Home" component={TabNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="Setting" component={Setting} options={{ headerShown: false}} />
             <Stack.Screen name="About" component={About} options={{ headerShown: false}} />
@@ -117,6 +118,7 @@ const AppNavigation = () => (
             <Stack.Screen name="ChangePhone" component={ChangePhone} options={{ headerShown: false}} />
             <Stack.Screen name="ChangePhone1" component={ChangePhone1} options={{ headerShown: false}} />
             <Stack.Screen name="ChangePassword" component={ChangePassword} options={{ headerShown: false}} />
+            <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false}} />
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false}} />
             <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false}} />
             <Stack.Screen name="Forgotpw" component={Forgotpw} options={{ headerShown: false}} />
