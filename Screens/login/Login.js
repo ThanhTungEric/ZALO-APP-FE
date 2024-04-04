@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { Pressable, StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput, Image } from 'react-native';
-import { AntDesign, MaterialCommunityIcons, Ionicons, Feather, SimpleLineIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { Text, View, TouchableOpacity, TextInput, Image } from 'react-native';
 import React, { useState } from "react";
-import axios from 'axios';  
-import {login} from '../../router/APIRouter';
+import { login } from '../../router/APIRouter';
+import { SafeAreaView } from 'react-native-safe-area-context'; 
+import {AntDesign} from '@expo/vector-icons';
+
 
 const Login = ({ navigation, route }) => {
     const [phoneNumber, setPhoneNumber] = useState(route.params?.phoneNumber || '');
@@ -19,7 +20,7 @@ const Login = ({ navigation, route }) => {
             const response = await fetch(`${login}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json' 
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             });
@@ -35,57 +36,66 @@ const Login = ({ navigation, route }) => {
         }
     };
 
-
     return (
-        <View style={styles.container}>
-            <View>
-                <Image source={require('../../assets/login.png')} resizeMode='contain' style={{width: 200, height: 100 }}/>
-                <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={{ fontWeight: '600', color: '#574E92', fontSize: 25 }}>ZooLaa</Text>
+        <View style={{ flex: 1, backgroundColor: '#7B71F9' }}>
+            <SafeAreaView style={{ flex: 1 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={{ backgroundColor: '#FFEA00', padding: 8, borderTopRightRadius: 20, borderBottomLeftRadius: 20, marginLeft: 16 }}>
+                        <AntDesign name="arrowleft" size={20} color="black" />
+                    </TouchableOpacity>
+                </View>
+                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                    <Image source={require('../../assets/cota.png')} style={{ width: 200, height: 200, borderRadius: 100 }} />
+                </View>
+            </SafeAreaView>
+            <View style={{flex: 2, backgroundColor: 'white', paddingHorizontal: 8, paddingTop: 8, borderTopLeftRadius: 50, borderTopRightRadius: 50 }}>
+                <View style={{ marginTop: 8 }}>
+                    <Text style={{ color: '#4B5563', marginLeft: 16 }}>Số điện thoại</Text>
+                    <TextInput
+                        style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20, marginBottom: 12 }}
+                        value={phoneNumber}
+                        placeholder='Nhập số điện thoại'
+                        onChangeText={(text) => setPhoneNumber(text)}
+                    />
+                    <Text style={{ color: '#4B5563', marginLeft: 16 }}>Mật Khẩu</Text>
+                    <TextInput
+                        style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20 }}
+                        secureTextEntry={true}
+                        placeholder='Nhập mật khẩu'
+                        onChangeText={(text) => setPassword(text)} 
+                    />
+                    <TouchableOpacity style={{ alignItems: 'flex-end', marginBottom: 20, marginTop: 10 }}
+                        onPress={()=> navigation.navigate('Forgotpw')}
+                    >
+                        <Text style={{ color: '#4B5563' }}>Quên mật khẩu?</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ paddingVertical: 12, backgroundColor: '#FFEA00', borderRadius: 20 }} onPress={handleLogin}>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#4B5563' }}>Đăng nhập</Text>
+                    </TouchableOpacity>
+                </View>
+                <Text style={{ fontSize: 20, color: '#4B5563', fontWeight: 'bold', textAlign: 'center', marginTop: 20 }}>Or</Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 12 }}>
+                    <TouchableOpacity style={{ padding: 8, backgroundColor: '#E5E7EB', borderRadius: 20 }}>
+                        <Image source={require('../../assets/google.png')} style={{ width: 40, height: 40 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ padding: 8, backgroundColor: '#E5E7EB', borderRadius: 20 }}>
+                        <Image source={require('../../assets/apple.png')} style={{ width: 40, height: 40 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ padding: 8, backgroundColor: '#E5E7EB', borderRadius: 20 }}>
+                        <Image source={require('../../assets/facebook.png')} style={{ width: 40, height: 40 }} />
+                    </TouchableOpacity>
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 50 }}>
+                    <Text style={{ color: '#4B5563', fontWeight: '600' }}>Bạn chưa có tài khoản?</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('AuthenOTP')}>
+                        <Text style={{ fontWeight: '600', color: '#FFEA00' }}> Đăng ký</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
-            <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
-                <TextInput placeholder='Nhập số điện thoại' placeholderTextColor={'#574E92'} 
-                value={phoneNumber}
-                style={{backgroundColor:'white', borderBottomWidth: 1, borderBottomColor: '#E8ECF4', height:50,width:'90%'}}
-                onChangeText={(text) => setPhoneNumber(text)}
-                ></TextInput>
-                <TextInput placeholder='Nhập mật khẩu' placeholderTextColor={'#574E92'} 
-                secureTextEntry={true}
-                style={{backgroundColor:'white', borderBottomWidth: 1, borderBottomColor: '#E8ECF4', height:50,width:'90%',marginTop:10}} 
-                onChangeText={(text) => setPassword(text)} 
-                ></TextInput>
-            </View>
-            <View style={{ width: '100%', height: 50, justifyContent: 'center', alignItems: 'center',marginTop:20 }}>
-                <TouchableOpacity 
-                onPress={handleLogin}
-                style={{ width: '40%', height: 45, backgroundColor: '#574E92', justifyContent: 'center', alignItems: 'center', borderRadius: 20 }}>
-                    <Text style={{ color: 'white', fontSize: 16 }}>Đăng nhập</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={{ width: '100%', height: 50, justifyContent: 'center', alignItems: 'center',marginTop:20 }}>
-                <TouchableOpacity 
-                onPress={()=> navigation.navigate('Forgotpw')}
-                style={{ width: '70%', height: 40, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}>
-                    <Text style={{ fontWeight: '600', color: 'black', fontSize: 18 }}>Quên mật khẩu</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={{ width: '100%', height: 40, justifyContent: 'center', alignItems: 'center',marginTop:20 }}>
-                <TouchableOpacity 
-                onPress={() => navigation.navigate('AuthenOTP')}
-                style={{ width: '90%', height: 40, backgroundColor: 'lightblue', justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}>
-                    <Text style={{ fontWeight: '600', color: 'white', fontSize: 18 }}>Đăng ký</Text>
-                </TouchableOpacity>
-            </View>
+            <StatusBar style="auto" />
         </View>
-    )
+
+    );
 
 }
 export default Login;
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-    },
-})
