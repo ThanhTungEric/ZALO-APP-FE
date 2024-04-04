@@ -13,6 +13,19 @@ const Signup = ({ navigation }) => {
     const [birthDate, setBirthDate] = useState('');
     const [password, setPassword] = useState('');
 
+    //hide icon pass
+    const [hideIconPass, setHideIconPass] = useState(true);
+    //hide pass
+    const [hidePass, setHidePass] = useState(true);
+    //form login/register
+    const [isLoginFormVisible, setLoginFormVisible] = useState(true);
+
+    const handleHidePass = () => {
+        setHidePass(!hidePass);
+        setPassword(password);
+        setHideIconPass(!hideIconPass);
+    }
+
     const handleSignup = async () => {
         try {
             const response = await axios.post(`${register}`, {
@@ -77,12 +90,17 @@ const Signup = ({ navigation }) => {
                         onChangeText={(text) => setBirthDate(text)}
                     />
                     <Text style={{ color: '#4B5563', marginLeft: 16 }}>Mật Khẩu</Text>
-                    <TextInput
-                        style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20, marginBottom: 12  }}
-                        secureTextEntry={true}
-                        placeholder='Nhập mật khẩu'
-                        onChangeText={(text) => setPassword(text)}
-                    />
+                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#E5E7EB', borderRadius: 20 }}>
+                        <TextInput
+                            style={{ flex: 1, padding: 16, color: '#4B5563' }}
+                            secureTextEntry={hidePass}
+                            placeholder='Nhập mật khẩu'
+                            onChangeText={(text) => setPassword(text)}
+                        />
+                        <TouchableOpacity onPress={handleHidePass} style={{ padding: 16, color: '#4B5563' }}>
+                            <Image source={hidePass ? require('../../assets/hide.png') : require('../../assets/eye.png')} style={{ width: 20, height: 20, backgroundColor: 'grey' }} />
+                        </TouchableOpacity>
+                    </View>
                     <TouchableOpacity style={{ paddingVertical: 12, backgroundColor: '#FFEA00', borderRadius: 20, marginTop: 20 }}  onPress={handleSignup}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#4B5563' }}>Đăng ký</Text>
                     </TouchableOpacity>

@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Forgotpw = ({ navigation}) => {
 
+
     return (
         <View style={{ flex: 1, backgroundColor: '#7B71F9' }}>
             <SafeAreaView style={{ flex: 1 }}>
@@ -23,16 +24,11 @@ const Forgotpw = ({ navigation}) => {
                     <Text style={{ color: '#4B5563', marginLeft: 16 }}>Email</Text>
                     <TextInput
                         style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20 }}
-                        value="xitrum@gmail.com"
                         placeholder='Nhập email'
-                       
                     />
-                    <View style={{ width: '100%', height: 50, justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                        <TouchableOpacity
-                            style={{ width: '70%', height: 40, backgroundColor: '#fff', justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}>
-                            <Text style={{ fontWeight: '600', color: '#4B5563', fontSize: 18 }}>Quên mật khẩu</Text>
-                        </TouchableOpacity>
-                    </View>
+                   <TouchableOpacity style={{ paddingVertical: 12, backgroundColor: '#FFEA00', borderRadius: 20, marginTop: 50 }} >
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#4B5563' }}>Quên mật khẩu</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
             <StatusBar style="auto" />

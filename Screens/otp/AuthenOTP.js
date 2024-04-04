@@ -162,7 +162,7 @@ export default function AuthenOTP() {
                                     />
                                 </View>
                                 <Button
-                                    title="Submit"
+                                    title="Gửi mã"
                                     onPress={signInWithPhoneNumber}
                                     style={{
                                         width: '100%',
