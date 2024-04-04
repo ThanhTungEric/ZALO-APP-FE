@@ -1,50 +1,67 @@
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput, Image } from 'react-native';
-import { AntDesign, MaterialCommunityIcons, Ionicons, Feather, SimpleLineIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';  
+import {login} from '../../router/APIRouter';
 
 const Login = ({ navigation, route }) => {
     const [phoneNumber, setPhoneNumber] = useState(route.params?.phoneNumber || '');
     const [password, setPassword] = useState('');
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        const data = {
+            phoneNumber: phoneNumber,
+            password: password
+        };
+
         try {
-            const response = await axios.post('http://localhost:8080/user/login', {
-                phoneNumber,
-                password,
+            const response = await fetch(`${login}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify(data)
             });
-    
-            if (response.status === 200) {
-                
-                console.log('Đăng nhập thành công', response.data);
+            if (response.ok) {
+                const userData = await response.json();
+                console.log(userData);
                 navigation.navigate('Home');
-                // Chuyển hướng đến màn hình tiếp theo hoặc thực hiện các xử lý khác
             } else {
-                
-                console.error('Đăng nhập thất bại', response.data);
+                console.error('Login failed');
             }
         } catch (error) {
-           
-            console.error('Đã xảy ra lỗi:', error.message);
+            console.error('Error:', error);
         }
     };
+    // const [data, setData] = useState([]);
+    // //http://localhost:8080/user
+    // useEffect(() => {
+    //     axios.get('https://localhost:8083/user')
+    //         .then(res => {
+    //             setData(res.data);
+    //         })
+    //         .catch(err => {
+    //             console.error(err);
+    //         })
+    // }, []);
+
+
 
     return (
         <View style={styles.container}>
             <View>
-                <Image source={require('../../assets/login.png')} resizeMode='contain' style={{ width: 300, height: 200,  }}/>
+                <Image source={require('../../assets/login.png')} resizeMode='contain' style={{width: 200, height: 100 }}/>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                     <Text style={{ fontWeight: '600', color: '#574E92', fontSize: 25 }}>ZooLaa</Text>
                 </View>
             </View>
             <View style={{ width: '100%', height: 'auto', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
-                <TextInput placeholder='Phone Number' placeholderTextColor={'#574E92'} 
+                <TextInput placeholder='Nhập số điện thoại' placeholderTextColor={'#574E92'} 
                 value={phoneNumber}
                 style={{backgroundColor:'white', borderBottomWidth: 1, borderBottomColor: '#E8ECF4', height:50,width:'90%'}}
                 onChangeText={(text) => setPhoneNumber(text)}
                 ></TextInput>
-                <TextInput placeholder='Password' placeholderTextColor={'#574E92'} 
+                <TextInput placeholder='Nhập mật khẩu' placeholderTextColor={'#574E92'} 
                 secureTextEntry={true}
                 style={{backgroundColor:'white', borderBottomWidth: 1, borderBottomColor: '#E8ECF4', height:50,width:'90%',marginTop:10}} 
                 onChangeText={(text) => setPassword(text)} 
@@ -52,10 +69,9 @@ const Login = ({ navigation, route }) => {
             </View>
             <View style={{ width: '100%', height: 50, justifyContent: 'center', alignItems: 'center',marginTop:20 }}>
                 <TouchableOpacity 
-                //onPress={handleLogin}
-                onPress={()=> navigation.navigate('Home')}
-                style={{ width: '70%', height: 40, backgroundColor: '#574E92', justifyContent: 'center', alignItems: 'center', borderRadius: 10 }}>
-                    <Text style={{ fontWeight: '600', color: 'white', fontSize: 18 }}>Đăng nhập</Text>
+                onPress={handleLogin}
+                style={{ width: '40%', height: 45, backgroundColor: '#574E92', justifyContent: 'center', alignItems: 'center', borderRadius: 20 }}>
+                    <Text style={{ color: 'white', fontSize: 16 }}>Đăng nhập</Text>
                 </TouchableOpacity>
             </View>
             <View style={{ width: '100%', height: 50, justifyContent: 'center', alignItems: 'center',marginTop:20 }}>
@@ -72,8 +88,6 @@ const Login = ({ navigation, route }) => {
                     <Text style={{ fontWeight: '600', color: 'white', fontSize: 18 }}>Đăng ký</Text>
                 </TouchableOpacity>
             </View>
-            
-            
         </View>
     )
 
@@ -81,7 +95,6 @@ const Login = ({ navigation, route }) => {
 export default Login;
 const styles = StyleSheet.create({
     container: {
-        marginTop: 20,
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',

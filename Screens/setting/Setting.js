@@ -1,20 +1,21 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View, ScrollView, TextInput } from "react-native";
+import { Pressable, Text, View, ScrollView, TextInput } from "react-native";
 import { AntDesign, Entypo, Feather, MaterialCommunityIcons, FontAwesome5, Ionicons, MaterialIcons, Octicons, FontAwesome } from '@expo/vector-icons';
+import { styles } from "../../CSS/styles"
+import { StatusBar } from 'expo-status-bar';
 
 const Setting = ({ navigation }) => {
     return (
         <View style={styles.container}>
-            <View style={{flexDirection:'row', alignItems:'center', justifyContent: 'space-around', backgroundColor:'#574E92', height: 50}}>
-                <AntDesign name="search1" size={22} color="white"/>
+            <View style={styles.header}>
+                <AntDesign name="search1" size={22} color="white" style={styles.searchIcon}/>
                 <TextInput placeholder="Tìm kiếm" placeholderTextColor={'#D9D9D9'}
-                    style={{width: 260, height:40, color: "white"}}
+                    style={styles.searchInput}
                 />
                 <AntDesign name="setting" size={22} color="white" />
             </View>
-
             <ScrollView>
-                <View style={{ height: 140, backgroundColor: '#fff'}}>
+                <View style={{backgroundColor: '#fff'}}>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}
                         onPress={()=> navigation.navigate('AccountSecurity')}
                     >
@@ -31,8 +32,8 @@ const Setting = ({ navigation }) => {
                     </Pressable>
                 </View>
 
-                <View style={{ height: 140, backgroundColor: '#fff', marginTop: 10}}>
-                    <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
+                <View style={{backgroundColor: '#fff', marginTop: 10}}>
+                    <Pressable style={{ alignItems: 'center', height: 80, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}>
                         <Entypo name="time-slot" size={20} color="#574E92" style={{left: 20}}/>
                         <View style={{left: 40}}>
                             <Text>Dung lượng và dữ liệu</Text>
@@ -40,7 +41,7 @@ const Setting = ({ navigation }) => {
                         </View>
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 140}}/>
                     </Pressable>
-                    <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}>
+                    <Pressable style={{ alignItems: 'center', height: 80, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4', }}>
                         <AntDesign name="cloudo" size={20} color="#574E92" style={{left: 20}} />
                         <View style={{left: 40}}>
                             <Text>Sao lưu và khôi phục</Text>
@@ -51,7 +52,7 @@ const Setting = ({ navigation }) => {
                 </View>
 
 
-                <View style={{ height: 420, backgroundColor: '#fff', marginTop: 10}}>
+                <View style={{backgroundColor: '#fff', marginTop: 10}}>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}
                         onPress={()=> navigation.navigate('Notification')}
                     >
@@ -96,7 +97,7 @@ const Setting = ({ navigation }) => {
                     </Pressable>
                 </View>
 
-                <View style={{ height: 140, backgroundColor: '#fff', marginTop: 10}}>
+                <View style={{backgroundColor: '#fff', marginTop: 10}}>
                     <Pressable style={{ alignItems: 'center', height: 70, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}} 
                         onPress={()=> navigation.navigate('About')}
                     >
@@ -112,7 +113,7 @@ const Setting = ({ navigation }) => {
                         </View>
                     </Pressable>
                 </View>
-                <View style={{ height: 210, backgroundColor: '#fff', marginTop: 10}}>
+                <View style={{ backgroundColor: '#fff', marginTop: 10}}>
                     <Pressable style={{ alignItems: 'center', height: 60, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}
                         onPress={()=> navigation.navigate('SwitchAccount')}
                     >
@@ -130,14 +131,8 @@ const Setting = ({ navigation }) => {
                     </Pressable>
                 </View>
             </ScrollView>
+            <StatusBar style="auto" />
         </View>
     );
 }
 export default Setting;
-const styles = StyleSheet.create({
-    container: {
-        marginTop: 20,
-        backgroundColor: '#E8ECF4',
-        height: 670,
-    },
-});

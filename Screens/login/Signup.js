@@ -2,7 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, View, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { AntDesign} from '@expo/vector-icons';
 import React, { useState } from "react";
-import axios from 'axios';  
+import axios from 'axios'; 
+import {register} from '../../router/APIRouter';
 
 const Signup = ({ navigation }) => {
     const [fullName, setFullName] = useState('');
@@ -14,7 +15,7 @@ const Signup = ({ navigation }) => {
 
     const handleSignup = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/user/', {
+            const response = await axios.post(`${register}`, {
                 fullName,
                 phoneNumber,
                 email,
@@ -105,7 +106,6 @@ export default Signup;
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 20,
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
