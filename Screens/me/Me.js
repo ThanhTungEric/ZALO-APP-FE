@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Pressable, StyleSheet, Text, View, Image, ScrollView, TextInput } from "react-native";
 import { AntDesign, Feather, Entypo, MaterialIcons } from '@expo/vector-icons';
 import { styles } from '../../CSS/styles';
@@ -7,13 +7,22 @@ import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Me = ({ navigation }) => {
-  AsyncStorage.getItem('userData')
-    .then(userData => {
-      console.log("async", userData);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+  const [user, setUser] = useState('');
+  
+  const getUser = async () => {
+    try {
+      const value = await AsyncStorage.getItem('userData');
+      if (value !== null) {
+        const parsUser = JSON.parse(value);
+        setUser(parsUser);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  useEffect(() => {
+    getUser();
+  }, []);
 
 
   return (
@@ -24,10 +33,12 @@ const Me = ({ navigation }) => {
         <AntDesign name="user" size={22} color="white" />
       </View>
       <ScrollView>
-        <Pressable style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', height: 70, backgroundColor: '#fff', }}>
+        <Pressable style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', height: 70, backgroundColor: '#fff', }}
+          onPress={() => navigation.navigate('Profile')}
+        >
           <Image source={require('../../assets/dog.png')} style={{ width: 45, height: 45, borderRadius: 22.5, right: 15 }} />
           <View style={{ right: 60 }}>
-            <Text>Lê Quang Trung</Text>
+            <Text>{user.fullName}</Text>
             <Text style={{ fontSize: 10, color: 'grey' }}>Xem trang cá nhân</Text>
           </View>
           <Feather name="user-plus" size={20} color="#574E92" style={{ left: 15 }} />
