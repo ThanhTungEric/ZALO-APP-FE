@@ -63,7 +63,7 @@ const Signup = ({ navigation }) => {
                     <Image source={require('../../assets/cota.png')} style={{ width: 200, height: 200, borderRadius: 100 }} />
                 </View>
             </SafeAreaView>
-            <View style={{ flex: 1, backgroundColor: 'white', paddingHorizontal: 8, paddingTop: 8, borderTopLeftRadius: 50, borderTopRightRadius: 50 }}>
+            <View style={{ flex: 3, backgroundColor: 'white', paddingHorizontal: 8, paddingTop: 8, borderTopLeftRadius: 50, borderTopRightRadius: 50 }}>
                 <View style={{ marginTop: 8 }}>
                     <Text style={{ color: '#4B5563', marginLeft: 16 }}>Họ và tên</Text>
                     <TextInput
@@ -98,7 +98,7 @@ const Signup = ({ navigation }) => {
                             onChangeText={(text) => setPassword(text)}
                         />
                         <TouchableOpacity onPress={handleHidePass} style={{ padding: 16, color: '#4B5563' }}>
-                            <Image source={hidePass ? require('../../assets/hide.png') : require('../../assets/eye.png')} style={{ width: 20, height: 20, backgroundColor: 'grey' }} />
+                            <Image source={hidePass ? require('../../assets/hide.png') : require('../../assets/eye.png')} style={{ width: 20, height: 20 }} />
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity style={{ paddingVertical: 12, backgroundColor: '#FFEA00', borderRadius: 20, marginTop: 20 }}  onPress={handleSignup}>

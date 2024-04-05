@@ -176,8 +176,8 @@ export default function AuthenOTP() {
                         <>
                             <Text style={{ ...FONTS.h2, marginTop: 48, marginBottom: 22 }}>Nhập mã OTP</Text>
                             <Text style={{ ...FONTS.body3, textAlign: 'center' }}>Chúng tôi đã gửi cho bạn một tin nhắn SMS chứa mã</Text>
-                            <TextInput style={{ height: 50, width: "12%", borderColor: "black", borderWidth: 1, marginBottom: 30, paddingHorizontal: 10, borderRadius: 20, }}
-                                placeholder="Enter code"
+                            <TextInput style={{ height: 50, width: "30%", borderColor: "black", borderWidth: 1, marginBottom: 30, paddingHorizontal: 10, borderRadius: 20, }}
+                                placeholder="Nhập mã"
                                 value={code}
                                 onChangeText={setCode} />
                             <Button

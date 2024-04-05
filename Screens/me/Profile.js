@@ -12,7 +12,7 @@ const ProfileScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <ImageBackground style={{ height: 400, paddingTop: 25 }} source={require('../../assets/dog.png')} >
+            <ImageBackground style={{ height: 300, paddingTop: 25 }} source={require('../../assets/dog.png')} >
                 <AntDesign name="arrowleft" size={25} color="white" onPress={() => navigation.goBack()} style={styles.searchIcon} />
                 <View style={styles.header}>
                     <Image style={styles.avatar} source={require('../../assets/dog.png')} />
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginLeft: 16,
-        color: '#111111',
+        color: '#fff',
     },
     label: {
         fontSize: 16,
