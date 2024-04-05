@@ -1,9 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, TouchableOpacity, TextInput, Image } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
 import React, { useState } from "react";
 import { login } from '../../router/APIRouter';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
+
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const Login = ({ navigation, route }) => {
@@ -40,6 +42,7 @@ const Login = ({ navigation, route }) => {
             if (response.ok) {
                 const userData = await response.json();
                 console.log(userData);
+                await AsyncStorage.setItem('userData', JSON.stringify(userData));
                 navigation.navigate('Home');
             } else {
                 console.error('Login failed');

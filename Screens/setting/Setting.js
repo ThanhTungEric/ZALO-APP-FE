@@ -3,7 +3,7 @@ import { Pressable, Text, View, ScrollView, TextInput } from "react-native";
 import { AntDesign, Entypo, Feather, MaterialCommunityIcons, FontAwesome5, Ionicons, MaterialIcons, Octicons, FontAwesome } from '@expo/vector-icons';
 import { styles } from "../../CSS/styles"
 import { StatusBar } from 'expo-status-bar';
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const Setting = ({ navigation }) => {
     return (
         <View style={styles.container}>
@@ -122,7 +122,10 @@ const Setting = ({ navigation }) => {
                         <AntDesign name="right" size={18} color="#7A7E86" style={{left: 195}}/>
                     </Pressable>
                     <Pressable style={{ alignItems: 'center', justifyContent:'center', height: 80, flexDirection:'row', borderWidth: 1, borderColor: '#E8ECF4'}}
-                        onPress={()=> navigation.navigate('Login')}
+                        onPress={ async ()=> {
+                            await AsyncStorage.removeItem('userData');
+                            navigation.navigate('Login');
+                        }}
                     >
                         <View style={{flexDirection:'row',display: "flex", width: 350, height: 50, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 30}}>
                             <FontAwesome name="sign-out" size={24} color="black" />
