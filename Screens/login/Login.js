@@ -27,8 +27,8 @@ const Login = ({ navigation, route }) => {
 
     const handleLogin = async (e) => {
         const data = {
-            phoneNumber: phoneNumber,
-            password: password
+            phoneNumber: '0812718943',
+            password: 'thanhtung123@'
         };
 
         try {

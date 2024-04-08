@@ -30,6 +30,7 @@ import FriendRequest from "../Screens/friendrequest/FriendRequest";
 import AuthenOTP from "../Screens/otp/AuthenOTP";
 import Welcome from "../Screens/login/Welcome";
 import Profile from "../Screens/me/Profile";
+import ChatBox from "../Screens/chat/Chat";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -126,6 +127,7 @@ const AppNavigation = () => (
             <Stack.Screen name="FriendRequest" component={FriendRequest} options={{ headerShown: false}} />
             <Stack.Screen name="AuthenOTP" component={AuthenOTP} options={{ headerShown: false}} />
             <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false}} />
+            <Stack.Screen name="ChatBox" component={ChatBox} options={{ headerShown: false}} />
         </Stack.Navigator>
     </NavigationContainer>
 );

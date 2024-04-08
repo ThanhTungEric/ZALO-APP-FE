@@ -1,63 +1,95 @@
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions } from 'react-native';
-import React, { useState, useRef, useEffect } from "react";
-import { useRoute } from '@react-navigation/native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, FlatList } from 'react-native';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'; // Import các icon cần sử dụng
+import { AntDesign } from '@expo/vector-icons'; // Import icon AntDesign
+import { useNavigation } from '@react-navigation/native'; // Hook để sử dụng các hàm điều hướng của React Navigation
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { sendMessageRoute, recieveMessageRoute } from '../../router/APIRouter';
+import axios from 'axios';
 
 const ChatBox = ({ route }) => {
-    const { item } = route.params; // Nhận item từ params
-
-    const [messages, setMessages] = useState([]); // State để lưu trữ danh sách tin nhắn
-    const [message, setMessage] = useState(''); // State để lưu trữ nội dung tin nhắn
-
+    const { selectedChat, socket } = route.params;
+    const navigation = useNavigation();
+    const [messages, setMessages] = useState([]);
+    const [msg, setMsg] = useState('');
     const scrollViewRef = useRef();
-
+    const scrollRef = useRef();
     const screenWidth = Dimensions.get('window').width;
+    const [arrivalMessage, setArrivalMessage] = useState(null);
 
-    const sendMessage = () => {
-        // Gửi tin nhắn đi (có thể gửi thông qua API hoặc xử lý tại đây)
-        const newMessages = [...messages, { content: message, sender: 'self' }];
-        setMessages(newMessages);
-        setMessage('');
-
-        // Cuộn ScrollView lên đầu khi gửi tin nhắn mới
-        scrollViewRef.current.scrollToEnd({ animated: true });
-    };
+    const getMessages = async () => {
+        const data = JSON.parse(await AsyncStorage.getItem('userData'));
+        const reponse = await axios.post(recieveMessageRoute, {
+            from: data._id,
+            to: selectedChat._id
+        });
+        setMessages(reponse.data);
+        console.log("day la tin nhan", reponse.data)
+    }
 
     useEffect(() => {
-        // Mô phỏng việc nhận tin nhắn từ người khác
-        const receivedMessage = setTimeout(() => {
-            const newMessages = [...messages, { content: 'Võ Sang Đẹp Zai :)', sender: 'other' }];
-            setMessages(newMessages);
+        getMessages();
+    }, [selectedChat]);
 
-            // Cuộn ScrollView lên đầu khi có tin nhắn mới
-            scrollViewRef.current.scrollToEnd({ animated: true });
-        }, 10000); // Mô phỏng sau 10 giây nhận được tin nhắn
-        return () => clearTimeout(receivedMessage);
-    }, [messages]); // Khi messages thay đổi, tức có tin nhắn mới, sẽ gọi lại useEffect
+    useEffect(() => {
+        const getCurrentChat = async () => {
+            if (selectedChat) {
+                await JSON.parse(await AsyncStorage.getItem('userData'))._id;
+            }
+        }
+        getCurrentChat();
+    }, [selectedChat]);
 
-    // Hàm xử lý khi người dùng nhấn vào nút gửi file
-    const sendFile = () => {
-        // Xử lý gửi file ở đây
-        console.log("Đã gửi file");
+    const handleSendMsg = async (message) => {
+        const data = JSON.parse(await AsyncStorage.getItem('userData'));
+        socket.current.emit("send-msg", {
+            to: selectedChat._id,
+            from: data._id,
+            msg,
+        });
+        await axios.post(sendMessageRoute, {
+            from: data._id,
+            to: selectedChat._id,
+            message: msg,
+        });
+
+        const msgs = [...messages];
+        msgs.push({ fromSelf: true, message: msg });
+        setMessages(msgs);
     };
+    const sendChat = async (message) => {
+        if (message) {
+            handleSendMsg(message);
+            setMsg('');
+            console.log('message', message);
+        }
+    }
 
-    // Hàm xử lý khi người dùng nhấn vào nút gửi icon
-    const sendIcon = () => {
-        // Xử lý gửi icon ở đây
-        console.log("Đã gửi icon");
-    };
+    useEffect(() => {
+        if (socket.current) {
+            socket.current.on("msg-recieve", (msg) => {
+                setArrivalMessage({ fromSelf: false, message: msg });
+            });
+        }
+    }, []);
 
-    // Hàm xử lý khi người dùng nhấn vào nút gửi sticker
-    const sendSticker = () => {
-        // Xử lý gửi sticker ở đây
-        console.log("Đã gửi sticker");
-    };
+    useEffect(() => {
+        arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+    }, [arrivalMessage]);
+
+    useEffect(() => {
+        scrollViewRef.current?.scrollToEnd({ animated: true });
+    }, [messages]);
+
 
     return (
         <View style={styles.container}>
             {/* Header */}
-            <View style={{ width: '100%', height: 50, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={{ fontWeight: '600', color: 'white', fontSize: 18 }}>{item.name}</Text>
+            <View style={{ width: '100%', height: 70, paddingTop: 25, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center' }}>
+                <TouchableOpacity style={{ marginLeft: 10 }}>
+                    <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.navigate('Message')} />
+                </TouchableOpacity>
+                <Text style={{ fontWeight: '600', color: 'white', fontSize: 18 }}>{selectedChat.fullName}</Text>
             </View>
 
             {/* ScrollView cho nội dung tin nhắn */}
@@ -68,9 +100,9 @@ const ChatBox = ({ route }) => {
                 onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
             >
                 {messages.map((msg, index) => (
-                    <View key={index} style={[styles.messageContainer, { alignSelf: msg.sender === 'self' ? 'flex-end' : 'flex-start' }]}>
-                        <View style={[styles.messageBubble, { backgroundColor: msg.sender === 'self' ? '#574E92' : '#ccc', maxWidth: screenWidth * 0.7 }]}>
-                            <Text style={{ color: msg.sender === 'self' ? 'white' : 'black' }}>{msg.content}</Text>
+                    <View key={index} style={[styles.messageContainer, { alignSelf: msg.fromSelf ? 'flex-end' : 'flex-start' }]}>
+                        <View style={[styles.messageBubble, { backgroundColor: msg.fromSelf ? '#574E92' : '#ccc', maxWidth: screenWidth * 0.7 }]}>
+                            <Text style={{ color: msg.fromSelf ? 'white' : 'black' }}>{msg.message}</Text>
                         </View>
                     </View>
                 ))}
@@ -82,25 +114,12 @@ const ChatBox = ({ route }) => {
                 <TextInput
                     style={styles.input}
                     placeholder="Nhập tin nhắn..."
-                    value={message}
-                    onChangeText={setMessage}
+                    value={msg}
+                    onChangeText={setMsg}
                     multiline
                 />
-                {/* Nút gửi file */}
-                <TouchableOpacity onPress={sendFile}>
-                    <MaterialIcons name="attach-file" size={24} color="#574E92" />
-                </TouchableOpacity>
-                {/* Nút gửi icon */}
-                <TouchableOpacity onPress={sendIcon}>
-                    <FontAwesome name="smile-o"
-                        size={24} color="#574E92" />
-                </TouchableOpacity>
-                {/* Nút gửi sticker /}
-                <TouchableOpacity onPress={sendSticker}>
-                <FontAwesome name="sticky-note-o" size={24} color="#574E92" />
-                </TouchableOpacity>
-                {/ Button gửi tin nhắn */}
-                <TouchableOpacity onPress={sendMessage} style={styles.sendButton}>
+
+                <TouchableOpacity onPress={() => sendChat(msg)} style={styles.sendButton}>
                     <Text style={{ color: 'white' }}>Gửi</Text>
                 </TouchableOpacity>
             </View>
@@ -152,5 +171,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         borderRadius: 15,
         width: 'auto',
+    },
+    modalContainer: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'flex-end',
+    },
+    emoji: {
+        fontSize: 24,
+        margin: 5,
+    },
+    closeButton: {
+        alignItems: 'flex-end',
+        marginRight: 10,
+        marginTop: 10,
     },
 });
