@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, ScrollView, TextInput, Pressable, Image, FlatList } from 'react-native';
 import { AntDesign, MaterialCommunityIcons  } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
-import { styles } from '../../CSS/styles'
+import { styles } from '../../css/styles';
 const array = [
   {image: require('../../assets/ava1.png'), name: 'Chí Thanh IUH'},
   {image: require('../../assets/group1.png'), name: 'N3_NHÓM CÔNG NGHỆ MỚI'},

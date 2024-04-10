@@ -1,23 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FlatList, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput, View, Text, Image } from 'react-native'
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SIZES, FONTS } from '../../constrants/theme';
-import Button from '../../Components/Button';
-import PageTitle from '../../Components/PageTitle';
-import {AntDesign} from '@expo/vector-icons';
+import Button from '../../components/Button';
+import PageTitle from '../../components/PageContainer';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function AuthenOTP() {
-    const [phoneNumber, setPhoneNumber] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState('+84 ');
     const [code, setCode] = useState("");
     const [confirm, setConfirm] = useState(null);
+    const phoneInput = useRef(null);
+    const [formattedValue, setFormattedValue] = useState("");
     const navigation = useNavigation();
 
     const [areas, setAreas] = useState([])
     const [selectedArea, setSelectedArea] = useState(null)
     const [modalVisible, setModalVisible] = useState(false)
+
 
     const signInWithPhoneNumber = async () => {
         try {
@@ -61,7 +64,6 @@ export default function AuthenOTP() {
                     return {
                         code: item.alpha2Code,
                         item: item.name,
-                        callingCode: `+${item.callingCodes[0]}`,
                         flag: `https://flagsapi.com/${item.alpha2Code}/flat/64.png`,
                     }
                 })
@@ -103,7 +105,7 @@ export default function AuthenOTP() {
                                 keyExtractor={(item) => item.code}
                                 verticalScrollIndicator={false}
                                 style={{
-                                    padding: 20,
+                                    padding: 30,
                                     marginBottom: 20,
                                 }}
                             />
@@ -127,7 +129,7 @@ export default function AuthenOTP() {
                             <Text style={{ ...FONTS.h2, color: COLORS.white, marginTop: 80 }}>Nhập số điện thoại của bạn</Text>
                             <View style={{ width: '100%', paddingHorizontal: 22, paddingVertical: 60, }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 88, }}>
-                                    <TouchableOpacity style={{ width: 100, height: 48, marginHorizontal: 5, borderRadius: SIZES.padding, borderColor: COLORS.secondaryWhite, borderWidth: 1, backgroundColor: COLORS.secondaryWhite, flexDirection: 'row', fontSize: 12, }}
+                                    <TouchableOpacity style={{ width: 45, height: 48, marginHorizontal: 5, borderRadius: SIZES.padding, borderColor: COLORS.secondaryWhite, borderWidth: 1, backgroundColor: COLORS.secondaryWhite, flexDirection: 'row', fontSize: 12, }}
                                         onPress={() => setModalVisible(true)}
                                     >
                                         <View style={{ justifyContent: 'center', marginLeft: 5 }}>
@@ -159,6 +161,7 @@ export default function AuthenOTP() {
                                         onChangeText={setPhoneNumber}
                                         placeholderTextColor="#111"
                                         selectionColor="#111"
+                                        keyboardType="phone-pad"
                                     />
                                 </View>
                                 <Button
