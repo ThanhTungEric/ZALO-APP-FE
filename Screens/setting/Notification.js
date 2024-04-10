@@ -18,7 +18,7 @@ const Notification = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-        <View style={{width:'100%', height:40, backgroundColor:"#574E92", flexDirection:'row', alignItems:'center'}}>
+        <View style={{width:'100%', height:50, backgroundColor:"#574E92", flexDirection:'row', alignItems:'center'}}>
                 <Pressable style={{width:50, height:50, left: 10, justifyContent:'center', alignItems:'center'}}>
                     <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()}/>
                 </Pressable>
@@ -27,7 +27,7 @@ const Notification = ({ navigation }) => {
             <ScrollView style={{width:'100%'}}>
             <View style={{width:'100%', height:'auto',backgroundColor:"#fff"}}>
             <View style={{height:30}}>
-                <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Trò chuyện 2 người</Text>
+                <Text style={{color:'#2F62AB',fontWeight:'bold',left: 20,marginTop:10}}>Trò chuyện 2 người</Text>
             </View>
             <View
                 style={{height:60,
@@ -41,7 +41,7 @@ const Notification = ({ navigation }) => {
             }}>
                     <View style={{width:'80%',left:10}}>
                         <View style={{height:30}}>
-                            <Text>Báo tin nhắn mới từ trò chuyện 2<br></br>người</Text>
+                            <Text>Báo tin nhắn mới từ trò chuyện 2 người</Text>
                         </View>
                     </View>
                     <View style={{width:'auto'}}>
@@ -66,7 +66,7 @@ const Notification = ({ navigation }) => {
             }}>
                     <View style={{width:'80%',left:10}}>
                         <View style={{height:30}}>
-                            <Text>Xem trước tin nhắn từ trò chuyện 2<br></br>người</Text>
+                            <Text>Xem trước tin nhắn từ trò chuyện 2 người</Text>
                         </View>
                     </View>
                     <View style={{width:'auto'}}>
@@ -80,7 +80,7 @@ const Notification = ({ navigation }) => {
                 </View>
             </View> 
                 <View style={{width:'100%', height:'auto',backgroundColor:"#fff", marginTop: 10}}>
-                    <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Trò chuyện nhóm</Text>
+                    <Text style={{color:'#2F62AB',fontWeight:'bold',left: 20,marginTop:10}}>Trò chuyện nhóm</Text>
                     <View
                     style={{height:60,
                     width:'100%',
@@ -106,7 +106,7 @@ const Notification = ({ navigation }) => {
                 </View>
 
                 <View style={{width:'100%', height:'auto',backgroundColor:"#fff", marginTop: 10}}>
-                    <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Cuộc gọi</Text>
+                    <Text style={{color:'#2F62AB',fontWeight:'bold',left: 20,marginTop:10}}>Cuộc gọi</Text>
                     <View
                     style={{height:60,
                     width:'100%',
@@ -146,7 +146,7 @@ const Notification = ({ navigation }) => {
                             </View>
                         </View>
                         <View style={{width:'auto'}}>
-                        <AntDesign name="right" size={18} color="#7A7E86" style={{left: 10}}/>
+                        <AntDesign name="right" size={18} color="#7A7E86" style={{left: 20}}/>
                         </View>
                     </Pressable>
                 </View>
@@ -155,7 +155,7 @@ const Notification = ({ navigation }) => {
             </View>
 
             <View style={{width:'100%', height:'auto',backgroundColor:"#fff", marginTop: 10}}>
-                    <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Sự kiện</Text>
+                    <Text style={{color:'#2F62AB',fontWeight:'bold',left: 20,marginTop:10}}>Sự kiện</Text>
                     <View
                     style={{height:60,
                     width:'100%',
@@ -181,7 +181,7 @@ const Notification = ({ navigation }) => {
                 </View>
             </View>
             <View style={{width:'100%', height:'auto',backgroundColor:"#fff", marginTop: 10}}>
-                    <Text style={{color:'#2F62AB',fontWeight:'bold',left:'20px',marginTop:10}}>Thông báo</Text>
+                    <Text style={{color:'#2F62AB',fontWeight:'bold',left: 20,marginTop:10}}>Thông báo</Text>
                     <View
                     style={{height:60,
                     width:'100%',
@@ -259,30 +259,30 @@ const Notification = ({ navigation }) => {
 export default Notification;
 const styles = StyleSheet.create({
     container: {
+        marginTop: 20,
         flex: 1,
         backgroundColor: '#D9D9D9',
         alignItems: 'center',
     },
     toggleBtn: {
-        width: 40,
-        height: 20,
+        width: 50,
+        height: 30,
         borderRadius: 20,
         backgroundColor: "#ccc",
         marginLeft: "auto",
         justifyContent: "center",
       },
       circle: {
-        width: 20,
-        height: 20,
-        borderRadius: 15,
+        width: 25,
+        height: 25,
+        borderRadius: 20,
         backgroundColor: "#fff",
-        marginHorizontal: 2,
       },
       activeBtn: {
-        backgroundColor: '#3388E7',
+        backgroundColor: '#574E92',
         color: '#fff',
       },
       activeCircle: {
-        transform: [{ translateX: 16 }],
+        transform: [{ translateX: 22 }],
       },
 });

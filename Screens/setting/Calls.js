@@ -1,7 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import { AntDesign, MaterialCommunityIcons, Ionicons, Feather, SimpleLineIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import React, { useState } from "react";
+import { StatusBar } from 'expo-status-bar';
+import { styles } from "../../CSS/styles"
 
 const Calls = ({ navigation }) => {
     const [ToggleTBGoiNho, setToggleTBGoiNho] = useState(false);
@@ -14,19 +15,14 @@ const Calls = ({ navigation }) => {
     };
     return (
         <View style={styles.container}>
-            <View style={{ width: '100%', height: 40, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center' }}>
-                <Pressable style={{ width: 50, height: 50, left: 10, justifyContent: 'center', alignItems: 'center' }}>
-                    <AntDesign name="arrowleft" size={22} color="white" onPress={() => navigation.goBack()} />
-                </Pressable>
-                <Text style={{color: 'white', left: 20, fontSize: 18}}>Cuộc gọi</Text>
+             <View style={styles.header}>
+                <AntDesign name="arrowleft" size={22} color="white" onPress={() => navigation.goBack()} style={styles.searchIcon} />
+                <Text style={styles.title}>Cuộc gọi</Text>
             </View>
-            <ScrollView style={{ width: '100%' }}>
+            <ScrollView >
                 <View style={{ width: '100%', height: 'auto', backgroundColor: "#fff" }}>
-                    <View style={{ height: 30 }}>
-                        <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Âm thanh</Text>
-                    </View>
+                    <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: 20, marginTop: 10 }}>Âm thanh</Text>
                     <Pressable
-
                         style={{
                             height: 60,
                             width: '100%',
@@ -38,12 +34,10 @@ const Calls = ({ navigation }) => {
                             //justifyContent: 'center'
                         }}>
                         <View style={{ width: '90%' }}>
-                            <View style={{ height: 20 }}>
-                                <Text>Nhạc chuông</Text>
-                            </View>
+                            <Text>Nhạc chuông</Text>
                         </View>
                         <View
-                            style={{ width: 40, height: 40, right: 20, justifyContent: 'center', alignItems: 'center' }}><AntDesign name="right" size={20} color="black" /></View>
+                            style={{ width: 40, height: 40, right: 20, justifyContent: 'center', alignItems: 'center' }}><AntDesign name="right" size={20} color="#7A7E86" /></View>
                     </Pressable>
 
                     <Pressable
@@ -59,22 +53,17 @@ const Calls = ({ navigation }) => {
                             //justifyContent: 'center'
                         }}>
                         <View style={{ width: '90%' }}>
-                            <View style={{ height: 20 }}>
-                                <Text>Nhạc chờ</Text>
-                            </View>
+                            <Text>Nhạc chờ</Text>
                         </View>
                         <View
-                            style={{ width: 40, height: 40, right: 20, justifyContent: 'center', alignItems: 'center' }}><AntDesign name="right" size={20} color="black" /></View>
+                            style={{ width: 40, height: 40, right: 20, justifyContent: 'center', alignItems: 'center' }}><AntDesign name="right" size={20} color="#7A7E86" /></View>
                     </Pressable>
 
 
                 </View>
 
                 <View style={{ width: '100%', height: 'auto', backgroundColor: "#fff", marginTop: 10 }}>
-                    <View style={{ height: 30 }}>
-                        <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Lịch sử cuộc gọi</Text>
-                    </View>
-
+                    <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: 20, marginTop: 10 }}>Lịch sử cuộc gọi</Text>
                     <View
                         style={{
                             height: 60,
@@ -86,9 +75,7 @@ const Calls = ({ navigation }) => {
                             alignItems: 'center',
                         }}>
                         <View style={{ width: '80%', }}>
-                            <View style={{ height: 20 }}>
-                                <Text>Thông báo cuộc gọi nhỡ từ điện thoại</Text>
-                            </View>
+                            <Text>Thông báo cuộc gọi nhỡ từ điện thoại</Text>
                         </View>
                         <View style={{ width: 'auto' }}>
                             <TouchableOpacity
@@ -111,9 +98,7 @@ const Calls = ({ navigation }) => {
                             alignItems: 'center',
                         }}>
                         <View style={{ width: '80%', }}>
-                            <View style={{ height: 20 }}>
-                                <Text>Đồng bộ thông tin cuộc gọi từ điện thoại</Text>
-                            </View>
+                            <Text>Đồng bộ thông tin cuộc gọi từ điện thoại</Text>
                         </View>
                         <View style={{ width: 'auto' }}>
                             <TouchableOpacity
@@ -128,10 +113,7 @@ const Calls = ({ navigation }) => {
                 </View>
 
                 <View style={{ width: '100%', height: 'auto', backgroundColor: "#fff", marginTop: 10 }}>
-                    <View style={{ height: 30 }}>
-                        <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Cuộc gọi video</Text>
-                    </View>
-
+                    <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: 20, marginTop: 10 }}>Cuộc gọi video</Text>
                     <View
                         style={{
                             height: 60,
@@ -143,9 +125,7 @@ const Calls = ({ navigation }) => {
                             alignItems: 'center',
                         }}>
                         <View style={{ width: '80%', }}>
-                            <View style={{ height: 20 }}>
-                                <Text>Thu nhỏ màn hình khi gọi video</Text>
-                            </View>
+                            <Text>Thu nhỏ màn hình khi gọi video</Text>
                         </View>
                         <View style={{ width: 'auto' }}>
                             <TouchableOpacity
@@ -159,10 +139,7 @@ const Calls = ({ navigation }) => {
                 </View>
 
                 <View style={{ width: '100%', height: 'auto', backgroundColor: "#fff", marginTop: 10 }}>
-                    <View style={{ height: 30 }}>
-                        <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Cuộc gọi</Text>
-                    </View>
-
+                    <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: 20, marginTop: 10 }}>Cuộc gọi</Text>
                     <View
                         style={{
                             height: 60,
@@ -174,9 +151,7 @@ const Calls = ({ navigation }) => {
                             alignItems: 'center',
                         }}>
                         <View style={{ width: '80%', }}>
-                            <View style={{ height: 20 }}>
-                                <Text>Thông báo cuộc gọi đến</Text>
-                            </View>
+                            <Text>Thông báo cuộc gọi đến</Text>
                         </View>
                         <View style={{ width: 'auto' }}>
                             <TouchableOpacity
@@ -201,20 +176,15 @@ const Calls = ({ navigation }) => {
                             //justifyContent: 'center'
                         }}>
                         <View style={{ width: '90%' }}>
-                            <View style={{ height: 20 }}>
-                                <Text>Tắt thông báo cuộc gọi từ bạn bè</Text>
-                            </View>
+                            <Text>Tắt thông báo cuộc gọi từ bạn bè</Text>
                         </View>
                         <View
-                            style={{ width: 40, height: 40, right: 20, justifyContent: 'center', alignItems: 'center' }}><AntDesign name="right" size={20} color="black" /></View>
+                            style={{ width: 40, height: 40, right: 20, justifyContent: 'center', alignItems: 'center' }}><AntDesign name="right" size={20} color="#7A7E86" /></View>
                     </Pressable>
                 </View>
 
                 <View style={{ width: '100%', height: 'auto', backgroundColor: "#fff", marginTop: 10 }}>
-                    <View style={{ height: 30 }}>
-                        <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: '20px', marginTop: 10 }}>Quyền riêng tư</Text>
-                    </View>
-
+                    <Text style={{ color: '#2F62AB', fontWeight: 'bold', left: 20, marginTop: 10 }}>Quyền riêng tư</Text>
                     <Pressable
 
                         style={{
@@ -228,12 +198,10 @@ const Calls = ({ navigation }) => {
                             //justifyContent: 'center'
                         }}>
                         <View style={{ width: '90%' }}>
-                            <View style={{ height: 20 }}>
-                                <Text>Cho phép gọi điện</Text>
-                            </View>
+                           <Text>Cho phép gọi điện</Text>  
                         </View>
                         <View
-                            style={{ width: 40, height: 40, right: 20, justifyContent: 'center', alignItems: 'center' }}><AntDesign name="right" size={20} color="black" /></View>
+                            style={{ width: 40, height: 40, right: 20, justifyContent: 'center', alignItems: 'center' }}><AntDesign name="right" size={20} color="#7A7E86" /></View>
                     </Pressable>
 
                     <Pressable
@@ -249,47 +217,17 @@ const Calls = ({ navigation }) => {
                             //justifyContent: 'center'
                         }}>
                         <View style={{ width: '90%' }}>
-                            <View style={{ height: 20 }}>
-                                <Text>Chặn cuộc gọi</Text>
-                            </View>
+                            <Text>Chặn cuộc gọi</Text>
                         </View>
                         <View
-                            style={{ width: 40, height: 40, right: 20, justifyContent: 'center', alignItems: 'center' }}><AntDesign name="right" size={20} color="black" /></View>
+                            style={{ width: 40, height: 40, right: 20, justifyContent: 'center', alignItems: 'center' }}><AntDesign name="right" size={20} color="#7A7E86" /></View>
                     </Pressable>
                 </View>
 
             </ScrollView>
+            <StatusBar style="auto" />
         </View>
     )
 
 }
 export default Calls;
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#D9D9D9',
-        alignItems: 'center',
-    },
-    toggleBtn: {
-        width: 40,
-        height: 20,
-        borderRadius: 20,
-        backgroundColor: "#ccc",
-        marginLeft: "auto",
-        justifyContent: "center",
-    },
-    circle: {
-        width: 20,
-        height: 20,
-        borderRadius: 15,
-        backgroundColor: "#fff",
-        marginHorizontal: 2,
-    },
-    activeBtn: {
-        backgroundColor: '#3388E7',
-        color: '#fff',
-    },
-    activeCircle: {
-        transform: [{ translateX: 16 }],
-    },
-})
