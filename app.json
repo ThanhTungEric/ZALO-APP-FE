@@ -24,7 +24,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.thanhtung15052001.ZALOAPPFE"
+      "package": "com.quangtrung315.ZALOAPPFE"
     },
     "web": {
       "favicon": "./assets/favicon.png"
