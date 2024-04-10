@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "911611408948",
+    "project_id": "otpauth-71eeb",
+    "storage_bucket": "otpauth-71eeb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911611408948:android:c0b25a2eea1f5a727a9061",
+        "android_client_info": {
+          "package_name": "com.quangtrung315.ZALOAPPFE"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_hKmRcBQv8efIZBLukgDhwpxb-O2ZGF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

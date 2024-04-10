@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, FlatList } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, FlatList,Platform,Image } from 'react-native';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'; // Import các icon cần sử dụng
 import { AntDesign } from '@expo/vector-icons'; // Import icon AntDesign
 import { useNavigation } from '@react-navigation/native'; // Hook để sử dụng các hàm điều hướng của React Navigation
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { sendMessageRoute, recieveMessageRoute } from '../../router/APIRouter';
 import axios from 'axios';
+import * as ImagePicker from 'expo-image-picker';
 
 const ChatBox = ({ route }) => {
     const { selectedChat, socket } = route.params;
@@ -16,6 +17,7 @@ const ChatBox = ({ route }) => {
     const scrollRef = useRef();
     const screenWidth = Dimensions.get('window').width;
     const [arrivalMessage, setArrivalMessage] = useState(null);
+    const [image, setImage] = useState(null);
 
     const getMessages = async () => {
         const data = JSON.parse(await AsyncStorage.getItem('userData'));
@@ -46,17 +48,23 @@ const ChatBox = ({ route }) => {
             to: selectedChat._id,
             from: data._id,
             msg,
+            image // Gửi uri của ảnh cùng với tin nhắn
         });
         await axios.post(sendMessageRoute, {
             from: data._id,
             to: selectedChat._id,
             message: msg,
+            image // Gửi uri của ảnh cùng với tin nhắn
         });
 
         const msgs = [...messages];
-        msgs.push({ fromSelf: true, message: msg });
+        msgs.push({ fromSelf: true, message: msg, image }); // Thêm uri của ảnh vào tin nhắn
         setMessages(msgs);
+
+        // Reset lại giá trị của biến image sau khi gửi tin nhắn
+        setImage(null);
     };
+
     const sendChat = async (message) => {
         if (message) {
             handleSendMsg(message);
@@ -82,6 +90,36 @@ const ChatBox = ({ route }) => {
     }, [messages]);
 
 
+    useEffect(() => {
+        (async () => {
+          if (Platform.OS !== 'web') {
+            const libraryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
+            if (libraryStatus.status !== 'granted') {
+              alert('Sorry, we need camera roll permissions to make this work!');
+            }
+    
+            const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
+            if (cameraStatus.status !== 'granted') {
+              alert('Sorry, we need camera permissions to make this work!');
+            }
+          }
+        })();
+      }, []);
+    
+      const pickImage = async () => {
+          let result = await ImagePicker.launchImageLibraryAsync({
+              mediaTypes: ImagePicker.MediaTypeOptions.All,
+              allowsEditing: false,
+              quality: 1,
+          });
+      
+          if (!result.cancelled) {
+              setImage(result.assets[0].uri); // Truy cập đến uri của phần tử đầu tiên trong mảng assets
+              console.log(result.assets[0].uri);
+          }
+      };
+
+
     return (
         <View style={styles.container}>
             {/* Header */}
@@ -103,6 +141,7 @@ const ChatBox = ({ route }) => {
                     <View key={index} style={[styles.messageContainer, { alignSelf: msg.fromSelf ? 'flex-end' : 'flex-start' }]}>
                         <View style={[styles.messageBubble, { backgroundColor: msg.fromSelf ? '#574E92' : '#ccc', maxWidth: screenWidth * 0.7 }]}>
                             <Text style={{ color: msg.fromSelf ? 'white' : 'black' }}>{msg.message}</Text>
+                            {msg.image && <Image source={{ uri: msg.image }} style={{ width: 200, height: 200, borderRadius: 10, marginVertical: 5 }} />}
                         </View>
                     </View>
                 ))}
@@ -118,7 +157,11 @@ const ChatBox = ({ route }) => {
                     onChangeText={setMsg}
                     multiline
                 />
-
+                <TouchableOpacity
+                onPress={pickImage}
+                style={styles.imageButton}>
+                    <FontAwesome name="image" size={24} color="#574E92" />
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => sendChat(msg)} style={styles.sendButton}>
                     <Text style={{ color: 'white' }}>Gửi</Text>
                 </TouchableOpacity>
@@ -185,5 +228,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         marginRight: 10,
         marginTop: 10,
+    },
+    imageButton: {
+        margin: 10,
     },
 });
