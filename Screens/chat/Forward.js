@@ -1,6 +1,6 @@
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, Pressable, Image, Alert } from 'react-native'
-import React, { useState, useEffect, useRef } from 'react'
-import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { AntDesign, Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import PageContainer from '../../components/PageContainer'
@@ -8,25 +8,15 @@ import { COLORS, FONTS } from '../../constrants/theme'
 
 //API router
 import { getFriendListRoute } from '../../router/APIRouter';
-import { getFriendByNumberPhoneRoute } from '../../router/APIRouter';
-import PopupFriend from './PopupFriend';
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const Contacts = ({ navigation }) => {
+const Forward = ({ navigation }) => {
 
     const [numberPhone, setPhoneNumber] = useState("");
     const [data1, setData1] = useState([]);
 
     const [userData, setUserData] = useState('');
-
-    //popup
-    const [showPopup, setShowPopup] = useState(false);
-
-    const closePopup = () => {
-        setShowPopup(!showPopup)
-    }
-    //popup
 
     //lấy data từ local / lưu trữ thông tin người dùng đang đăng nhập
     const [user, setUser] = useState("");
@@ -47,28 +37,6 @@ const Contacts = ({ navigation }) => {
         getUser();
     }, []);
     //lấy data từ local 
-    
-    /////// gửi lời mời kết bạn
-    const getFriendByNumberPhone = async () => {
-        try {
-            const response = await fetch(`${getFriendByNumberPhoneRoute}/${numberPhone}`, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            const responseData = await response.json();
-
-            if (responseData.phoneNumber === numberPhone) {
-                setUser(responseData);
-                setShowPopup(true);
-            } else {
-                Alert.alert('Người dùng chưa đăng ký tài khoản');
-            }
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    };
 
     const handleSearch = () => {
         getFriendByNumberPhone();
@@ -102,9 +70,16 @@ const Contacts = ({ navigation }) => {
         <SafeAreaView>
             <PageContainer>
                 <View >
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 22, marginTop: 22, }}>
-                        <Text style={{ ...FONTS.h4 }}>Danh sách bạn bè</Text>
-                        <AntDesign name="plus" size={20} color={COLORS.secondaryBlack} />
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginHorizontal: 22, paddingTop: 20 }}>
+                        <View style={{ height: 60, width: 60, alignItems: 'center', justifyContent: 'center', }}>
+                            <AntDesign name="arrowleft" size={24} color="black" onPress={() => navigation.goBack()} />
+                        </View>
+                        <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'column', marginHorizontal: 22, }}>
+                            <Text style={{ ...FONTS.h4, marginVertical: 6 }}>Gửi đến</Text>
+                        </View>
+                        <View>
+                            <Text style={{ ...FONTS.h4, marginVertical: 6 }}>Tạo nhóm</Text>
+                        </View>
                     </View>
                     <View style={{
                         marginHorizontal: 22,
@@ -123,24 +98,12 @@ const Contacts = ({ navigation }) => {
                         <TextInput style={{ width: '100%', height: '100%', marginHorizontal: 12, color: '#fff', }}
                             onChangeText={(text) => setPhoneNumber(text)}
                             value={numberPhone}
-                            placeholder="Tìm kiếm số điện thoại..."
+                            placeholder="Tìm kiếm..."
                             placeholderTextColor={'#fff'}
                         />
                     </View>
                     <View>
-                        {showPopup && (
-                            <View>
-                                <PopupFriend closePopup={closePopup} userData={userData} userId={user} />
-                            </View>)}
-                    </View>
-                    <View style={{ backgroundColor: '#fff' }}>
-                        <Pressable style={styles.header}
-                            onPress={() => navigation.navigate('FriendRequest')}>
-                            <View style={styles.viewHeader}>
-                                <MaterialIcons name="group" size={24} color="white" />
-                            </View>
-                            <Text style={styles.textHeader}>Lời mời kết bạn</Text>
-                        </Pressable>
+                        <Text  style={{ ...FONTS.h4, marginVertical: 6, marginLeft: 15 }}>Gửi tới</Text>
                     </View>
                     <View style={{ paddingBottom: 100, backgroundColor: '#fff', marginTop: 10 }}>
                         {data1.map((item, index) => (
@@ -180,6 +143,10 @@ const Contacts = ({ navigation }) => {
                                                     {item.friendInfo.fullName}
                                                 </Text>
                                             </View>
+                                            <View style={{ marginLeft: 'auto', width: 80, height: 35, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 30 }}>
+                                                <Text>Gửi</Text>
+                                            </View>
+
                                         </TouchableOpacity>
                                     </>
                                 )}
@@ -192,7 +159,7 @@ const Contacts = ({ navigation }) => {
     )
 }
 
-export default Contacts;
+export default Forward;
 
 const styles = StyleSheet.create({
     header: {

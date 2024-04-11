@@ -12,7 +12,7 @@ const Welcome = ({ navigation }) => {
                     <Image source={require('../../assets/cota.png')} style={{ width: 400, height: 400, borderRadius: 200 }} />
                 </View>
                 <View style={{ marginVertical: 16 }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('AuthenOTP')} style={{ paddingVertical: 12, backgroundColor: '#FFEA00', marginHorizontal: 28, borderRadius: 20 }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Signup')} style={{ paddingVertical: 12, backgroundColor: '#FFEA00', marginHorizontal: 28, borderRadius: 20 }}>
                         <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#4B5563' }}>Đăng ký</Text>
                     </TouchableOpacity>
                     <View style={{flexDirection: 'row', justifyContent: 'center', marginTop: 20}}>

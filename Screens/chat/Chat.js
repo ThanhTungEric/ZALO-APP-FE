@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, FlatList } from 'react-native';
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons'; // Import các icon cần sử dụng
+import { MaterialIcons, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons'; // Import các icon cần sử dụng
 import { AntDesign } from '@expo/vector-icons'; // Import icon AntDesign
 import { useNavigation } from '@react-navigation/native'; // Hook để sử dụng các hàm điều hướng của React Navigation
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { sendMessageRoute, recieveMessageRoute } from '../../router/APIRouter';
 import axios from 'axios';
+import { COLORS, FONTS } from '../../constrants/theme'
 
 const ChatBox = ({ route }) => {
     const { selectedChat, socket } = route.params;
@@ -81,15 +82,22 @@ const ChatBox = ({ route }) => {
         scrollViewRef.current?.scrollToEnd({ animated: true });
     }, [messages]);
 
+    const handleNavigateToOptions = () => {
+        // Điều hướng đến màn hình option
+        navigation.navigate('Option', { selectedChat: selectedChat });
+    };
 
     return (
         <View style={styles.container}>
             {/* Header */}
-            <View style={{ width: '100%', height: 70, paddingTop: 25, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ width: '100%', height: 70, paddingTop: 25, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                 <TouchableOpacity style={{ marginLeft: 10 }}>
-                    <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.navigate('Message')} />
+                    <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()} />
                 </TouchableOpacity>
                 <Text style={{ fontWeight: '600', color: 'white', fontSize: 18 }}>{selectedChat.fullName}</Text>
+                <MaterialCommunityIcons name="playlist-check" size={20} color={COLORS.white} style={{ marginLeft: 12, }} 
+                   onPress={handleNavigateToOptions}
+                />
             </View>
 
             {/* ScrollView cho nội dung tin nhắn */}

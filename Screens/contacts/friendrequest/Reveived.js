@@ -52,7 +52,7 @@ const Received = () => {
 
         fetchData();
     }, [user._id]);
-
+    
     const handleRejectFriend = async ({ userId1, userId2 }) => {
         try {
             const response = await fetch(`${getRejectFriend}`, {
@@ -100,6 +100,7 @@ const Received = () => {
             console.error('Error accepting friend:', error);
         }
     };
+
 
     return (
         <View style={styles.container}>
