@@ -2,7 +2,7 @@
   "expo": {
     "name": "ZALO-APP-FE",
     "slug": "ZALO-APP-FE",
-    "plugins": ["@react-native-firebase/app", "@react-native-firebase/auth"],
+    "plugins": ["@react-native-firebase/app", "@react-native-firebase/auth","expo-document-picker"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

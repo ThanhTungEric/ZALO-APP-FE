@@ -7,7 +7,6 @@ import { forgotPassword } from '../../router/APIRouter';
 
 const Forgotpw = ({ navigation}) => {
     const [email, setEmail] = useState('');
-    
     const handleForgotPassword = async () => {
         if (email === '') {
             Alert.alert('Vui lòng nhập email');
@@ -40,7 +39,7 @@ const Forgotpw = ({ navigation}) => {
                     </TouchableOpacity>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                    <Image source={require('../../assets/cota.png')} style={{ width: 400, height: 400, borderRadius: 200 }} />
+                    <Image source={require('../../assets/cota.png')} style={{ width: 200, height: 200, borderRadius: 100 }} />
                 </View>
             </SafeAreaView>
             <View style={{ flex: 1, backgroundColor: 'white', paddingHorizontal: 8, paddingTop: 8, borderTopLeftRadius: 50, borderTopRightRadius: 50 }}>

@@ -15,10 +15,10 @@ const SwitchAccount = ({ navigation }) => {
 
                 <View style={{height: 600, backgroundColor: '#fff', marginTop: 10}}>
                     <Pressable style={{ flexDirection: 'row', alignItems: 'center', justifyContent:'space-around', height: 70, backgroundColor: '#fff', borderWidth: 1, borderColor: '#E8ECF4'}}>
-                        <View>  
-                            <Image source={require('../../../assets/dog.png')} style={{ width: 45, height: 45, borderRadius: 22.5, top:5 }}/>
+                        {/* <View>  
+                            <Image source={require('../../assets/dog.png')} style={{ width: 45, height: 45, borderRadius: 22.5, top:5 }}/>
                             <AntDesign name="checkcircle" size={12} color="green" style={{left: 30, bottom: 5}}/>
-                        </View>  
+                        </View>   */}
                         <Text>Lê Quang Trung</Text>
                         <Text style={{fontSize: 12, color:'grey'}}>Đã đăng nhập</Text>
                     </Pressable>

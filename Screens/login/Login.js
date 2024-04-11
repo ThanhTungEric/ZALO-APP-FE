@@ -84,7 +84,7 @@ const Login = ({ navigation, route }) => {
                     <Image source={require('../../assets/cota.png')} style={{ width: 300, height: 300, borderRadius: 150 }} />
                 </View>
             </SafeAreaView>
-            <View style={{ flex: 1, backgroundColor: 'white', paddingHorizontal: 8, paddingTop: 8, borderTopLeftRadius: 50, borderTopRightRadius: 50 }}>
+            <View style={{ flex: 2, backgroundColor: 'white', paddingHorizontal: 8, paddingTop: 8, borderTopLeftRadius: 50, borderTopRightRadius: 50 }}>
                 <View style={{ marginTop: 8 }}>
                     <Text style={{ color: '#4B5563', marginLeft: 16 }}>Số điện thoại</Text>
                     <TextInput
