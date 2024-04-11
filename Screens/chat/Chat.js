@@ -10,6 +10,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { set } from 'firebase/database';
 import * as DocumentPicker from 'expo-document-picker';
 import { COLORS, FONTS } from '../../constrants/theme';
+import * as FileSystem from 'expo-file-system';
 
 const ChatBox = ({ route }) => {
     const { selectedChat, socket } = route.params;
@@ -24,6 +25,7 @@ const ChatBox = ({ route }) => {
     const [isOptionsVisible, setIsOptionsVisible] = useState(false);
     const [selectedMessage, setSelectedMessage] = useState(null);
     const [file, setFile] = useState(null);
+    const [fileName, setFileName] = useState(null);
 
     const getMessages = async () => {
         const data = JSON.parse(await AsyncStorage.getItem('userData'));
@@ -186,8 +188,10 @@ const ChatBox = ({ route }) => {
         try {
             const result = await DocumentPicker.getDocumentAsync();
             if (result.type !== 'cancel') {
+                console.log(result.assets[0].name);
                 console.log(result.assets[0].uri);
                 setFile(result.assets[0].uri);
+                setFileName(result.assets[0].name);
             } else if (result.type == 'cancel') {
                 console.log("User canceled the document picker");
             }
@@ -285,17 +289,28 @@ const ChatBox = ({ route }) => {
                         <View style={[styles.messageBubble, { backgroundColor: msg.fromSelf ? '#574E92' : '#ccc', maxWidth: screenWidth * 0.7 }]}>
                             {msg.message.includes('.jpg') || msg.message.includes('.png') ? (
                                 <Image resizeMode='contain' source={{ uri: msg.message }} style={{ width: 200, height: 200, borderRadius: 10, marginVertical: 5 }} />
-                            ) : msg.message.includes('.pdf') || msg.message.includes('.docx') || msg.message.includes('.txt') ? (
-                                <View style={{ backgroundColor: 'lightgray', padding: 10, borderRadius: 10, marginVertical: 5 }}>
-                                    <Text>{msg.message}</Text>
-                                </View>
+                            ) : msg.message.includes('.pdf') ? (
+                                <TouchableOpacity onPress={() => handleFileDownload(msg.message)} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <FontAwesome name="file-pdf-o" size={24} color="red" />
+                                    <Text style={{ marginLeft: 5 }}>{msg.message.split('/').pop()}</Text>
+                                </TouchableOpacity>
+                            ) : msg.message.includes('.docx') ? (
+                                <TouchableOpacity onPress={() => handleFileDownload(msg.message)} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <FontAwesome name="file-word-o" size={24} color="blue" />
+                                    <Text style={{ marginLeft: 5 }}>{msg.message.split('/').pop()}</Text>
+                                </TouchableOpacity>
+                            ) : msg.message.includes('.txt') ? (
+                                <TouchableOpacity onPress={() => handleFileDownload(msg.message)} style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <FontAwesome name="file-text-o" size={24} color="green" />
+                                    <Text style={{ marginLeft: 5 }}>{msg.message.split('/').pop()}</Text>
+                                </TouchableOpacity>
                             ) : (
                                 <Text style={{ color: msg.fromSelf ? 'white' : 'black' }}>{msg.message}</Text>
                             )}
-
                         </View>
                     </TouchableOpacity>
                 ))}
+
             </ScrollView>
 
             {/* Box chat */}
@@ -416,5 +431,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         justifyContent: 'space-around',
         alignItems: 'center',
+    },
+    modalButton: {
+        backgroundColor: 'white',
+        width: '90%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        borderRadius: 10,
     },
 });
