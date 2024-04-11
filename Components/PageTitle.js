@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
@@ -39,45 +38,3 @@ const styles = StyleSheet.create({
 })
 
 export default PageTitle
-=======
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
-import { TouchableOpacity } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
-import { SIZES, COLORS, FONTS } from '../constrants/theme'
-
-const PageTitle = (props) => {
-    return (
-        <View style={styles.pageTitleContainer}>
-            <TouchableOpacity
-                onPress={props.onPress}
-                style={{
-                    marginRight: 12,
-                }}
-            >
-                <MaterialIcons
-                    name="keyboard-arrow-left"
-                    size={SIZES.padding * 3}
-                    color={COLORS.black}
-                />
-            </TouchableOpacity>
-            {props.title && (
-                <Text style={{ ...FONTS.h4, color: COLORS.black }}>
-                    {props.title}
-                </Text>
-            )}
-        </View>
-    )
-}
-
-const styles = StyleSheet.create({
-    pageTitleContainer: {
-        marginHorizontal: 22,
-        marginVertical: 22,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-})
-
-export default PageTitle
->>>>>>> b22fb74c6eb6513ba9b45c65c60c800e9b3e4ed1

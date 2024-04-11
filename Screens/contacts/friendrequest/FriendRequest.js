@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Received from './Reveived';
 import Sent from './Sent';
-import { styles } from '../../../css/styles';
+import { styles } from '../../../CSS/styles';
 import { StatusBar } from 'expo-status-bar';
 
 const Tab = createMaterialTopTabNavigator();

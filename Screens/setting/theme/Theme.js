@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
-import { styles } from '../../../css/styles';
+import { styles } from '../../../CSS/styles';
 
 const Theme = ({ navigation }) => {
 

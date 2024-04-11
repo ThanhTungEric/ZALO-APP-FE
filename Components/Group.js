@@ -23,7 +23,7 @@ function Group() {
                         <Text style={{left: 30, color: '#2F62AB'  }}>Tạo nhóm mới</Text>
                     </Pressable>
                 </View>
-                <View style={{ height: 120, backgroundColor: '#fff', marginTop: 10}}>
+                {/* <View style={{ height: 120, backgroundColor: '#fff', marginTop: 10}}>
                     <Pressable style={{ alignItems: 'center', height: 40, flexDirection:'row'}}>
                         <Text style={{left: 20, color: 'black', fontSize: 16}}>Tạo nhóm với:</Text>
                     </Pressable>
@@ -47,7 +47,7 @@ function Group() {
                             <Text style={{color: 'grey'}}>Nhóm offline</Text>
                         </View>
                     </Pressable>
-                </View>
+                </View> */}
                 <View style={{ backgroundColor: '#fff', marginTop: 10}}>
                     <Pressable style={{ alignItems: 'center', height: 30, flexDirection:'row'}}>
                         <Text style={{left: 20, color: 'black', fontSize: 15}}>Nhóm đang tham gia</Text>
