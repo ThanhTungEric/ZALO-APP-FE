@@ -32,6 +32,7 @@ import Welcome from "../Screens/login/Welcome";
 import Profile from "../Screens/me/Profile";
 import ChatBox from "../Screens/chat/Chat";
 import Options from "../Screens/chat/Options";
+import Forward from "../Screens/chat/Forward";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -130,6 +131,7 @@ const AppNavigation = () => (
             <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false}} />
             <Stack.Screen name="ChatBox" component={ChatBox} options={{ headerShown: false}} />
             <Stack.Screen name="Options" component={Options} options={{ headerShown: false}} />
+            <Stack.Screen name="Forward" component={Forward} options={{ headerShown: false}} />
         </Stack.Navigator>
     </NavigationContainer>
 );
