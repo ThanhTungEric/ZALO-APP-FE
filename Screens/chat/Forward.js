@@ -11,7 +11,9 @@ import { getFriendListRoute } from '../../router/APIRouter';
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const Forward = ({ navigation }) => {
+const Forward = ({ navigation, route }) => {
+
+    const { message } = route.params;
 
     const [numberPhone, setPhoneNumber] = useState("");
     const [data1, setData1] = useState([]);
@@ -20,7 +22,7 @@ const Forward = ({ navigation }) => {
 
     //lấy data từ local / lưu trữ thông tin người dùng đang đăng nhập
     const [user, setUser] = useState("");
-
+    console.log("message đã gửi qua", message);
     const getUser = async () => {
         try {
             const value = await AsyncStorage.getItem('userData');

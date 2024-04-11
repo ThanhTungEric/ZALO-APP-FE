@@ -26,6 +26,7 @@ const ChatBox = ({ route }) => {
     const [selectedMessage, setSelectedMessage] = useState(null);
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState(null);
+    
 
     const getMessages = async () => {
         const data = JSON.parse(await AsyncStorage.getItem('userData'));
@@ -38,7 +39,9 @@ const ChatBox = ({ route }) => {
     }
 
     useEffect(() => {
-        getMessages();
+        if (selectedChat) {
+            getMessages();
+        }
     }, [selectedChat]);
 
     useEffect(() => {
@@ -180,7 +183,9 @@ const ChatBox = ({ route }) => {
 
     const handleForwardMessage = () => {
         // Xử lý chuyển tiếp tin nhắn
+        navigation.navigate('Forward', selectedMessage);
         setIsOptionsVisible(false);
+        console.log('Chuyển tiếp tin nhắn', selectedMessage);
     };
 
     // Hàm để chọn file từ thư viện tài liệu
@@ -344,14 +349,14 @@ const ChatBox = ({ route }) => {
                 {/* Modal tùy chọn */}
                 <Modal visible={isOptionsVisible} animationType="slide" style={styles.modalContainer} transparent >
                     <View style={styles.modalContainer}>
-                        <TouchableOpacity onPress={handleDeleteMessage}>
+                        <TouchableOpacity onPress={handleDeleteMessage} style={styles.modalButton}>
                             <Text>Xóa tin nhắn</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={handleForwardMessage}>
-                            <Text>Gỡ tin nhắn</Text>
+                        <TouchableOpacity onPress={handleForwardMessage} style={styles.modalButton}>
+                            <Text>Chuyển tiếp tin nhắn</Text>
                         </TouchableOpacity>
                         {/* Thêm các tùy chọn khác tại đây */}
-                        <TouchableOpacity onPress={() => setIsOptionsVisible(false)}>
+                        <TouchableOpacity onPress={() => setIsOptionsVisible(false) } style={styles.modalButton}>
                             <Text>Đóng</Text>
                         </TouchableOpacity>
                     </View>
