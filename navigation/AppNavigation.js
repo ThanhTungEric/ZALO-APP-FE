@@ -25,8 +25,9 @@ import Forgotpw from "../Screens/login/Forgotpw"
 import FriendRequest from "../Screens/contacts/friendrequest/FriendRequest"
 import AuthenOTP from "../Screens/otp/AuthenOTP";
 import Welcome from "../Screens/login/Welcome";
-
 import Chat from "../Screens/chat/Chat"
+import Options from "../Screens/chat/Option";
+import Forward from "../Screens/chat/Forward";
 import { COLORS } from '../constrants/theme'
 
 
@@ -127,6 +128,8 @@ const AppNavigation = () => (
             <Stack.Screen name="Me" component={Me} options={{ headerShown: false }} />
             <Stack.Screen name="FriendRequest" component={FriendRequest} options={{ headerShown: false }} />
             <Stack.Screen name="ChatBox" component={Chat} options={{ headerShown: false }} />
+            <Stack.Screen name="Option" component={Options} options={{ headerShown: false }} />
+            <Stack.Screen name="Forward" component={Forward} options={{ headerShown: false }} />
         </Stack.Navigator>
     </NavigationContainer>
 );
