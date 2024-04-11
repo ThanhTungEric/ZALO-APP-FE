@@ -12,6 +12,7 @@ export const getGetAddFriendRoute = `${host}/friend/get-add-friend`;
 export const getRejectFriend =  `${host}/friend/reject-friend`;
 export const getAcceptFriendRoute = `${host}/friend/accept-friend`;
 export const getUnFriendRoute = `${host}/friend/unfriend-friend`;
+export const getFriendByNumberPhoneRoute = `${host}/user/phoneNumber`;
 
 //chat
 export const sendMessageRoute = `${host}/api/messages/addmsg`;
