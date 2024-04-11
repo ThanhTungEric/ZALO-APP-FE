@@ -5,8 +5,8 @@ import firestore from "@react-native-firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SIZES, FONTS } from '../../constrants/theme';
-import Button from '../../components/Button';
-import PageTitle from '../../components/PageContainer';
+import Button from '../../Components/Button';
+import PageTitle from '../../Components/PageContainer';
 import { AntDesign } from '@expo/vector-icons';
 
 export default function AuthenOTP() {

@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image, Pressable } from 'react-native';
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
-import PageContainer from '../../components/PageContainer';
+import PageContainer from '../../Components/PageContainer';
 import { COLORS, FONTS } from '../../constrants/theme'
 import { AntDesign, MaterialIcons, MaterialCommunityIcons, Ionicons, Entypo, FontAwesome, Feather,Octicons } from '@expo/vector-icons'
 

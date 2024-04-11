@@ -5,7 +5,7 @@ import { AntDesign, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@exp
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import PageContainer from '../../components/PageContainer'
+import PageContainer from '../../Components/PageContainer'
 import { COLORS, FONTS } from '../../constrants/theme'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'

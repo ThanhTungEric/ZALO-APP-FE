@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { AntDesign, Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-import PageContainer from '../../components/PageContainer'
+import PageContainer from '../../Components/PageContainer'
 import { COLORS, FONTS } from '../../constrants/theme'
 
 //API router

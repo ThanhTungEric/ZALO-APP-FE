@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, View, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import React, { useState,useEffect } from "react";
-import { styles } from "../../../css/styles";
+import { styles } from "../../../CSS/styles";
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
