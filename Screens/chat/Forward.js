@@ -2,27 +2,45 @@ import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image } from 'reac
 import React, { useState, useEffect } from 'react'
 import { AntDesign, Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
-
 import PageContainer from '../../Components/PageContainer'
 import { COLORS, FONTS } from '../../constrants/theme'
+import axios from 'axios'
 
 //API router
-import { getFriendListRoute } from '../../router/APIRouter';
+import { getFriendListRoute, sendMessageRoute } from '../../router/APIRouter';
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Forward = ({ navigation, route }) => {
 
-    const { message } = route.params;
+    const { message} = route.params;
 
     const [numberPhone, setPhoneNumber] = useState("");
     const [data1, setData1] = useState([]);
 
     const [userData, setUserData] = useState('');
-
-    //lấy data từ local / lưu trữ thông tin người dùng đang đăng nhập
-    const [user, setUser] = useState("");
     console.log("message đã gửi qua", message);
+
+    const handleSendMsg = async (message, userSelected) => {
+        try {
+            const response = await axios.post(sendMessageRoute, {
+                from: userData._id,
+                to: userSelected._id,
+                message: message,
+            });
+            if (response.status === 200) {
+                console.log("Gửi tin nhắn thành công", response.data);
+                navigation.navigate('ChatBox', { selectedChat: userSelected });
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
+    const sendChat = (userSelected) => {
+        handleSendMsg(message, userSelected)
+    }
+
     const getUser = async () => {
         try {
             const value = await AsyncStorage.getItem('userData');
@@ -105,14 +123,14 @@ const Forward = ({ navigation, route }) => {
                         />
                     </View>
                     <View>
-                        <Text  style={{ ...FONTS.h4, marginVertical: 6, marginLeft: 15 }}>Gửi tới</Text>
+                        <Text style={{ ...FONTS.h4, marginVertical: 6, marginLeft: 15 }}>Gửi tới</Text>
                     </View>
                     <View style={{ paddingBottom: 100, backgroundColor: '#fff', marginTop: 10 }}>
                         {data1.map((item, index) => (
                             <View key={index} >
                                 {item.friendInfo && (
                                     <>
-                                        <TouchableOpacity
+                                        <View
                                             key={index}
                                             // onPress={() =>
                                             //     navigation.navigate('Chat')
@@ -145,11 +163,15 @@ const Forward = ({ navigation, route }) => {
                                                     {item.friendInfo.fullName}
                                                 </Text>
                                             </View>
-                                            <View style={{ marginLeft: 'auto', width: 80, height: 35, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 30 }}>
+                                            <TouchableOpacity
+                                                style={{ width: 80, height: 35, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 30 }}
+                                                onPress={() => sendChat(item.friendInfo)}
+                                            >
                                                 <Text>Gửi</Text>
-                                            </View>
+                                            </TouchableOpacity>
 
-                                        </TouchableOpacity>
+
+                                        </View>
                                     </>
                                 )}
                             </View>
