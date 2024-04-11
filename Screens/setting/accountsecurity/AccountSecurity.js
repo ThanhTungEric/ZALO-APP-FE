@@ -1,7 +1,7 @@
 import { Pressable, Text, View, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import React, { useState } from "react";
-import { styles } from "../../../css/styles"
+import { styles } from "../../../CSS/styles"
 
 const AccountSecurity = ({ navigation }) => {
   const [Toggle, setToggle] = useState(false);
