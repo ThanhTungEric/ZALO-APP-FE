@@ -2,22 +2,23 @@ import { View, Text, TouchableOpacity, TextInput, StyleSheet, Pressable, Image, 
 import React, { useState, useEffect, useRef } from 'react'
 import { AntDesign, Ionicons, MaterialIcons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
-
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import PageContainer from '../../Components/PageContainer'
 import { COLORS, FONTS } from '../../constrants/theme'
 
 //API router
-import { getFriendListRoute } from '../../router/APIRouter';
 import { getFriendByNumberPhoneRoute } from '../../router/APIRouter';
 import PopupFriend from './PopupFriend';
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import Friend from './Friend';
+import Group from './Group';
+const Tab = createMaterialTopTabNavigator();
+
 const Contacts = ({ navigation }) => {
 
     const [numberPhone, setPhoneNumber] = useState("");
-    const [data1, setData1] = useState([]);
-
     const [userData, setUserData] = useState('');
 
     //popup
@@ -47,7 +48,7 @@ const Contacts = ({ navigation }) => {
         getUser();
     }, []);
     //lấy data từ local 
-    
+
     /////// gửi lời mời kết bạn
     const getFriendByNumberPhone = async () => {
         try {
@@ -73,30 +74,6 @@ const Contacts = ({ navigation }) => {
     const handleSearch = () => {
         getFriendByNumberPhone();
     };
-
-    /////////////// lấy danh sách bạn bè
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${getFriendListRoute}/${userData._id}`, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                const data = await response.json();
-                setData1(data);
-                console.log("Danh sách bạn bè", data)
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-
-        fetchData();
-    }, [userData._id]);
 
     return (
         <SafeAreaView>
@@ -142,49 +119,29 @@ const Contacts = ({ navigation }) => {
                             <Text style={styles.textHeader}>Lời mời kết bạn</Text>
                         </Pressable>
                     </View>
-                    <View style={{ paddingBottom: 100, backgroundColor: '#fff', marginTop: 10 }}>
-                        {data1.map((item, index) => (
-                            <View key={index} >
-                                {item.friendInfo && (
-                                    <>
-                                        <TouchableOpacity
-                                            key={index}
-                                            // onPress={() =>
-                                            //     navigation.navigate('Chat')
-                                            // }
-                                            style={[
-                                                {
-                                                    width: '100%',
-                                                    flexDirection: 'row',
-                                                    alignItems: 'center',
-                                                    paddingHorizontal: 22,
-                                                    borderBottomColor: COLORS.secondaryWhite,
-                                                    borderBottomWidth: 1,
-                                                },
-                                                index % 2 !== 0
-                                                    ? {
-                                                        backgroundColor: COLORS.tertiaryWhite,
-                                                    }
-                                                    : null,
-                                            ]}
-                                        >
-                                            <View style={{ paddingVertical: 15, marginRight: 22, }}>
-                                                <Image
-                                                    source={{ uri: item.friendInfo.avatar }}
-                                                    resizeMode="contain"
-                                                    style={{ height: 50, width: 50, borderRadius: 25, }}
-                                                />
-                                            </View>
-                                            <View style={{ flexDirection: 'column', }}>
-                                                <Text style={{ ...FONTS.h4, marginBottom: 4 }}>
-                                                    {item.friendInfo.fullName}
-                                                </Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                    </>
-                                )}
+                    <View style={{ backgroundColor: '#fff' }}>
+                        <Pressable style={styles.header}
+                            onPress={() => navigation.navigate('CreateGroup')}>
+                            <View style={styles.viewHeader}>
+                                <MaterialIcons name="group-add" size={24} color="white" />
                             </View>
-                        ))}
+                            <Text style={styles.textHeader}>Tạo nhóm mới</Text>
+                        </Pressable>
+                    </View>
+                    <View style={{
+                        alignItems: 'center',
+                        height: 900,
+                        flexDirection: 'row',
+                    }}>
+                        <Tab.Navigator initialRouteName="Bạn bè"
+                            screenOptions={{
+                                tabBarLabelStyle: { textTransform: 'none' },
+                                tabBarActiveTintColor: '#574E92',
+                                tabBarInactiveTintColor: 'grey',
+                            }}>
+                            <Tab.Screen name="Bạn bè" component={Friend} />
+                            <Tab.Screen name="Nhóm" component={Group} />
+                        </Tab.Navigator>
                     </View>
                 </View>
             </PageContainer>

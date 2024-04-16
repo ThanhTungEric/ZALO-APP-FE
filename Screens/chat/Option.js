@@ -94,9 +94,9 @@ const Options = () => {
         console.log("Xóa lịch sử trò chuyện");
     };
 
-    const handleForwardMessages = () => {
-        navigation.navigate('Forward');
-    }
+    // const handleForwardMessages = () => {
+    //     navigation.navigate('Forward');
+    // }
     //////////////////
 
     return (
@@ -150,10 +150,6 @@ const Options = () => {
                 <TouchableOpacity onPress={handleClearChatHistory} style={styles.option2}>
                     <MaterialIcons name="delete" size={24} color="#574E92" />
                     <Text style={styles.optionText}>Xóa lịch sử trò chuyện</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleForwardMessages} style={styles.option2}>
-                    <MaterialIcons name="delete" size={24} color="#574E92" />
-                    <Text style={styles.optionText}>Chuyển tiếp tin nhắn</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.option2}
                     onPress={() => handleUnFriend({ userId1: user._id, userId2: selectedChat._id })}

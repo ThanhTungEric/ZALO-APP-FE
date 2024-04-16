@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, Image, Alert} from 'react-native';
 import React, { useState } from "react";
 import { login } from '../../router/APIRouter';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -27,9 +27,14 @@ const Login = ({ navigation, route }) => {
 
     const handleLogin = async (e) => {
         const data = {
-            phoneNumber: phoneNumber,
-            password: password
+            phoneNumber: '0339955555',
+            password: 'sangvo123@'
         };
+        
+        if (phoneNumber === '' || password === '' ) {
+            Alert.alert('Vui lòng nhập đầy đủ thông tin');
+            return;
+        }
 
         try {
             const response = await fetch(`${login}`, {
@@ -44,8 +49,12 @@ const Login = ({ navigation, route }) => {
                 console.log(userData);
                 await AsyncStorage.setItem('userData', JSON.stringify(userData));
                 navigation.navigate('Home');
-            } else {
-                console.error('Login failed');
+            } else if(response.status===405){
+                Alert.alert('Số điện thoại không tồn tại');
+                return;
+            } else if(response.status===404){
+                Alert.alert('Mật khẩu không đúng');
+                return;
             }
         } catch (error) {
             console.error('Error:', error);
@@ -72,7 +81,7 @@ const Login = ({ navigation, route }) => {
                     </TouchableOpacity>
                 </View>
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-                    <Image source={require('../../assets/cota.png')} style={{ width: 200, height: 200, borderRadius: 100 }} />
+                    <Image source={require('../../assets/cota.png')} style={{ width: 300, height: 300, borderRadius: 150 }} />
                 </View>
             </SafeAreaView>
             <View style={{ flex: 2, backgroundColor: 'white', paddingHorizontal: 8, paddingTop: 8, borderTopLeftRadius: 50, borderTopRightRadius: 50 }}>
@@ -94,7 +103,7 @@ const Login = ({ navigation, route }) => {
                             value={password}
                         />
                         <TouchableOpacity onPress={handleHidePass} style={{ padding: 16, color: '#4B5563' }}>
-                            <Image source={hidePass ? require('../../assets/hide.png') : require('../../assets/eye.png')} style={{ width: 20, height: 20, backgroundColor: 'grey' }} />
+                            <Image source={hidePass ? require('../../assets/hide.png') : require('../../assets/eye.png')} style={{ width: 20, height: 20 }} />
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity style={{ alignItems: 'flex-end', marginBottom: 20, marginTop: 10 }}
@@ -107,21 +116,10 @@ const Login = ({ navigation, route }) => {
                     </TouchableOpacity>
                 </View>
                 <Text style={{ fontSize: 20, color: '#4B5563', fontWeight: 'bold', textAlign: 'center', marginTop: 20 }}>Hoặc</Text>
-                {/* <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 12 }}>
-                    <TouchableOpacity style={{ padding: 8, backgroundColor: '#E5E7EB', borderRadius: 20 }}>
-                        <Image source={require('../../assets/google.png')} style={{ width: 40, height: 40 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ padding: 8, backgroundColor: '#E5E7EB', borderRadius: 20 }}>
-                        <Image source={require('../../assets/apple.png')} style={{ width: 40, height: 40 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ padding: 8, backgroundColor: '#E5E7EB', borderRadius: 20 }}>
-                        <Image source={require('../../assets/facebook.png')} style={{ width: 40, height: 40 }} />
-                    </TouchableOpacity>
-                </View> */}
                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 50 }}>
                     <Text style={{ color: '#4B5563', fontWeight: '600' }}>Bạn chưa có tài khoản?</Text>
                     <TouchableOpacity onPress={() => navigation.navigate('AuthenOTP')}>
-                        <Text style={{ fontWeight: '600', color: '#FFEA00' }}> Đăng ký</Text>
+                        <Text style={{ fontWeight: '600', color: 'purple' }}> Đăng ký</Text>
                     </TouchableOpacity>
                 </View>
             </View>

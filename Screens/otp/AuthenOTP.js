@@ -6,11 +6,11 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SIZES, FONTS } from '../../constrants/theme';
 import Button from '../../Components/Button';
-import PageTitle from '../../Components/PageTitle';
-import {AntDesign} from '@expo/vector-icons';
+import PageTitle from '../../Components/PageContainer';
+import { AntDesign } from '@expo/vector-icons';
 
 export default function AuthenOTP() {
-    const [phoneNumber, setPhoneNumber] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState('+84 ');
     const [code, setCode] = useState("");
     const [confirm, setConfirm] = useState(null);
     const phoneInput = useRef(null);
@@ -20,6 +20,7 @@ export default function AuthenOTP() {
     const [areas, setAreas] = useState([])
     const [selectedArea, setSelectedArea] = useState(null)
     const [modalVisible, setModalVisible] = useState(false)
+
 
     const signInWithPhoneNumber = async () => {
         try {
@@ -63,7 +64,6 @@ export default function AuthenOTP() {
                     return {
                         code: item.alpha2Code,
                         item: item.name,
-                        callingCode: `+${item.callingCodes[0]}`,
                         flag: `https://flagsapi.com/${item.alpha2Code}/flat/64.png`,
                     }
                 })
@@ -105,7 +105,7 @@ export default function AuthenOTP() {
                                 keyExtractor={(item) => item.code}
                                 verticalScrollIndicator={false}
                                 style={{
-                                    padding: 20,
+                                    padding: 30,
                                     marginBottom: 20,
                                 }}
                             />
@@ -129,7 +129,7 @@ export default function AuthenOTP() {
                             <Text style={{ ...FONTS.h2, color: COLORS.white, marginTop: 80 }}>Nhập số điện thoại của bạn</Text>
                             <View style={{ width: '100%', paddingHorizontal: 22, paddingVertical: 60, }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 88, }}>
-                                    <TouchableOpacity style={{ width: 100, height: 48, marginHorizontal: 5, borderRadius: SIZES.padding, borderColor: COLORS.secondaryWhite, borderWidth: 1, backgroundColor: COLORS.secondaryWhite, flexDirection: 'row', fontSize: 12, }}
+                                    <TouchableOpacity style={{ width: 45, height: 48, marginHorizontal: 5, borderRadius: SIZES.padding, borderColor: COLORS.secondaryWhite, borderWidth: 1, backgroundColor: COLORS.secondaryWhite, flexDirection: 'row', fontSize: 12, }}
                                         onPress={() => setModalVisible(true)}
                                     >
                                         <View style={{ justifyContent: 'center', marginLeft: 5 }}>
@@ -161,6 +161,7 @@ export default function AuthenOTP() {
                                         onChangeText={setPhoneNumber}
                                         placeholderTextColor="#111"
                                         selectionColor="#111"
+                                        keyboardType="phone-pad"
                                     />
                                 </View>
                                 <Button
@@ -178,8 +179,8 @@ export default function AuthenOTP() {
                         <>
                             <Text style={{ ...FONTS.h2, marginTop: 48, marginBottom: 22 }}>Nhập mã OTP</Text>
                             <Text style={{ ...FONTS.body3, textAlign: 'center' }}>Chúng tôi đã gửi cho bạn một tin nhắn SMS chứa mã</Text>
-                            <TextInput style={{ height: 50, width: "12%", borderColor: "black", borderWidth: 1, marginBottom: 30, paddingHorizontal: 10, borderRadius: 20, }}
-                                placeholder="Enter code"
+                            <TextInput style={{ height: 50, width: "30%", borderColor: "black", borderWidth: 1, marginBottom: 30, paddingHorizontal: 10, borderRadius: 20, }}
+                                placeholder="Nhập mã"
                                 value={code}
                                 onChangeText={setCode} />
                             <Button
@@ -200,4 +201,3 @@ export default function AuthenOTP() {
         </SafeAreaView>
     )
 }
-

@@ -98,7 +98,7 @@ const Signup = ({ navigation }) => {
                             onChangeText={(text) => setPassword(text)}
                         />
                         <TouchableOpacity onPress={handleHidePass} style={{ padding: 16, color: '#4B5563' }}>
-                            <Image source={hidePass ? require('../../assets/hide.png') : require('../../assets/eye.png')} style={{ width: 20, height: 20, backgroundColor: 'grey' }} />
+                            <Image source={hidePass ? require('../../assets/hide.png') : require('../../assets/eye.png')} style={{ width: 20, height: 20}} />
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity style={{ paddingVertical: 12, backgroundColor: '#FFEA00', borderRadius: 20, marginTop: 20 }}  onPress={handleSignup}>

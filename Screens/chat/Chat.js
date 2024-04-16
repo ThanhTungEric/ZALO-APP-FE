@@ -1,16 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, FlatList, Platform, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, Platform, Image } from 'react-native';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'; // Import các icon cần sử dụng
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'; // Import icon AntDesign
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native'; // Hook để sử dụng các hàm điều hướng của React Navigation
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { sendMessageRoute, recieveMessageRoute, uploadImageRoute, deleteMessageRoute } from '../../router/APIRouter';
 import axios from 'axios';
 import * as ImagePicker from 'expo-image-picker';
-import { set } from 'firebase/database';
+// import { set } from 'firebase/database';
+// import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
 import { COLORS, FONTS } from '../../constrants/theme';
-import * as FileSystem from 'expo-file-system';
+
 
 const ChatBox = ({ route }) => {
     const { selectedChat, socket } = route.params;
@@ -26,7 +27,7 @@ const ChatBox = ({ route }) => {
     const [selectedMessage, setSelectedMessage] = useState(null);
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState(null);
-    
+
 
     const getMessages = async () => {
         const data = JSON.parse(await AsyncStorage.getItem('userData'));
@@ -268,18 +269,21 @@ const ChatBox = ({ route }) => {
     }, [])
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={{ flex: 1, color: COLORS.secondaryWhite }}>
             {/* Header */}
-            <View style={{ width: '100%', height: 70, paddingTop: 25, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <TouchableOpacity style={{ marginLeft: 10 }}>
-                    <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()} />
-                </TouchableOpacity>
-                <Text style={{ fontWeight: '600', color: 'white', fontSize: 18 }}>{selectedChat.fullName}</Text>
-                <MaterialCommunityIcons name="playlist-check" size={20} color={COLORS.white} style={{ marginLeft: 12, }} 
-                   onPress={handleNavigateToOptions}
-                />
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22,  backgroundColor: COLORS.white, height: 60,}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center',}}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black}/>
+                    </TouchableOpacity>
+                    <Text style={{ ...FONTS.h4, marginLeft: 8 }}>{selectedChat.fullName}</Text>
+                </View>
+                <View style={{flexDirection: 'row',alignItems: 'center',}}>
+                    <TouchableOpacity  onPress={handleNavigateToOptions} style={{marginRight: 8}}>
+                        <MaterialIcons name="menu" size={24}color={COLORS.black}/>
+                    </TouchableOpacity>
+                </View>
             </View>
-
             {/* ScrollView cho nội dung tin nhắn */}
             <ScrollView
                 ref={scrollViewRef}
@@ -356,14 +360,14 @@ const ChatBox = ({ route }) => {
                             <Text>Chuyển tiếp tin nhắn</Text>
                         </TouchableOpacity>
                         {/* Thêm các tùy chọn khác tại đây */}
-                        <TouchableOpacity onPress={() => setIsOptionsVisible(false) } style={styles.modalButton}>
+                        <TouchableOpacity onPress={() => setIsOptionsVisible(false)} style={styles.modalButton}>
                             <Text>Đóng</Text>
                         </TouchableOpacity>
                     </View>
                 </Modal>
 
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 export default ChatBox;

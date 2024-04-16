@@ -1,194 +1,89 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, FlatList, Platform, Image } from 'react-native';
-import { MaterialIcons, FontAwesome } from '@expo/vector-icons'; // Import các icon cần sử dụng
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'; // Import icon AntDesign
-import { useNavigation } from '@react-navigation/native'; // Hook để sử dụng các hàm điều hướng của React Navigation
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { sendMessageRoute, recieveMessageRoute, uploadImageRoute, deleteMessageRoute } from '../../router/APIRouter';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, Platform, Image, SafeAreaView } from 'react-native';
 import axios from 'axios';
-import * as ImagePicker from 'expo-image-picker';
-import { set } from 'firebase/database';
-import * as DocumentPicker from 'expo-document-picker';
 import { COLORS, FONTS } from '../../constrants/theme';
-import * as FileSystem from 'expo-file-system';
+import { getMessagesGroup } from '../../router/APIRouter';
+import { MaterialIcons, FontAwesome } from '@expo/vector-icons'; // Import các icon cần sử dụng
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { sendMessageGroup } from '../../router/APIRouter';
+import * as DocumentPicker from 'expo-document-picker';
+import * as ImagePicker from 'expo-image-picker';
 
 const ChatGroup = ({ route }) => {
-    const { selectedChat, socket } = route.params;
-    const navigation = useNavigation();
+    const { group } = route.params;
     const [messages, setMessages] = useState([]);
+    const scrollViewRef = React.useRef();
     const [msg, setMsg] = useState('');
-    const scrollViewRef = useRef();
-    const scrollRef = useRef();
-    const screenWidth = Dimensions.get('window').width;
-    const [arrivalMessage, setArrivalMessage] = useState(null);
-    const [image, setImage] = useState(null);
-    const [isOptionsVisible, setIsOptionsVisible] = useState(false);
-    const [selectedMessage, setSelectedMessage] = useState(null);
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState(null);
-    
+    const [image, setImage] = useState(null);
+    const [isOptionsVisible, setIsOptionsVisible] = useState(false);
 
-    const getMessages = async () => {
-        const data = JSON.parse(await AsyncStorage.getItem('userData'));
-        const reponse = await axios.post(recieveMessageRoute, {
-            from: data._id,
-            to: selectedChat._id
-        });
-        setMessages(reponse.data);
-        console.log("day la tin nhan", reponse.data)
-    }
+    console.log('group', group);
+
 
     useEffect(() => {
-        if (selectedChat) {
-            getMessages();
-        }
-    }, [selectedChat]);
-
-    useEffect(() => {
-        const getCurrentChat = async () => {
-            if (selectedChat) {
-                await JSON.parse(await AsyncStorage.getItem('userData'))._id;
+        const fetchMessages = async () => {
+            try {
+                const messagesData = await getMessages(group._id);
+                setMessages(messagesData);
+            } catch (error) {
+                console.error('Error fetching messages:', error);
+                console.log('group', group._id)
             }
-        }
-        getCurrentChat();
-    }, [selectedChat]);
+        };
 
-    const handleSendMsg = async msg => {
-        const data = JSON.parse(await AsyncStorage.getItem('userData'));
-        socket.current.emit("send-msg", {
-            to: selectedChat._id,
-            from: data._id,
-            msg,
-        });
-        await axios.post(sendMessageRoute, {
-            from: data._id,
-            to: selectedChat._id,
-            message: msg,
-        });
-
-        const msgs = [...messages];
-        msgs.push({ fromSelf: true, message: msg });
-        setMessages(msgs);
-    };
+        fetchMessages();
+    }, [group._id]);
 
     const sendChat = async (message) => {
-        if (image) {
-            sendImage();
-            setMsg('');
-        } else if (file) {
-            sendFile();
-            setMsg('');
-            setFile(null);
-        }
-        else if (message) {
+        if (message) {
             handleSendMsg(message);
             setMsg('');
             console.log('message', message);
         }
     }
 
-    useEffect(() => {
-        if (socket.current) {
-            socket.current.on("msg-recieve", (msg) => {
-                setArrivalMessage({ fromSelf: false, message: msg });
-            });
-        }
-    }, []);
-
-    useEffect(() => {
-        arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
-    }, [arrivalMessage]);
-
-    useEffect(() => {
-        scrollViewRef.current?.scrollToEnd({ animated: true });
-    }, [messages]);
-
-    const handleNavigateToOptions = () => {
-        // Điều hướng đến màn hình option
-        navigation.navigate('Option', { selectedChat: selectedChat });
-    };
-
-    useEffect(() => {
-        (async () => {
-            if (Platform.OS !== 'web') {
-                const libraryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
-                if (libraryStatus.status !== 'granted') {
-                    alert('Sorry, we need camera roll permissions to make this work!');
-                }
-
-                const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
-                if (cameraStatus.status !== 'granted') {
-                    alert('Sorry, we need camera permissions to make this work!');
-                }
-            }
-        })();
-    }, []);
-
-    const pickImage = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: false,
-            quality: 1,
-        });
-
-        if (!result.canceled) {
-            setImage(result.assets[0].uri);
-            console.log(result.assets[0].uri);
-        }
-    };
-    //api get only uri of image
-    const sendImage = async () => {
+    const handleSendMsg = async (message) => {
+        const data = JSON.parse(await AsyncStorage.getItem('userData'));
         try {
-            const formData = new FormData();
-            let fileType = 'image/jpeg';
-
-            if (image.endsWith('.png')) {
-                fileType = 'image/png';
-            }
-            formData.append('file', {
-                uri: image,
-                type: fileType,
-                name: 'image.' + (fileType === 'image/jpeg' ? 'jpg' : 'png'),
+            const response = await axios.post(sendMessageGroup, {
+                groupId: group._id,
+                message,
+                sender: data._id,
             });
-
-            const response = await axios.post(uploadImageRoute, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            console.log('file uploaded', response.data);
-            const imageUrl = response.data;
-
-            await handleSendMsg(imageUrl);
-            setImage(null);
+            console.log('response', response.data);
+            setMessages([...messages, {
+                _id: response.data._id,
+                text: message,
+                fromSelf: true,
+                sender: data._id,
+            }]);
         } catch (error) {
-            console.log('error upload image', error);
+            console.error('Error sending message:', error);
         }
     };
 
-    // Hàm xử lý khi nhấn giữ tin nhắn
-    const handleLongPress = (message) => {
-        setSelectedMessage(message);
-        console.log('Tin nhắn đã được chọn', message);
-        setTimeout(() => {
-            setIsOptionsVisible(true);
-        }, 1000);
+
+    const getMessages = async (groupId) => {
+        const data = JSON.parse(await AsyncStorage.getItem('userData'));
+        try {
+            const response = await axios.post(getMessagesGroup, { groupId });
+            // Dựa vào cấu trúc dữ liệu mới từ API, bạn cần trích xuất thông tin tin nhắn từ response.data.messages
+            const formattedMessages = response.data.messages.map(msg => ({
+                _id: msg._id,
+                text: msg.message,
+                fromSelf: msg.sender === data._id, // Cần có userId từ người dùng đã đăng nhập để so sánh
+                sender: msg.sender,
+            }));
+            return formattedMessages;
+
+        } catch (error) {
+            console.error('Error getting messages:', error);
+            return [];
+        }
     };
 
-    const handleDeleteMessage = () => {
-        deleteMessageById(selectedMessage._id);
-        setIsOptionsVisible(false);
-        setSelectedMessage(null);
-    };
-
-    const handleForwardMessage = () => {
-        // Xử lý chuyển tiếp tin nhắn
-        navigation.navigate('Forward', selectedMessage);
-        setIsOptionsVisible(false);
-        console.log('Chuyển tiếp tin nhắn', selectedMessage);
-    };
-
-    // Hàm để chọn file từ thư viện tài liệu
     const pickDocument = async () => {
         try {
             const result = await DocumentPicker.getDocumentAsync();
@@ -205,82 +100,33 @@ const ChatGroup = ({ route }) => {
         }
     };
 
-    // send file
-    const sendFile = async () => {
-        try {
-            const formData = new FormData();
-            let fileType = '';
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: false,
+            quality: 1,
+        });
 
-            if (file.endsWith('.pdf')) {
-                fileType = 'application/pdf';
-            } else if (file.endsWith('.docx')) {
-                fileType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
-            } else if (file.endsWith('.txt')) {
-                fileType = 'text/plain';
-            }
-
-            formData.append('file', {
-                uri: file,
-                type: fileType,
-                name: file.split('/').pop(),
-            });
-
-            const response = await axios.post(uploadImageRoute, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            console.log('file uploaded', response.data);
-            const fileUrl = response.data;
-
-            await handleSendMsg(fileUrl);
-            setFile(null);
-        } catch (error) {
-            console.log('error upload file', error);
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
+            console.log(result.assets[0].uri);
         }
     };
 
-
-    const deleteMessageById = async messageId => {
-        socket.current.emit('delete-msg', { messageId })
-        const url = `${deleteMessageRoute}/${messageId}`
-        try {
-            const response = await axios.delete(url, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            console.log('Tin nhắn đã được xóa thành công', response.data)
-        } catch (error) {
-            console.error('Lỗi khi xóa tin nhắn:', error.message)
-        }
-    }
-    useEffect(() => {
-        if (socket.current) {
-            socket.current.on('msg-delete', data => {
-                const { messageId } = data
-                setMessages(prevMessages =>
-                    prevMessages.filter(message => message._id !== messageId)
-                )
-                console.log('Đã xóa tin nhắn từ danh sách hiển thị')
-            })
-        }
-    }, [])
+    // Hàm xử lý khi nhấn giữ tin nhắn
+    const handleLongPress = (message) => {
+        setSelectedMessage(message);
+        console.log('Tin nhắn đã được chọn', message);
+        setTimeout(() => {
+            setIsOptionsVisible(true);
+        }, 1000);
+    };
 
     return (
-        <View style={styles.container}>
-            {/* Header */}
-            <View style={{ width: '100%', height: 70, paddingTop: 25, backgroundColor: "#574E92", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <TouchableOpacity style={{ marginLeft: 10 }}>
-                    <AntDesign name="arrowleft" size={24} color="white" onPress={() => navigation.goBack()} />
-                </TouchableOpacity>
-                <Text style={{ fontWeight: '600', color: 'white', fontSize: 18 }}>{selectedChat.fullName}</Text>
-                <MaterialCommunityIcons name="playlist-check" size={20} color={COLORS.white} style={{ marginLeft: 12, }} 
-                   onPress={handleNavigateToOptions}
-                />
+        <SafeAreaView style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>{group.groupName}</Text>
             </View>
-
-            {/* ScrollView cho nội dung tin nhắn */}
             <ScrollView
                 ref={scrollViewRef}
                 style={styles.scrollView}
@@ -342,36 +188,59 @@ const ChatGroup = ({ route }) => {
                     <FontAwesome name="file" size={24} color="#574E92" />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => sendChat(msg)} style={styles.sendButton}>
+                <TouchableOpacity
+                    onPress={() => sendChat(msg)}
+                    style={styles.sendButton}>
                     <Text style={{ color: 'white' }}>Gửi</Text>
                 </TouchableOpacity>
 
                 {/* Modal tùy chọn */}
                 <Modal visible={isOptionsVisible} animationType="slide" style={styles.modalContainer} transparent >
                     <View style={styles.modalContainer}>
-                        <TouchableOpacity onPress={handleDeleteMessage} style={styles.modalButton}>
+                        <TouchableOpacity 
+                        //onPress={handleDeleteMessage} 
+                        style={styles.modalButton}>
                             <Text>Xóa tin nhắn</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={handleForwardMessage} style={styles.modalButton}>
+                        <TouchableOpacity 
+                        //onPress={handleForwardMessage} 
+                        style={styles.modalButton}>
                             <Text>Chuyển tiếp tin nhắn</Text>
                         </TouchableOpacity>
                         {/* Thêm các tùy chọn khác tại đây */}
-                        <TouchableOpacity onPress={() => setIsOptionsVisible(false) } style={styles.modalButton}>
+                        <TouchableOpacity onPress={() => setIsOptionsVisible(false)} style={styles.modalButton}>
                             <Text>Đóng</Text>
                         </TouchableOpacity>
                     </View>
                 </Modal>
 
             </View>
-        </View>
-    )
-}
-export default ChatGroup;
+        </SafeAreaView>
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: COLORS.secondaryWhite,
+    },
+    header: {
+        backgroundColor: COLORS.white,
+        padding: 10,
+        elevation: 4,
+    },
+    headerText: {
+        ...FONTS.h4,
+    },
+    messageContainer: {
+        flex: 1,
+        padding: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    emptyMessageText: {
+        ...FONTS.body3,
+        color: COLORS.gray,
     },
     scrollView: {
         flex: 1,
@@ -446,3 +315,5 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
 });
+
+export default ChatGroup;

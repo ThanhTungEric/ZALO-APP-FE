@@ -2,7 +2,7 @@ import React from "react";
 import { Pressable, StyleSheet, Text, View, ScrollView } from "react-native";
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
-import { styles } from '../../../CSS/styles';
+import { styles } from "../../../CSS/styles";
 
 const About = ({ navigation }) => {
     return (
