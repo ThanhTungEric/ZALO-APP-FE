@@ -1,4 +1,4 @@
-export const host = "http://192.168.1.6:8080";
+export const host = "http://192.168.137.3:8080";
 export const login = `${host}/user/login`;
 export const register = `${host}/user/`;
 export const forgotPassword = `${host}/user/forgotPassword`;
@@ -22,6 +22,8 @@ export const recallMessageRoute = `${host}/api/messages/recallmsg`;
 //upload file
 export const uploadImageRoute = `${host}/api/upload/file`;
 
+//group
+export const findAllgroupRoute = `${host}/group/member`;
 
 
 
