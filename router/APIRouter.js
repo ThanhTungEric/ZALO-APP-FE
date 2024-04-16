@@ -1,4 +1,4 @@
-export const host = "http://192.168.1.20:8080";
+export const host = "http://192.168.1.16:8080";
 export const login = `${host}/user/login`;
 export const register = `${host}/user/`;
 export const forgotPassword = `${host}/user/forgotPassword`;
@@ -14,6 +14,9 @@ export const getAcceptFriendRoute = `${host}/friend/accept-friend`;
 export const getUnFriendRoute = `${host}/friend/unfriend-friend`;
 export const getFriendByNumberPhoneRoute = `${host}/user/phoneNumber`;
 
+//group
+export const getCreateGroup = `${host}/api/group/create-group`;
+export const getAllGroup = `${host}/api/group/all`
 //chat
 export const sendMessageRoute = `${host}/api/messages/addmsg`;
 export const recieveMessageRoute = `${host}/api/messages/getmsg`;

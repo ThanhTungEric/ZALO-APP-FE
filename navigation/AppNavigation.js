@@ -29,6 +29,7 @@ import Chat from "../Screens/chat/Chat"
 import Options from "../Screens/chat/Option";
 import Forward from "../Screens/chat/Forward";
 import { COLORS } from '../constrants/theme'
+import CreateGroup from "../Screens/contacts/group/CreateGroup";
 
 
 const Stack = createNativeStackNavigator();
@@ -130,6 +131,7 @@ const AppNavigation = () => (
             <Stack.Screen name="ChatBox" component={Chat} options={{ headerShown: false }} />
             <Stack.Screen name="Option" component={Options} options={{ headerShown: false }} />
             <Stack.Screen name="Forward" component={Forward} options={{ headerShown: false }} />
+            <Stack.Screen name="CreateGroup" component={CreateGroup} options={{ headerShown: false }} />
         </Stack.Navigator>
     </NavigationContainer>
 );
