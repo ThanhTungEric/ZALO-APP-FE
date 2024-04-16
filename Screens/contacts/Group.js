@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Pressable, Image, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { getAllGroup } from '../../router/APIRouter'
+import { getAllGroup, host } from '../../router/APIRouter'
 import { COLORS, FONTS } from '../../constrants/theme'
 import PageContainer from '../../Components/PageContainer';
 import { useNavigation } from '@react-navigation/native';
-
+import { io } from "socket.io-client";
 const Group = () => {
     const navigator = useNavigation();
-
+    const socket = useRef();
     const [userData, setUserData] = useState('');
 
     // State để lưu danh sách nhóm
@@ -25,6 +25,12 @@ const Group = () => {
             console.error(error);
         }
     }
+    useEffect(() => {
+        if (userData) {
+          socket.current = io(host);
+          socket.current.emit('add-user', userData._id);
+        }
+      }, [userData]);
 
     const getAllGroups = async () => {
         try {
@@ -58,7 +64,7 @@ const Group = () => {
                 {groups.map((group, index) => (
                     <TouchableOpacity
                         key={index}
-                        onPress={() => navigator.navigate('ChatGroup', { group })}
+                        onPress={() => navigator.navigate('ChatGroup', { group, socket})}
                         style={[
                             { width: '100%', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 22, borderBottomColor: COLORS.secondaryWhite, borderBottomWidth: 1, },
                             index % 2 !== 0
