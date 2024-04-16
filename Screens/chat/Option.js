@@ -84,6 +84,11 @@ const Options = () => {
         navigation.navigate('ViewGroup');
     };
 
+    const handleNavigateToViewMember = () => {
+        // Điều hướng đến màn hình xem thành viên
+        navigation.navigate('ViewMember');
+    };
+
     const handleBlockChat = () => {
         // Xử lý chặn trò chuyện ở đây
         console.log("Chặn trò chuyện");
@@ -142,6 +147,10 @@ const Options = () => {
                 <TouchableOpacity onPress={handleNavigateToViewGroup} style={styles.option2}>
                     <MaterialIcons name="group" size={24} color="#574E92" />
                     <Text style={styles.optionText}>Xem nhóm chung</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={handleNavigateToViewMember} style={styles.option2}>
+                    <MaterialIcons name="group" size={24} color="#574E92" />
+                    <Text style={styles.optionText}>Xem thành viên</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleBlockChat} style={styles.option2}>
                     <MaterialIcons name="block" size={24} color="#574E92" />

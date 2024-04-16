@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Pressable, Image, FlatList } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getAllGroup } from '../../router/APIRouter'
+import { getAllGroupByMemberId } from '../../router/APIRouter';
 import { COLORS, FONTS } from '../../constrants/theme'
 import PageContainer from '../../Components/PageContainer';
-
+import { useNavigation } from '@react-navigation/native';
 const Group = () => {
+    const navigation = useNavigation();
 
     const [userData, setUserData] = useState('');
 
@@ -24,9 +26,30 @@ const Group = () => {
         }
     }
 
+    // lấy toàn bộ danh sách nhóm chỉ để test
+    // const getAllGroups = async () => {
+    //     try {
+    //         const response = await fetch(getAllGroup, {
+    //             method: "GET",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //         });
+    //         if (!response.ok) {
+    //             throw new Error("Network response was not ok");
+    //         }
+    //         const data = await response.json();
+    //         setGroups(data); // Lưu danh sách nhóm vào state
+    //         console.log("Danh sách nhóm:", data);
+    //     } catch (error) {
+    //         console.error("Error fetching group data:", error);
+    //     }
+    // };
+
+    // lấy toàn bộ danh sách nhóm có chứa id của tài khoản đăng nhập
     const getAllGroups = async () => {
         try {
-            const response = await fetch(getAllGroup, {
+            const response = await fetch(`${getAllGroupByMemberId}/${userData._id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -42,12 +65,22 @@ const Group = () => {
             console.error("Error fetching group data:", error);
         }
     };
+    // console.log("đây là",userData)
 
     useEffect(() => {
         getUser();
         getAllGroups();
     }, []);
     //lấy data từ local 
+
+    const handleViewMember = (group) => {
+        navigation.navigate('ViewMember', { group });
+    };
+
+    const isAdminGroup = (group) => {
+        return group.groupAdmin === userData._id;
+    }
+
 
     return (
         <PageContainer>
@@ -56,6 +89,7 @@ const Group = () => {
                 {groups.map((group, index) => (
                     <TouchableOpacity
                         key={index}
+                        onPress={() => handleViewMember(group)}
                         style={[
                             { width: '100%', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 22, borderBottomColor: COLORS.secondaryWhite, borderBottomWidth: 1, },
                             index % 2 !== 0
@@ -77,6 +111,27 @@ const Group = () => {
                                 {group.groupName}
                             </Text>
                         </View>
+                        <View style={{ marginLeft: 'auto', flexDirection: 'row' }}>
+                            <TouchableOpacity>
+                                <View style={styles.viewHeader}>
+                                    <Image source={require('../../assets/addMember.png')} style={{ width: 20, height: 20 }} />
+                                </View>
+                            </TouchableOpacity>
+                            {isAdminGroup(group) && (
+                                <>
+                                    <TouchableOpacity onPress={() => handleDeleteGroup(group._id)}>
+                                        <View style={styles.viewHeader}>
+                                            <Image source={require('../../assets/deleteGroup.png')} style={{ width: 20, height: 20 }} />
+                                        </View>
+                                    </TouchableOpacity>
+                                </>
+                            )}
+                            <TouchableOpacity>
+                                <View style={styles.viewHeader}>
+                                    <Image source={require('../../assets/exit.png')} style={{ width: 20, height: 20 }} />
+                                </View>
+                            </TouchableOpacity>
+                        </View>
                     </TouchableOpacity>
                 ))}
             </View>
@@ -96,13 +151,14 @@ const styles = StyleSheet.create({
     },
     viewHeader: {
         display: 'flex',
-        width: 45,
-        height: 45,
+        width: 35,
+        height: 35,
         backgroundColor: "#7E57C2",
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 22.5,
-        left: 10,
+        margin: 5,
+
     },
     textHeader: {
         left: 25
