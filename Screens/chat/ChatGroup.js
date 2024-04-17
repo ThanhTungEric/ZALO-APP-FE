@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, Platform, Image, SafeAreaView } from 'react-native';
 import axios from 'axios';
 import { COLORS, FONTS } from '../../constrants/theme';
-import { getMessagesGroup } from '../../router/APIRouter';
+import { getMessagesGroup, sendMessageGroup, uploadImageRoute, getGroupMemberRoute } from '../../router/APIRouter';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'; // Import các icon cần sử dụng
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { sendMessageGroup } from '../../router/APIRouter';
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
+import { get } from 'firebase/database';
 
 const ChatGroup = ({ route }) => {
-    const { group } = route.params;
+    const { group, socket } = route.params;
     const [messages, setMessages] = useState([]);
     const scrollViewRef = React.useRef();
     const [msg, setMsg] = useState('');
@@ -18,71 +18,37 @@ const ChatGroup = ({ route }) => {
     const [fileName, setFileName] = useState(null);
     const [image, setImage] = useState(null);
     const [isOptionsVisible, setIsOptionsVisible] = useState(false);
-
+    const screenWidth = Dimensions.get('window').width;
+    const [arrivalMessage, setArrivalMessage] = useState(null)
+    const [memberGroup, setMemberGroup] = useState([]);
+    const [avatar, setAvatar] = useState([]);
     console.log('group', group);
 
-
     useEffect(() => {
-        const fetchMessages = async () => {
-            try {
-                const messagesData = await getMessages(group._id);
-                setMessages(messagesData);
-            } catch (error) {
-                console.error('Error fetching messages:', error);
-                console.log('group', group._id)
-            }
-        };
-
-        fetchMessages();
-    }, [group._id]);
-
-    const sendChat = async (message) => {
-        if (message) {
-            handleSendMsg(message);
-            setMsg('');
-            console.log('message', message);
+        if (socket.current) {
+            socket.current.emit('join-room', { groupId: group._id })
+            console.log('join-room', group._id);
         }
-    }
-
-    const handleSendMsg = async (message) => {
-        const data = JSON.parse(await AsyncStorage.getItem('userData'));
-        try {
-            const response = await axios.post(sendMessageGroup, group._id, {
-                groupId: group._id,
-                message,
-                sender: data._id,
-            });
-            console.log('response', response.data);
-            setMessages([...messages, {
-                _id: response.data._id,
-                text: message,
-                fromSelf: true,
-                sender: data._id,
-            }]);
-        } catch (error) {
-            console.error('Error sending message:', error);
-        }
-    };
-
+    }, [group]);
 
     const getMessages = async () => {
         const data = JSON.parse(await AsyncStorage.getItem('userData'));
         try {
-            const response = await axios.post(getMessagesGroup);
-            // Dựa vào cấu trúc dữ liệu mới từ API, bạn cần trích xuất thông tin tin nhắn từ response.data.messages
-            const formattedMessages = response.data.messages.map(msg => ({
-                _id: msg._id,
-                text: msg.message,
-                fromSelf: msg.sender === data._id, // Cần có userId từ người dùng đã đăng nhập để so sánh
-                sender: msg.sender,
-            }));
-            return formattedMessages;
-
-        } catch (error) {
-            console.error('Error getting messages:', error);
-            return [];
+            const response = await axios.post(getMessagesGroup, {
+                groupId: group._id,
+                userId: data._id
+            })
+            setMessages(response.data)
+            console.log('Tin nhắn:', response.data)
         }
-    };
+        catch (error) {
+            console.error('Lỗi khi lấy tin nhắn:', error.message)
+            setMessages([]);
+        }
+    }
+    useEffect(() => {
+        getMessages()
+    }, [group])
 
     const pickDocument = async () => {
         try {
@@ -100,6 +66,67 @@ const ChatGroup = ({ route }) => {
         }
     };
 
+    const handleSendMsg = async msg => {
+        const data = JSON.parse(await AsyncStorage.getItem('userData'));
+        try {
+            console.log('groupid', group._id);
+            socket.current.emit('send-group-msg', {
+                from: data._id,
+                groupId: group._id,
+                msg
+            })
+            await axios.post(`${sendMessageGroup}/${group._id}`, {
+                from: data._id,
+                to: group._id,
+                message: msg
+            });
+            const msgs = [...messages];
+            msgs.push({ fromSelf: true, message: msg });
+            setMessages(msgs);
+            getMessages();
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
+    };
+
+    const sendChat = async (msg) => {
+        if (image) {
+            sendImage();
+            setMsg('');
+        }   else if (msg) {
+            handleSendMsg(msg);
+            setMsg('');
+            console.log('message', msg);
+        }
+    };
+    const sendImage = async () => {
+        try {
+            const formData = new FormData();
+            let fileType = 'image/jpeg';
+
+            if (image.endsWith('.png')) {
+                fileType = 'image/png';
+            }
+            formData.append('file', {
+                uri: image,
+                type: fileType,
+                name: 'image.' + (fileType === 'image/jpeg' ? 'jpg' : 'png'),
+            });
+
+            const response = await axios.post(uploadImageRoute, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            console.log('file uploaded', response.data);
+            const imageUrl = response.data;
+
+            await handleSendMsg(imageUrl);
+            setImage(null);
+        } catch (error) {
+            console.log('error upload image', error);
+        }
+    };
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -113,7 +140,6 @@ const ChatGroup = ({ route }) => {
         }
     };
 
-    // Hàm xử lý khi nhấn giữ tin nhắn
     const handleLongPress = (message) => {
         setSelectedMessage(message);
         console.log('Tin nhắn đã được chọn', message);
@@ -121,6 +147,55 @@ const ChatGroup = ({ route }) => {
             setIsOptionsVisible(true);
         }, 1000);
     };
+    useEffect(() => {
+        if (socket.current) {
+            socket.current.on('recieve-group-msg', data => {
+                setArrivalMessage({
+                    message: data.msg,
+                    sender: data.from,
+                    groupId: data.groupId
+                })
+            })
+        }
+    }, [])
+    useEffect(() => {
+        arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+    }, [arrivalMessage]);
+
+    useEffect(() => {
+        scrollViewRef.current?.scrollToEnd({ animated: true });
+    }, [messages]);
+
+    const getMemberGroup = async () => {
+        try {
+            const response = await axios.get(`${getGroupMemberRoute}/${group._id}`)
+            setMemberGroup(response.data)
+            // map avatar
+            const avatar = response.data.map((item) => {
+                return { avatar: item.avatar, _id: item._id, name: item.fullName }
+            })
+            setAvatar(avatar)
+            console.log('avatar', avatar)
+            console.log('Thành viên nhóm:', response.data)
+        }
+        catch (error) {
+            console.error('Lỗi khi lấy thành viên nhóm:', error.message)
+        }
+    }
+
+    useEffect(() => {
+        getMemberGroup()
+    }, [group])
+
+    useEffect(() => {
+        const getCurrentChat = async () => {
+            if (group) {
+                await JSON.parse(localStorage.getItem('user'))._id
+            }
+        }
+        getCurrentChat()
+    }, [group])
+
 
     return (
         <SafeAreaView style={styles.container}>
@@ -134,9 +209,17 @@ const ChatGroup = ({ route }) => {
                 onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
             >
                 {messages.map((msg, index) => (
-                    <TouchableOpacity key={index}
+                    <TouchableOpacity 
+                        key={index}
                         onLongPress={() => handleLongPress(msg)}
-                        style={[styles.messageContainer, { alignSelf: msg.fromSelf ? 'flex-end' : 'flex-start' }]}>
+                        style={[styles.messageContainer, { alignSelf: msg.fromSelf ? 'flex-end' : 'flex-start' }]}
+                    >
+                        {(!msg.fromSelf && avatar.length > 0 && avatar.find(member => member._id === msg.sender)) && (
+                            <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 5 }}>
+                                <Image source={{ uri: avatar.find(member => member._id === msg.sender).avatar }} style={{ width: 30, height: 30, borderRadius: 15, marginRight: 5 }} />
+                                <Text>{avatar.find(member => member._id === msg.sender).name}</Text>
+                            </View>
+                        )}
                         <View style={[styles.messageBubble, { backgroundColor: msg.fromSelf ? '#574E92' : '#ccc', maxWidth: screenWidth * 0.7 }]}>
                             {msg.message.includes('.jpg') || msg.message.includes('.png') ? (
                                 <Image resizeMode='contain' source={{ uri: msg.message }} style={{ width: 200, height: 200, borderRadius: 10, marginVertical: 5 }} />
@@ -190,6 +273,7 @@ const ChatGroup = ({ route }) => {
 
                 <TouchableOpacity
                     onPress={() => sendChat(msg)}
+
                     style={styles.sendButton}>
                     <Text style={{ color: 'white' }}>Gửi</Text>
                 </TouchableOpacity>
@@ -197,14 +281,14 @@ const ChatGroup = ({ route }) => {
                 {/* Modal tùy chọn */}
                 <Modal visible={isOptionsVisible} animationType="slide" style={styles.modalContainer} transparent >
                     <View style={styles.modalContainer}>
-                        <TouchableOpacity 
-                        //onPress={handleDeleteMessage} 
-                        style={styles.modalButton}>
+                        <TouchableOpacity
+                            //onPress={handleDeleteMessage} 
+                            style={styles.modalButton}>
                             <Text>Xóa tin nhắn</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity 
-                        //onPress={handleForwardMessage} 
-                        style={styles.modalButton}>
+                        <TouchableOpacity
+                            //onPress={handleForwardMessage} 
+                            style={styles.modalButton}>
                             <Text>Chuyển tiếp tin nhắn</Text>
                         </TouchableOpacity>
                         {/* Thêm các tùy chọn khác tại đây */}
@@ -270,10 +354,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 20,
-    },
-    messageContainer: {
-        flexDirection: 'row',
-        marginBottom: 10,
     },
     messageBubble: {
         paddingVertical: 8,
