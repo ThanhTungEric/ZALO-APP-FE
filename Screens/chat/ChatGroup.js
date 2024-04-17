@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, Platform, Image, SafeAreaView } from 'react-native';
 import axios from 'axios';
 import { COLORS, FONTS } from '../../constrants/theme';
-import { getMessagesGroup, sendMessageGroup, uploadImageRoute, getGroupMemberRoute } from '../../router/APIRouter';
+import { getMessagesGroup, sendMessageGroup, uploadImageRoute, getGroupMemberRoute,deleteMessageGroupRoute } from '../../router/APIRouter';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'; // Import các icon cần sử dụng
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as DocumentPicker from 'expo-document-picker';
@@ -22,6 +22,7 @@ const ChatGroup = ({ route }) => {
     const [arrivalMessage, setArrivalMessage] = useState(null)
     const [memberGroup, setMemberGroup] = useState([]);
     const [avatar, setAvatar] = useState([]);
+    const [selectedMessage, setSelectedMessage] = useState(null);
     console.log('group', group);
 
     useEffect(() => {
@@ -66,6 +67,48 @@ const ChatGroup = ({ route }) => {
         }
     };
 
+    const sendFile = async () => {
+        if (!file) {
+            console.log("No file selected");
+            return;
+        }
+    
+        try {
+            let formData = new FormData();
+            let fileType = '';
+
+            if (file.endsWith('.pdf')) {
+                fileType = 'application/pdf';
+            } else if (file.endsWith('.docx')) {
+                fileType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+            } else if (file.endsWith('.txt')) {
+                fileType = 'text/plain';
+            }
+            formData.append('file', {
+                uri: file,
+                type: fileType,
+                name: fileName || 'file',
+            });
+    
+            const response = await axios.post(uploadImageRoute, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+    
+            if (response.status === 200) {
+                console.log("File uploaded successfully");
+                setFile(null);
+                setFileName(null);
+            } else {
+                console.log("Failed to upload file");
+            }
+        } catch (error) {
+            console.error("An error occurred while uploading the file: ", error);
+        }
+    };
+
+
     const handleSendMsg = async msg => {
         const data = JSON.parse(await AsyncStorage.getItem('userData'));
         try {
@@ -97,8 +140,12 @@ const ChatGroup = ({ route }) => {
             handleSendMsg(msg);
             setMsg('');
             console.log('message', msg);
+        } else if (file) {
+            sendFile();
+            setMsg('');
         }
     };
+    
     const sendImage = async () => {
         try {
             const formData = new FormData();
@@ -196,6 +243,26 @@ const ChatGroup = ({ route }) => {
         getCurrentChat()
     }, [group])
 
+    const deleteMessageById = async messageId => {
+        socket.current.emit('delete-msg', { messageId })
+        const url = `${deleteMessageGroupRoute}/${messageId}`
+        try {
+            const response = await axios.delete(url, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            console.log('Tin nhắn đã được xóa thành công', response.data)
+        } catch (error) {
+            console.error('Lỗi khi xóa tin nhắn:', error.message)
+        }
+    }
+
+    const handleDeleteMessage = () => {
+        deleteMessageById(selectedMessage._id);
+        setIsOptionsVisible(false);
+        setSelectedMessage(null);
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -282,7 +349,7 @@ const ChatGroup = ({ route }) => {
                 <Modal visible={isOptionsVisible} animationType="slide" style={styles.modalContainer} transparent >
                     <View style={styles.modalContainer}>
                         <TouchableOpacity
-                            //onPress={handleDeleteMessage} 
+                            onPress={handleDeleteMessage} 
                             style={styles.modalButton}>
                             <Text>Xóa tin nhắn</Text>
                         </TouchableOpacity>

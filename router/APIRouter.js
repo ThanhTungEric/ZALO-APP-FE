@@ -20,6 +20,7 @@ export const getAllGroup = `${host}/api/group/all`
 export const getMessagesGroup = `${host}/api/groupMessage/get-messages`
 export const sendMessageGroup = `${host}/api/groupMessage/send-message`
 export const getGroupMemberRoute = `${host}/api/group/get-member`
+export const deleteMessageGroupRoute = `${host}/api/groupMessage/delete-message`
 
 //chat
 export const sendMessageRoute = `${host}/api/messages/addmsg`;
