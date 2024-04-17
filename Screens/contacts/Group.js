@@ -18,32 +18,32 @@ const Group = () => {
             const value = await AsyncStorage.getItem('userData');
             if (value !== null) {
                 const parsUser = JSON.parse(value);
-                setUserData(parsUser);
+                setUserData(parsUser); 
             }
         } catch (error) {
             console.error(error);
         }
     }
 
-     {/*lấy toàn bộ danh sách nhóm chỉ để test
-    const getAllGroups = async () => {
-        try {
-            const response = await fetch(getAllGroup, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            const data = await response.json();
-            setGroups(data); // Lưu danh sách nhóm vào state
-            console.log("Danh sách nhóm:", data);
-        } catch (error) {
-            console.error("Error fetching group data:", error);
-        }
-    };*/}
+    // //lấy toàn bộ danh sách nhóm chỉ để test
+    // const getAllGroups = async () => {
+    //     try {
+    //         const response = await fetch(getAllGroup, {
+    //             method: "GET",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //         });
+    //         if (!response.ok) {
+    //             throw new Error("Network response was not ok");
+    //         }
+    //         const data = await response.json();
+    //         setGroups(data); // Lưu danh sách nhóm vào state
+    //         console.log("Danh sách nhóm:", data);
+    //     } catch (error) {
+    //         console.error("Error fetching group data:", error);
+    //     }
+    // };
 
     // lấy toàn bộ danh sách nhóm có chứa id của tài khoản đăng nhập
     const getAllGroups = async () => {
@@ -64,16 +64,15 @@ const Group = () => {
             console.error("Error fetching group data:", error);
         }
     };
-    // console.log("đây là",userData)
 
     useEffect(() => {
-        getUser();
+        getUser(); 
         getAllGroups();
-    }, []);
+    }, [userData._id]); 
     //lấy data từ local 
 
-    const handleViewMember = (group) => {
-        navigation.navigate('ViewMember', { group });
+    const handleOptionsGroup = (group) => {
+        navigation.navigate('OptionGroup', { group });
     };
 
     const isAdminGroup = (group) => {
@@ -158,7 +157,7 @@ const Group = () => {
                 {groups.map((group, index) => (
                     <TouchableOpacity
                         key={index}
-                        onPress={() => handleViewMember(group)}
+                        onPress={() => handleOptionsGroup(group)}
                         style={[
                             { width: '100%', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 22, borderBottomColor: COLORS.secondaryWhite, borderBottomWidth: 1, },
                             index % 2 !== 0
@@ -229,3 +228,8 @@ const styles = StyleSheet.create({
         left: 25
     },
 });
+
+
+
+  
+ 

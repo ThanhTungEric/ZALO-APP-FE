@@ -2,9 +2,11 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { getUnFriendRoute } from '../../router/APIRouter';
-import React, { useState, useEffect,  } from 'react'
+import React, { useState, useEffect, } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
+import { SafeAreaView } from 'react-native-safe-area-context';
+import PageContainer from '../../Components/PageContainer';
+import { COLORS, FONTS } from '../../constrants/theme'
 const Options = () => {
     const navigation = useNavigation();
     const route = useRoute();
@@ -82,58 +84,65 @@ const Options = () => {
     };
 
     return (
-        <View style={styles.container}>
-            {/* Header */}
-            <View style={styles.header}>
-                <MaterialIcons name="arrow-back" size={24} color="white" onPress={() => navigation.goBack()} />
-                <Text style={styles.headerText}>Tùy Chọn</Text>
-            </View>
-            {/* Hình ảnh và tên */}
-            <View style={styles.profileContainer}>
-                <Image source={{ uri: selectedChat.avatar }} style={styles.profileImage} />
+        <SafeAreaView>
+            <PageContainer>
+                <View style={styles.container}>
+                    {/* Header */}
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22, backgroundColor: COLORS.white, height: 60, }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black} />
+                            </TouchableOpacity>
+                            <Text style={{ ...FONTS.h4, marginLeft: 8 }}>Thành viên</Text>
+                        </View>
+                    </View>
+                    {/* Hình ảnh và tên */}
+                    <View style={styles.profileContainer}>
+                        <Image source={{ uri: selectedChat.avatar }} style={styles.profileImage} />
 
-                <Text style={styles.profileName}>{selectedChat.fullName}</Text>
-            </View>
-            {/* Các tùy chọn */}
-            <View style={styles.optionsContainer}>
-                <TouchableOpacity onPress={handleNavigateToMessage} style={styles.option}>
-                    <MaterialIcons name="message" size={24} color="#574E92" />
-                    <Text style={styles.optionText}>Tìm tin nhắn</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleNavigateToProfile} style={styles.option}>
-                    <MaterialIcons name="person" size={24} color="#574E92" />
-                    <Text style={styles.optionText}>Trang cá nhân</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleNavigateToChangeBackground} style={styles.option}>
-                    <MaterialIcons name="image" size={24} color="#574E92" />
-                    <Text style={styles.optionText}>Đổi hình nền</Text>
-                </TouchableOpacity>
-            </View>
-            {/* Tùy chọn hàng dọc */}
-            
-            <View style={styles.verticalOptionsContainer}>
-            
-                <TouchableOpacity onPress={handleNavigateToCreateGroup} style={styles.option2}>
-                    <MaterialIcons name="group-add" size={24} color="#574E92" />
-                    <Text style={styles.optionText}>Tạo nhóm</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleNavigateToAddToGroup} style={styles.option2}>
-                    <MaterialIcons name="person-add" size={24} color="#574E92" />
-                    <Text style={styles.optionText}>Thêm vào nhóm</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleNavigateToViewGroup} style={styles.option2}>
-                    <MaterialIcons name="group" size={24} color="#574E92" />
-                    <Text style={styles.optionText}>Xem nhóm chung</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.option2}
-                    onPress={() => handleUnFriend({ userId1: user._id, userId2: selectedChat._id })}
-                >
-                    <MaterialIcons name="delete" size={24} color="red" />
-                    <Text style={{ marginLeft: 10, color: 'red', }}>Xóa bạn</Text>
-                </TouchableOpacity>
-            </View>
-       
-        </View>
+                        <Text style={styles.profileName}>{selectedChat.fullName}</Text>
+                    </View>
+                    {/* Các tùy chọn */}
+                    <View style={styles.optionsContainer}>
+                        <TouchableOpacity onPress={handleNavigateToMessage} style={styles.option}>
+                            <MaterialIcons name="message" size={24} color="#574E92" />
+                            <Text style={styles.optionText}>Tìm tin nhắn</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={handleNavigateToProfile} style={styles.option}>
+                            <MaterialIcons name="person" size={24} color="#574E92" />
+                            <Text style={styles.optionText}>Trang cá nhân</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={handleNavigateToChangeBackground} style={styles.option}>
+                            <MaterialIcons name="image" size={24} color="#574E92" />
+                            <Text style={styles.optionText}>Đổi hình nền</Text>
+                        </TouchableOpacity>
+                    </View>
+                    {/* Tùy chọn hàng dọc */}
+
+                    <View style={styles.verticalOptionsContainer}>
+
+                        <TouchableOpacity onPress={handleNavigateToCreateGroup} style={styles.option2}>
+                            <MaterialIcons name="group-add" size={24} color="#574E92" />
+                            <Text style={styles.optionText}>Tạo nhóm</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={handleNavigateToAddToGroup} style={styles.option2}>
+                            <MaterialIcons name="person-add" size={24} color="#574E92" />
+                            <Text style={styles.optionText}>Thêm vào nhóm</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={handleNavigateToViewGroup} style={styles.option2}>
+                            <MaterialIcons name="group" size={24} color="#574E92" />
+                            <Text style={styles.optionText}>Xem nhóm chung</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.option2}
+                            onPress={() => handleUnFriend({ userId1: user._id, userId2: selectedChat._id })}
+                        >
+                            <MaterialIcons name="delete" size={24} color="red" />
+                            <Text style={{ marginLeft: 10, color: 'red', }}>Xóa bạn</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </PageContainer>
+        </SafeAreaView>
     );
 };
 
@@ -141,13 +150,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f5f5f5',
-    },
-    header: {
-        backgroundColor: "#574E92",
-        height: 50,
-        flexDirection: 'row',
-        //justifyContent: 'center',
-        alignItems: 'center',
     },
     headerText: {
         fontWeight: '600',

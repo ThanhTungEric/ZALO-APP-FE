@@ -5,10 +5,10 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import PageContainer from '../../../Components/PageContainer'
 import { COLORS, FONTS } from '../../../constrants/theme'
 import axios from 'axios'
-import { getCreateGroup} from '../../../router/APIRouter'
+
 
 //API router
-import { getFriendListRoute } from '../../../router/APIRouter';
+import { getFriendListRoute, getCreateGroup } from '../../../router/APIRouter';
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -23,6 +23,7 @@ const CreateGroup = ({ navigation, route }) => {
     const [groupName, setGroupName] = useState('');
     const [groupMembers, setGroupMembers] = useState([]);
     const [groupAdmin, setGroupAdmin] = useState('');
+
     // Hàm gửi yêu cầu tạo nhóm
     const createGroup = async () => {
         try {
@@ -35,7 +36,7 @@ const CreateGroup = ({ navigation, route }) => {
                 groupAdmin: groupAdmin,
             });
             console.log(response.data);
-            navigation.navigate('Home'); 
+            navigate.navigation("Home");
         } catch (error) {
             console.error('Error creating group:', error);
             Alert.alert('Error', 'Failed to create group. Please try again later.');

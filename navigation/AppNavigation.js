@@ -32,6 +32,8 @@ import { COLORS } from '../constrants/theme'
 import CreateGroup from "../Screens/contacts/group/CreateGroup";
 import ViewMember from "../Screens/chat/ViewMember";
 import AddMember from "../Screens/contacts/group/AddMember";
+import OptionsGroup from "../Screens/chat/OptionGroup";
+
 
 
 const Stack = createNativeStackNavigator();
@@ -132,6 +134,7 @@ const AppNavigation = () => (
             <Stack.Screen name="FriendRequest" component={FriendRequest} options={{ headerShown: false }} />
             <Stack.Screen name="ChatBox" component={Chat} options={{ headerShown: false }} />
             <Stack.Screen name="Option" component={Options} options={{ headerShown: false }} />
+            <Stack.Screen name="OptionGroup" component={OptionsGroup} options={{ headerShown: false }} />
             <Stack.Screen name="Forward" component={Forward} options={{ headerShown: false }} />
             <Stack.Screen name="CreateGroup" component={CreateGroup} options={{ headerShown: false }} />
             <Stack.Screen name="ViewMember" component={ViewMember} options={{ headerShown: false }} />
