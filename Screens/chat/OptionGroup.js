@@ -11,7 +11,7 @@ import PageContainer from '../../Components/PageContainer';
 const OptionsGroup = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const { group } = route.params; // Lấy thông tin group từ route params
+    const { group, userData } = route.params; // Lấy thông tin group và userData từ route params
     const groupId = group._id;
 
     const [user, setUser] = useState("");
@@ -43,9 +43,9 @@ const OptionsGroup = () => {
     };
 
     const handleViewMember = (group) => {
-        navigation.navigate('ViewMember', { group });
+        navigation.navigate('ViewMember', { group, userData });
     };
-
+    
     return (
         <SafeAreaView>
             <PageContainer>
@@ -56,7 +56,7 @@ const OptionsGroup = () => {
                             <TouchableOpacity onPress={() => navigation.goBack()}>
                                 <MaterialIcons name="keyboard-arrow-left" size={35} color={COLORS.black} />
                             </TouchableOpacity>
-                            <Text style={{ ...FONTS.h4, marginLeft: 8}}>Tùy chọn</Text>
+                            <Text style={{ ...FONTS.h4, marginLeft: 8 }}>Tùy chọn</Text>
                         </View>
                     </View>
 
@@ -65,7 +65,7 @@ const OptionsGroup = () => {
                         <Image source={{ uri: group.avatar }} style={styles.profileImage} />
                         <Text style={styles.profileName}>{group.groupName}</Text>
                     </View>
-                    
+
                     {/* Các tùy chọn */}
                     <View style={styles.optionsContainer}>
                         <TouchableOpacity style={styles.option}
@@ -86,13 +86,13 @@ const OptionsGroup = () => {
                         </TouchableOpacity>
                     </View>
                     {/* Tùy chọn hàng dọc */}
-
                     <View style={styles.verticalOptionsContainer}>
                         <TouchableOpacity onPress={() => handleViewMember(group)} style={styles.option2}>
                             <MaterialIcons name="group" size={24} color="#574E92" />
                             <Text style={styles.optionText}>Xem thành viên</Text>
                         </TouchableOpacity>
                     </View>
+                    
                 </View>
             </PageContainer>
         </SafeAreaView>

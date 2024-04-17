@@ -19,9 +19,13 @@ export const getCreateGroup = `${host}/api/group/create-group`;
 export const getAllGroup = `${host}/api/group/all`;
 export const getAllGroupByMemberId = `${host}/api/group/member`;
 export const getAllMemberByGroupId = `${host}/api/group/get-member`;
+export const getGroupById = `${host}/api/group/id`;
 export const getLeaveGroup = `${host}/api/group/leave-group`;
 export const getDeleteGroup = `${host}/api/group/delete-group`;
 export const getAddMember = `${host}/api/group/add-member`;
+export const getRemoveMemberFromGroup = `${host}/api/group/remove-member`;
+export const getSetDeputyForGroup = `${host}/api/group/set-deputy`;
+
 
 //chat
 export const sendMessageRoute = `${host}/api/messages/addmsg`;

@@ -36,7 +36,7 @@ const CreateGroup = ({ navigation, route }) => {
                 groupAdmin: groupAdmin,
             });
             console.log(response.data);
-            navigate.navigation("Home");
+            navigation.navigate("Home");
         } catch (error) {
             console.error('Error creating group:', error);
             Alert.alert('Error', 'Failed to create group. Please try again later.');

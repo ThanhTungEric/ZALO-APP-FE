@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, Pressable, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Pressable, FlatList, Modal } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useState, useEffect, } from 'react'
@@ -6,16 +6,20 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { COLORS, FONTS } from '../../constrants/theme'
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { getAllMemberByGroupId } from '../../router/APIRouter';
+import { getAllMemberByGroupId, getRemoveMemberFromGroup, getSetDeputyForGroup, getGroupById } from '../../router/APIRouter';
 
 const ViewMember = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const { group } = route.params; // Lấy thông tin group từ route params
+    const { group, userData } = route.params;; // Lấy thông tin group và userData từ route params
     const groupId = group._id;
 
     const [members, setMembers] = useState([]);
 
+    const [selectedMember, setSelectedMember] = useState(null); // Trạng thái cho việc hiển thị modal
+    const [modalVisible, setModalVisible] = useState(false); // Trạng thái để kiểm soát việc hiển thị modal
+
+    // Xem danh sách thành viên nhóm
     const getAllMembers = async () => {
         try {
             const response = await fetch(`${getAllMemberByGroupId}/${groupId}`, {
@@ -33,7 +37,7 @@ const ViewMember = () => {
             console.error("Error fetching group members:", error);
         }
     };
-    console.log(groupId)
+    console.log("groupId:",groupId)
     useEffect(() => {
         getAllMembers();
     }, []);
@@ -41,6 +45,102 @@ const ViewMember = () => {
     const handleAddMember = (group) => {
         navigation.navigate('AddMember', { group });
     };
+
+    /// MODAL
+    const handleMemberPress = (member) => {
+        // Kiểm tra nếu id của thành viên không phải là id của nhóm trưởng
+        if (member._id !== userData._id) {
+            setSelectedMember(member);
+            setModalVisible(true);
+        }
+    };
+
+    const closeModal = () => {
+        setModalVisible(false);
+    };
+    /// MODAL
+
+    // xóa thành viên khỏi nhóm
+    const removeMemberFromGroup = async (groupId, memberId) => {
+        try {
+            const response = await fetch(getRemoveMemberFromGroup, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    groupId: groupId,
+                    memberId: memberId,
+                }),
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            console.log(data.message);
+            getAllMembers();
+        } catch (error) {
+            console.error("Error removing member:", error);
+        }
+    };
+
+    // console.log("đây là user nhóm trưởng", userData._id)
+
+    // bổ nhiệm làm phó nhóm
+    const setDeputyForGroup = async (groupId, deputyId, adminId) => {
+        try {
+            const response = await fetch(getSetDeputyForGroup, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    groupId: groupId,
+                    deputyId: deputyId,
+                    adminId: adminId
+                }),
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            console.log(data); 
+            getAllMembers(); 
+        } catch (error) {
+            console.error("Error setting deputy:", error);
+        }
+    };
+
+    const handleSetDeputy = () => {
+        if (selectedMember) {
+            setDeputyForGroup(groupId, selectedMember._id, userData._id);
+            closeModal(); // Close the modal after setting the deputy
+        }
+    };
+
+    // get group by id
+    useEffect(() => {
+        const fetchGroupData = async () => {
+            try {
+                const response = await fetch(`${getGroupById}/${groupId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                console.log('Group Data:', data); // 
+            } catch (error) {
+                console.error('Error fetching group data:', error);
+            }
+        };
+
+        fetchGroupData(); // Call the function to fetch group data
+    }, []); 
+
 
     return (
         <SafeAreaView>
@@ -54,9 +154,10 @@ const ViewMember = () => {
                 </View>
             </View>
 
+
             <View style={{ backgroundColor: '#fff' }}>
                 <Pressable style={styles.header}
-                     onPress={() => handleAddMember(group)}>
+                    onPress={() => handleAddMember(group)}>
                     <View style={styles.viewHeader}>
                         <MaterialIcons name="group-add" size={24} color="white" />
                     </View>
@@ -69,24 +170,90 @@ const ViewMember = () => {
                 <FlatList
                     data={members}
                     keyExtractor={(item) => item._id}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity style={{ width: '100%', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 22, borderBottomColor: COLORS.secondaryWhite, borderBottomWidth: 1, }}>
+                    renderItem={({ item }) => {
+                        // Kiểm tra xem item có trong danh sách phó nhóm hay không
+                        const isDeputy = group.groupDeputy.includes(item._id);
+
+                        // Kiểm tra xem item có phải là nhóm trưởng hay không
+                        const isAdmin = item._id === group.groupAdmin;
+
+                        return (
+                            <TouchableOpacity
+                                style={{
+                                    width: '100%',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    paddingHorizontal: 22,
+                                    borderBottomColor: COLORS.secondaryWhite,
+                                    borderBottomWidth: 1,
+                                }}
+                                onPress={() => handleMemberPress(item)}
+                            >
+                                <View style={{ paddingVertical: 15, marginRight: 22 }}>
+                                    <Image
+                                        source={{ uri: item.avatar }}
+                                        resizeMode="contain"
+                                        style={{ height: 50, width: 50, borderRadius: 25 }}
+                                    />
+                                </View>
+                                <View style={{ flexDirection: 'column' }}>
+                                    <Text style={{ ...FONTS.h4, marginBottom: 4 }}>
+                                        {item.fullName}
+                                    </Text>
+                                    {/* Hiển thị vai trò của thành viên */}
+                                    {isDeputy && <Text style={{ color: 'grey' }}>Phó nhóm</Text>}
+                                    {isAdmin && <Text style={{ color: 'green' }}>Trưởng nhóm</Text>}
+                                </View>
+                            </TouchableOpacity>
+                        );
+                    }}
+                />
+
+                {/* Modal */}
+                <Modal visible={modalVisible} transparent animationType="fade">
+                    <View style={styles.modalContainer}>
+                        {/* Nội dung của modal */}
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 22, paddingTop: 20, }}>
+                            <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'column', marginHorizontal: 22, borderBottomColor: COLORS.secondaryWhite, borderBottomWidth: 1 }}>
+                                <Text style={{ ...FONTS.h4, marginVertical: 6 }}>Thông tin thành viên</Text>
+                            </View>
+                            <View style={{ height: 60, width: 60, alignItems: 'center', justifyContent: 'center' }}>
+                                <Text onPress={closeModal} style={{ ...FONTS.h4, marginVertical: 6, color: '#574E92' }}>X</Text>
+                            </View>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                             <View style={{ paddingVertical: 15, marginRight: 22, }}>
-                                <Image
-                                    source={{ uri: item.avatar }}
-                                    resizeMode="contain"
-                                    style={{ height: 50, width: 50, borderRadius: 25, }}
-                                />
+                                {selectedMember && (
+                                    <Image
+                                        source={{ uri: selectedMember.avatar }}
+                                        resizeMode="contain"
+                                        style={{ height: 50, width: 50, borderRadius: 25 }}
+                                    />
+                                )}
                             </View>
                             <View style={{ flexDirection: 'column', }}>
                                 <Text style={{ ...FONTS.h4, marginBottom: 4 }}>
-                                    {item.fullName}
+                                    {selectedMember ? selectedMember.fullName : ''}
                                 </Text>
                             </View>
-                        </TouchableOpacity>
-
-                    )}
-                />
+                        </View>
+                        <View style={styles.verticalOptionsContainer}>
+                            <TouchableOpacity style={styles.option2}>
+                                <Text style={styles.optionText}>Xem trang cá nhân</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.option2} onPress={handleSetDeputy}>
+                                <Text style={styles.optionText}>Bổ nhiệm làm phó nhóm</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.option2}>
+                                <Text style={styles.optionText}>Chuyển quyền trưởng nhóm </Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.option2}
+                                onPress={() => removeMemberFromGroup(group._id, selectedMember._id)}>
+                                <Text style={{ marginLeft: 10, color: 'red', }}>Xóa khỏi nhóm</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
             </View>
 
         </SafeAreaView>
@@ -114,5 +281,25 @@ const styles = StyleSheet.create({
     },
     textHeader: {
         left: 25
+    },
+    modalContainer: {
+        marginTop: "auto",
+        width: 'auto',
+        height: 'auto',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff'
+    },
+    verticalOptionsContainer: {
+        marginTop: 20,
+    },
+    option2: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 10,
+    },
+    optionText: {
+        marginLeft: 10,
+        color: '#574E92',
     },
 });

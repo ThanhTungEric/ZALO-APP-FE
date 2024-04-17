@@ -68,11 +68,11 @@ const Group = () => {
     useEffect(() => {
         getUser(); 
         getAllGroups();
-    }, [userData._id]); 
+    }, [userData._id]);  
     //lấy data từ local 
 
     const handleOptionsGroup = (group) => {
-        navigation.navigate('OptionGroup', { group });
+        navigation.navigate('OptionGroup', { group, userData });
     };
 
     const isAdminGroup = (group) => {
