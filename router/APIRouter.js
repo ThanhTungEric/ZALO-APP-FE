@@ -17,8 +17,12 @@ export const getFriendByNumberPhoneRoute = `${host}/user/phoneNumber`;
 //group
 export const getCreateGroup = `${host}/api/group/create-group`;
 export const getAllGroup = `${host}/api/group/all`;
-export const getAllGroupByMemberId = `${host}/api/group/member`
-export const getAllMemberByGroupId = `${host}/api/group/get-member`
+export const getAllGroupByMemberId = `${host}/api/group/member`;
+export const getAllMemberByGroupId = `${host}/api/group/get-member`;
+export const getLeaveGroup = `${host}/api/group/leave-group`;
+export const getDeleteGroup = `${host}/api/group/delete-group`;
+export const getAddMember = `${host}/api/group/add-member`;
+
 //chat
 export const sendMessageRoute = `${host}/api/messages/addmsg`;
 export const recieveMessageRoute = `${host}/api/messages/getmsg`;

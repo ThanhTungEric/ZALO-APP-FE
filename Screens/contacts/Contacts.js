@@ -80,7 +80,7 @@ const Contacts = ({ navigation }) => {
             <PageContainer>
                 <View >
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 22, marginTop: 22, }}>
-                        <Text style={{ ...FONTS.h4 }}>Danh sách bạn bè</Text>
+                        <Text style={{ ...FONTS.h4 }}>Danh bạ</Text>
                         <AntDesign name="plus" size={20} color={COLORS.secondaryBlack} />
                     </View>
                     <View style={{

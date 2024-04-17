@@ -50,9 +50,6 @@ const Options = () => {
             console.error('Error unfriend:', error);
         }
     };
-
-    console.log("--", selectedChat);
-    console.log("++", user)
     //////////////////////
     const handleNavigateToMessage = () => {
         // Điều hướng đến màn hình tin nhắn
@@ -76,33 +73,13 @@ const Options = () => {
 
     const handleNavigateToAddToGroup = () => {
         // Điều hướng đến màn hình thêm vào nhóm
-        navigation.navigate('AddToGroup');
+        navigation.navigate('AddMember');
     };
 
     const handleNavigateToViewGroup = () => {
         // Điều hướng đến màn hình xem nhóm chung
         navigation.navigate('ViewGroup');
     };
-
-    const handleNavigateToViewMember = () => {
-        // Điều hướng đến màn hình xem thành viên
-        navigation.navigate('ViewMember');
-    };
-
-    const handleBlockChat = () => {
-        // Xử lý chặn trò chuyện ở đây
-        console.log("Chặn trò chuyện");
-    };
-
-    const handleClearChatHistory = () => {
-        // Xử lý xóa lịch sử trò chuyện ở đây
-        console.log("Xóa lịch sử trò chuyện");
-    };
-
-    // const handleForwardMessages = () => {
-    //     navigation.navigate('Forward');
-    // }
-    //////////////////
 
     return (
         <View style={styles.container}>
@@ -147,18 +124,6 @@ const Options = () => {
                 <TouchableOpacity onPress={handleNavigateToViewGroup} style={styles.option2}>
                     <MaterialIcons name="group" size={24} color="#574E92" />
                     <Text style={styles.optionText}>Xem nhóm chung</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleNavigateToViewMember} style={styles.option2}>
-                    <MaterialIcons name="group" size={24} color="#574E92" />
-                    <Text style={styles.optionText}>Xem thành viên</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleBlockChat} style={styles.option2}>
-                    <MaterialIcons name="block" size={24} color="#574E92" />
-                    <Text style={styles.optionText}>Chặn trò chuyện</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleClearChatHistory} style={styles.option2}>
-                    <MaterialIcons name="delete" size={24} color="#574E92" />
-                    <Text style={styles.optionText}>Xóa lịch sử trò chuyện</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.option2}
                     onPress={() => handleUnFriend({ userId1: user._id, userId2: selectedChat._id })}

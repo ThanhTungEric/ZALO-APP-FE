@@ -37,6 +37,11 @@ const ViewMember = () => {
     useEffect(() => {
         getAllMembers();
     }, []);
+
+    const handleAddMember = (group) => {
+        navigation.navigate('AddMember', { group });
+    };
+
     return (
         <SafeAreaView>
             {/* Header */}
@@ -51,7 +56,7 @@ const ViewMember = () => {
 
             <View style={{ backgroundColor: '#fff' }}>
                 <Pressable style={styles.header}
-                    onPress={() => navigation.navigate('CreateGroup')}>
+                     onPress={() => handleAddMember(group)}>
                     <View style={styles.viewHeader}>
                         <MaterialIcons name="group-add" size={24} color="white" />
                     </View>

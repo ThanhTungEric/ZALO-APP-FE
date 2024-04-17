@@ -1,46 +1,23 @@
-import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image,Alert } from 'react-native'
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { AntDesign, Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import PageContainer from '../../../Components/PageContainer'
 import { COLORS, FONTS } from '../../../constrants/theme'
 import axios from 'axios'
-import { getCreateGroup} from '../../../router/APIRouter'
 
 //API router
-import { getFriendListRoute } from '../../../router/APIRouter';
+import { getFriendListRoute, getAddMember } from '../../../router/APIRouter';
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const CreateGroup = ({ navigation, route }) => {
+const AddMember = ({ navigation, route }) => {
 
     const [numberPhone, setPhoneNumber] = useState("");
     const [data1, setData1] = useState([]);
 
     const [userData, setUserData] = useState('');
-
-    // tạo nhóm
-    const [groupName, setGroupName] = useState('');
-    const [groupMembers, setGroupMembers] = useState([]);
-    const [groupAdmin, setGroupAdmin] = useState('');
-    // Hàm gửi yêu cầu tạo nhóm
-    const createGroup = async () => {
-        try {
-             // Thêm ID của admin vào mảng groupMembers
-            const updatedGroupMembers = [...groupMembers, groupAdmin];
-
-            const response = await axios.post(getCreateGroup, {
-                groupName: groupName,
-                groupMembers: updatedGroupMembers,
-                groupAdmin: groupAdmin,
-            });
-            console.log(response.data);
-            navigation.navigate('Home'); 
-        } catch (error) {
-            console.error('Error creating group:', error);
-            Alert.alert('Error', 'Failed to create group. Please try again later.');
-        }
-    };
+    const { group } = route.params; // Lấy thông tin group từ route params
 
     const getUser = async () => {
         try {
@@ -48,18 +25,11 @@ const CreateGroup = ({ navigation, route }) => {
             if (value !== null) {
                 const parsUser = JSON.parse(value);
                 setUserData(parsUser);
-                setGroupAdmin(parsUser._id); // Lấy id của bạn làm groupAdmin
             }
         } catch (error) {
             console.error(error);
         }
     }
-
-    const addMemberToGroup = (friendId) => {
-        setGroupMembers(prevMembers => [...prevMembers, friendId]); // Push id vào mảng groupMembers
-        Alert.alert('Thêm vào nhóm thành công');
-    };
-
 
     useEffect(() => {
         getUser();
@@ -90,28 +60,72 @@ const CreateGroup = ({ navigation, route }) => {
         fetchData();
     }, [userData._id]);
 
+    // // add member (thêm thành viên vào nhóm)
+    // const addMemberToGroup = async (groupId, memberId) => {
+    //     try {
+    //         const response = await fetch(getAddMember, {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify({
+    //                 groupId: groupId,
+    //                 memberId: memberId
+    //             }),
+    //         });
+    //         if (!response.ok) {
+    //             throw new Error("Network response was not ok");
+    //         }
+    //         const data = await response.json();
+    //         console.log(data); // Data trả về từ backend sau khi thêm thành viên vào nhóm
+
+    //     } catch (error) {
+    //         console.error("Error adding member to group:", error);
+    //     }
+    // };
+
+    // add member (thêm thành viên vào nhóm)
+    const addMemberToGroup = async (groupId, memberId) => {
+        try {
+            const response = await fetch(getAddMember, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    groupId: groupId,
+                    memberId: memberId
+                }),
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            console.log(data);
+
+            if (data.message === "Member already in group") {
+                Alert.alert("Thành viên đã có trong nhóm.");
+            } else {
+                navigation.navigate('ViewMember', { group: group });
+            }
+
+        } catch (error) {
+            console.error("Error adding member to group:", error);
+        }
+    };
+
+
     return (
         <SafeAreaView>
             <PageContainer>
                 <View >
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginHorizontal: 22, paddingTop: 20 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 22, paddingTop: 20 }}>
                         <View style={{ height: 60, width: 60, alignItems: 'center', justifyContent: 'center', }}>
-                            <Text onPress={() => navigation.goBack()} style={{ ...FONTS.h4, marginVertical: 6, color: '#574E92' }} >Hủy</Text>
+                            <Text onPress={() => navigation.goBack()} style={{ ...FONTS.h4, marginVertical: 6, color: '#574E92' }}>X</Text>
                         </View>
                         <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'column', marginHorizontal: 22, }}>
-                            <Text style={{ ...FONTS.h4, marginVertical: 6, fontWeight: 'bold' }}>Nhóm mới</Text>
+                            <Text style={{ ...FONTS.h4, marginVertical: 6 }}>Thêm vào nhóm</Text>
                         </View>
-                        <View>
-                            <Text style={{ ...FONTS.h4, marginVertical: 6 }} onPress={createGroup}>Tạo</Text>
-                        </View>
-                    </View>
-                    <View style={{ marginHorizontal: 22, flexDirection: 'row', alignItems: 'center', height: 48, marginVertical: 22, paddingHorizontal: 12, borderRadius: 20, }}>
-                        <TextInput style={{ width: '100%', height: '100%', marginHorizontal: 12, color: 'grey', }}
-                            value={groupName}
-                            onChangeText={text => setGroupName(text)}
-                            placeholder="Tên nhóm (không bắt buộc)"
-                            placeholderTextColor={'grey'}
-                        />
                     </View>
                     <View style={{ marginHorizontal: 22, flexDirection: 'row', alignItems: 'center', backgroundColor: '#574E92', height: 48, paddingHorizontal: 12, borderRadius: 20, }}>
                         <Ionicons name="search-outline" size={24} color={COLORS.white} />
@@ -162,7 +176,7 @@ const CreateGroup = ({ navigation, route }) => {
                                             </View>
                                             <TouchableOpacity
                                                 style={{ width: 150, height: 35, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 30, marginLeft: 'auto' }}
-                                                onPress={() => addMemberToGroup(item.friendInfo._id)}
+                                                onPress={() => addMemberToGroup(group._id, item.friendInfo._id)}
                                             >
                                                 <Text>Thêm vào nhóm</Text>
                                             </TouchableOpacity>
@@ -178,7 +192,7 @@ const CreateGroup = ({ navigation, route }) => {
     )
 }
 
-export default CreateGroup;
+export default AddMember;
 
 const styles = StyleSheet.create({
     header: {
