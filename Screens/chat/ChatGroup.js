@@ -47,7 +47,7 @@ const ChatGroup = ({ route }) => {
     const handleSendMsg = async (message) => {
         const data = JSON.parse(await AsyncStorage.getItem('userData'));
         try {
-            const response = await axios.post(sendMessageGroup, {
+            const response = await axios.post(sendMessageGroup, group._id, {
                 groupId: group._id,
                 message,
                 sender: data._id,
@@ -65,10 +65,10 @@ const ChatGroup = ({ route }) => {
     };
 
 
-    const getMessages = async (groupId) => {
+    const getMessages = async () => {
         const data = JSON.parse(await AsyncStorage.getItem('userData'));
         try {
-            const response = await axios.post(getMessagesGroup, { groupId });
+            const response = await axios.post(getMessagesGroup);
             // Dựa vào cấu trúc dữ liệu mới từ API, bạn cần trích xuất thông tin tin nhắn từ response.data.messages
             const formattedMessages = response.data.messages.map(msg => ({
                 _id: msg._id,
