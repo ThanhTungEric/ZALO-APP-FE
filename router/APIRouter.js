@@ -25,8 +25,12 @@ export const getDeleteGroup = `${host}/api/group/delete-group`;
 export const getAddMember = `${host}/api/group/add-member`;
 export const getRemoveMemberFromGroup = `${host}/api/group/remove-member`;
 export const getSetDeputyForGroup = `${host}/api/group/set-deputy`;
-export const getRemoveDeputyFromGroup = `${host}/api/group/remove-deputy`;
+export const getRemoveDeputyFromGroup = `${host}/api/group/remove-deputy`;// này chưa làm
 
+export const getMessagesGroup = `${host}/api/groupMessage/get-messages`
+export const sendMessageGroup = `${host}/api/groupMessage/send-message`
+export const getGroupMemberRoute = `${host}/api/group/get-member`
+export const deleteMessageGroupRoute = `${host}/api/groupMessage/delete-message`
 
 //chat
 export const sendMessageRoute = `${host}/api/messages/addmsg`;
@@ -36,6 +40,8 @@ export const recallMessageRoute = `${host}/api/messages/recallmsg`;
 //upload file
 export const uploadImageRoute = `${host}/api/upload/file`;
 
+// //group
+// export const findAllgroupRoute = `${host}/group/member`;
 
 
 

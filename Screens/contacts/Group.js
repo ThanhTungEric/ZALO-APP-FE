@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Pressable, Image, FlatList, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { getAllGroup, getAllGroupByMemberId, getLeaveGroup, getDeleteGroup} from '../../router/APIRouter'
+import { getAllGroup, host, getAllGroupByMemberId, getLeaveGroup, getDeleteGroup } from '../../router/APIRouter'
 import { COLORS, FONTS } from '../../constrants/theme'
 import PageContainer from '../../Components/PageContainer';
 import { useNavigation } from '@react-navigation/native';
+import { io } from "socket.io-client";
 const Group = () => {
-    const navigation = useNavigation();
-
+    const navigator = useNavigation();
+    const socket = useRef();
     const [userData, setUserData] = useState('');
 
     // State để lưu danh sách nhóm
@@ -24,6 +25,12 @@ const Group = () => {
             console.error(error);
         }
     }
+    useEffect(() => {
+        if (userData) {
+          socket.current = io(host);
+          socket.current.emit('add-user', userData._id);
+        }
+      }, [userData]);
 
     // //lấy toàn bộ danh sách nhóm chỉ để test
     // const getAllGroups = async () => {
@@ -157,7 +164,8 @@ const Group = () => {
                 {groups.map((group, index) => (
                     <TouchableOpacity
                         key={index}
-                        onPress={() => handleOptionsGroup(group)}
+                        // onPress={() => handleOptionsGroup(group)}
+                        onPress={() => navigator.navigate('ChatGroup', { group, socket})}
                         style={[
                             { width: '100%', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 22, borderBottomColor: COLORS.secondaryWhite, borderBottomWidth: 1, },
                             index % 2 !== 0

@@ -34,6 +34,7 @@ import ViewMember from "../Screens/chat/ViewMember";
 import AddMember from "../Screens/contacts/group/AddMember";
 import OptionsGroup from "../Screens/chat/OptionGroup";
 
+import ChatGroup from "../Screens/chat/ChatGroup";
 
 
 const Stack = createNativeStackNavigator();
@@ -139,6 +140,7 @@ const AppNavigation = () => (
             <Stack.Screen name="CreateGroup" component={CreateGroup} options={{ headerShown: false }} />
             <Stack.Screen name="ViewMember" component={ViewMember} options={{ headerShown: false }} />
             <Stack.Screen name="AddMember" component={AddMember} options={{ headerShown: false }} />
+            <Stack.Screen name="ChatGroup" component={ChatGroup} options={{ headerShown: false }} />
         </Stack.Navigator>
     </NavigationContainer>
 );
