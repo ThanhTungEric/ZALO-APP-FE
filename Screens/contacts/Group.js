@@ -78,9 +78,7 @@ const Group = () => {
     }, [userData._id]);  
     //lấy data từ local 
 
-    const handleOptionsGroup = (group) => {
-        navigation.navigate('OptionGroup', { group, userData });
-    };
+    
 
     const isAdminGroup = (group) => {
         return group.groupAdmin === userData._id;
@@ -164,7 +162,6 @@ const Group = () => {
                 {groups.map((group, index) => (
                     <TouchableOpacity
                         key={index}
-                        // onPress={() => handleOptionsGroup(group)}
                         onPress={() => navigator.navigate('ChatGroup', { group, socket})}
                         style={[
                             { width: '100%', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 22, borderBottomColor: COLORS.secondaryWhite, borderBottomWidth: 1, },
