@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import { get } from 'firebase/database';
+import { useNavigation } from '@react-navigation/native';
 
 const ChatGroup = ({ route }) => {
     const { group, socket } = route.params;
@@ -23,6 +24,8 @@ const ChatGroup = ({ route }) => {
     const [memberGroup, setMemberGroup] = useState([]);
     const [avatar, setAvatar] = useState([]);
     const [selectedMessage, setSelectedMessage] = useState(null);
+    const navigation = useNavigation();
+    const [userData, setUserData] = useState(null);
     console.log('group', group);
 
     useEffect(() => {
@@ -257,10 +260,41 @@ const ChatGroup = ({ route }) => {
         setSelectedMessage(null);
     };
 
+    const getUser = async () => {
+        try {
+            const value = await AsyncStorage.getItem('userData');
+            if (value !== null) {
+                const parsUser = JSON.parse(value);
+                setUserData(parsUser); 
+                console.log('userData', userData);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    useEffect(() => {
+        getUser(); 
+    }, [ userData._id]);
+
+    const handleOptionsGroup = (group) => {
+        
+        navigation.navigate('OptionGroup', { group, userData });
+    };
+
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>{group.groupName}</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22,  backgroundColor: COLORS.white, height: 60,}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center',}}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black}/>
+                    </TouchableOpacity>
+                    <Text style={{ ...FONTS.h4, marginLeft: 8 }}>{group.groupName}</Text>
+                </View>
+                <View style={{flexDirection: 'row',alignItems: 'center',}}>
+                    <TouchableOpacity  onPress={handleOptionsGroup} style={{marginRight: 8}}>
+                        <MaterialIcons name="menu" size={24}color={COLORS.black}/>
+                    </TouchableOpacity>
+                </View>
             </View>
             <ScrollView
                 ref={scrollViewRef}
