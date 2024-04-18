@@ -86,6 +86,39 @@ const ViewMember = () => {
         }
     };
 
+    // const handleDeleteMember = () => {
+    //     Alert.alert(
+    //         'Bạn có chắc chắn muốn xóa thành viên này không?', 
+    //         [
+    //             {
+    //                 text: 'Hủy',
+    //                 style: 'cancel'
+    //             },
+    //             {
+    //                 text: 'Xóa',
+    //                 onPress: () => removeMemberFromGroup(group._id, selectedMember._id)
+    //             }
+    //         ]
+    //     )
+    //     setIsOptionsVisible(false);
+    //     setSelectedMember(null);
+    // };
+    const handleDeleteMember = () => {
+        Alert.alert('Xác nhận', 'Bạn có chắc chắn muốn xóa thành viên này không?', [
+            {
+                text: 'Hủy',
+                onPress: () => console.log('Hủy xóa thành viên'),
+                style: 'cancel'
+            },
+            {
+                text: 'Xóa',
+                onPress: () => removeMemberFromGroup(group._id, selectedMember._id)
+            }
+        ])
+        
+        setSelectedMember(null);
+    };
+    
     // console.log("đây là user nhóm trưởng", userData._id)
 
     // bổ nhiệm làm phó nhóm
@@ -334,19 +367,14 @@ const ViewMember = () => {
                                     <TouchableOpacity style={styles.option2} onPress={handleTransferAdmin}>
                                         <Text style={styles.optionText}>Chuyển quyền trưởng nhóm </Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.option2} onPress={() => {
-                                        // removeDeputyFromGroup(group._id, selectedMember._id, userData._id);
-                                        removeMemberFromGroup(group._id, selectedMember._id);
-                                    }}>
+                                    <TouchableOpacity style={styles.option2} onPress={handleDeleteMember}>
                                         <Text style={{ marginLeft: 10, color: 'red' }}>Xóa khỏi nhóm</Text>
                                     </TouchableOpacity>
                                 </>
                             )}
                             {/* Hiển thị các lựa chọn cho phó nhóm */}
                             {group.groupDeputy.includes(userData._id) && (
-                                <TouchableOpacity style={styles.option2} onPress={() => {
-                                    removeMemberFromGroup(group._id, selectedMember._id);
-                                }}>
+                                <TouchableOpacity style={styles.option2} onPress={handleDeleteMember}>
                                     <Text style={{ marginLeft: 10, color: 'red' }}>Xóa khỏi nhóm</Text>
                                 </TouchableOpacity>
                             )}

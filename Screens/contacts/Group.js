@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Pressable, Image, FlatList, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { getAllGroup, host, getAllGroupByMemberId, getLeaveGroup, getDeleteGroup } from '../../router/APIRouter'
+import { getAllGroup, host, getAllGroupByMemberId, getLeaveGroup, getDeleteGroup, getGroupById } from '../../router/APIRouter'
 import { COLORS, FONTS } from '../../constrants/theme'
 import PageContainer from '../../Components/PageContainer';
 import { useNavigation } from '@react-navigation/native';
@@ -19,7 +19,7 @@ const Group = () => {
             const value = await AsyncStorage.getItem('userData');
             if (value !== null) {
                 const parsUser = JSON.parse(value);
-                setUserData(parsUser); 
+                setUserData(parsUser);
             }
         } catch (error) {
             console.error(error);
@@ -27,12 +27,12 @@ const Group = () => {
     }
     useEffect(() => {
         if (userData) {
-          socket.current = io(host);
-          socket.current.emit('add-user', userData._id);
+            socket.current = io(host);
+            socket.current.emit('add-user', userData._id);
         }
-      }, [userData]);
+    }, [userData]);
 
-    // //lấy toàn bộ danh sách nhóm chỉ để test
+    // //lấy toàn bộ danh sách nhóm chỉ để test 
     // const getAllGroups = async () => {
     //     try {
     //         const response = await fetch(getAllGroup, {
@@ -73,12 +73,11 @@ const Group = () => {
     };
 
     useEffect(() => {
-        getUser(); 
+        getUser();
         getAllGroups();
-    }, [userData._id]);  
+    }, [userData._id]);
     //lấy data từ local 
 
-    
 
     const isAdminGroup = (group) => {
         return group.groupAdmin === userData._id;
@@ -87,31 +86,48 @@ const Group = () => {
     // leave group (rời nhóm)
     const handleLeaveGroup = async (groupId, memberId) => {
         try {
-            if (isAdminGroup) {
-                // Nếu là admin, hiển thị thông báo không cho admin rời nhóm
-                Alert.alert('Trưởng nhóm không thể rời nhóm');
-                return;
-            }
-            const response = await fetch(getLeaveGroup, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    groupId: groupId,
-                    memberId: memberId
-                }),
-            });
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            const data = await response.json();
-            console.log(data.message); // In ra thông báo từ backend
-            getAllGroups();
+            Alert.alert(
+                'Xác nhận rời nhóm',
+                'Bạn có chắc chắn muốn rời nhóm này không?',
+                [
+                    {
+                        text: 'Hủy',
+                        onPress: () => console.log('Hủy rời nhóm'),
+                        style: 'cancel'
+                    },
+                    {
+                        text: 'Rời nhóm',
+                        onPress: async () => {
+                            try {
+                                const response = await fetch(getLeaveGroup, {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify({
+                                        groupId: groupId,
+                                        memberId: memberId
+                                    }),
+                                });
+                                if (!response.ok) {
+                                    throw new Error("Network response was not ok");
+                                }
+                                const data = await response.json();
+                                console.log(data.message); // In ra thông báo từ backend
+                                getAllGroups();
+                            } catch (error) {
+                                console.error("Error leaving group:", error);
+                            }
+                        }
+                    }
+                ],
+                { cancelable: false }
+            );
         } catch (error) {
-            console.error("Error leaving group:", error);
+            console.error("Error handling leave group:", error);
         }
     };
+
 
     // delete-group (giải tán nhóm)
     const handleDeleteGroup = async (groupId, memberId) => {
@@ -155,14 +171,15 @@ const Group = () => {
         );
     };
 
+
     return (
         <PageContainer>
-            {/* render danh sách nhóm */} 
+            {/* render danh sách nhóm */}
             <View>
                 {groups.map((group, index) => (
                     <TouchableOpacity
                         key={index}
-                        onPress={() => navigator.navigate('ChatGroup', { group, socket})}
+                        onPress={() => navigator.navigate('ChatGroup', { group, socket })}
                         style={[
                             { width: '100%', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 22, borderBottomColor: COLORS.secondaryWhite, borderBottomWidth: 1, },
                             index % 2 !== 0
@@ -195,11 +212,13 @@ const Group = () => {
 
                                 </>
                             )}
-                            <TouchableOpacity onPress={() => handleLeaveGroup(group._id, userData._id)}>
-                                <View style={styles.viewHeader}>
-                                    <Image source={require('../../assets/exit.png')} style={{ width: 20, height: 20 }} />
-                                </View>
-                            </TouchableOpacity>
+                            {!isAdminGroup(group) && (
+                                <TouchableOpacity onPress={() => handleLeaveGroup(group._id, userData._id)}>
+                                    <View style={styles.viewHeader}>
+                                        <Image source={require('../../assets/exit.png')} style={{ width: 20, height: 20 }} />
+                                    </View>
+                                </TouchableOpacity>
+                            )}
                         </View>
                     </TouchableOpacity>
                 ))}
@@ -236,5 +255,4 @@ const styles = StyleSheet.create({
 
 
 
-  
- 
+
