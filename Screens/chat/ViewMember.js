@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { COLORS, FONTS } from '../../constrants/theme'
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { getAllMemberByGroupId, getRemoveMemberFromGroup, getSetDeputyForGroup, getGroupById, getRemoveDeputyFromGroup } from '../../router/APIRouter';
+import { getAllMemberByGroupId, getRemoveMemberFromGroup, getSetDeputyForGroup, getGroupById, getRemoveDeputyFromGroup, getChangeAdminOfGroup } from '../../router/APIRouter';
 
 const ViewMember = () => {
     const navigation = useNavigation();
@@ -19,8 +19,8 @@ const ViewMember = () => {
 
     const [selectedMember, setSelectedMember] = useState(null); // Trạng thái cho việc hiển thị modal
     const [modalVisible, setModalVisible] = useState(false); // Trạng thái để kiểm soát việc hiển thị modal
-    const [confirmModalVisible, setConfirmModalVisible] = useState(false); // hiện modal của bổ nhiệm nhóm phó
-
+    const [confirmModalVisibleDeputy, setConfirmModalVisibleDeputy] = useState(false); // hiện modal của bổ nhiệm nhóm phó
+    const [confirmModalVisibleAdmin, setConfirmModalVisibleAdmin] = useState(false); // hiện modal của chuyển quyền nhóm trưởng
     // Xem danh sách thành viên nhóm
     const getAllMembers = async () => {
         try {
@@ -45,7 +45,7 @@ const ViewMember = () => {
     }, []);
 
     const handleAddMember = (group) => {
-        navigation.navigate('AddMember', { group }); 
+        navigation.navigate('AddMember', { group });
     };
 
     /// MODAL của nhóm trưởng
@@ -116,7 +116,7 @@ const ViewMember = () => {
 
     const handleSetDeputy = () => {
         if (selectedMember) {
-            setConfirmModalVisible(true); // Hiển thị modal xác nhận
+            setConfirmModalVisibleDeputy(true); // Hiển thị modal xác nhận
         }
     };
 
@@ -124,13 +124,14 @@ const ViewMember = () => {
     const confirmSetDeputy = () => {
         setDeputyForGroup(groupId, selectedMember._id, userData._id);
         closeModal(); // Đóng modal
-        setConfirmModalVisible(false); // Ẩn modal xác nhận
+        setConfirmModalVisibleDeputy(false); // Ẩn modal xác nhận
     };
 
     // Hàm để hủy bỏ bổ nhiệm làm phó nhóm 
     const cancelSetDeputy = () => {
-        setConfirmModalVisible(false); // Ẩn modal xác nhận
+        setConfirmModalVisibleDeputy(false); // Ẩn modal xác nhận
     };
+
     // cái rename group cũng vậy (chưa cần đến này để cuối kì báo cáo làm)
     // // xóa phó nhóm khỏi nhóm (chưa cần đến này để cuối kì báo cáo làm)
     // const removeDeputyFromGroup = async (groupId, memberId, adminId) => {
@@ -180,6 +181,49 @@ const ViewMember = () => {
 
         fetchGroupData(); // Call the function to fetch group data
     }, []);
+
+    // Change admin of group
+    const changeAdminOfGroup = async (groupId, adminId, newAdminId) => {
+        try {
+            const response = await fetch(getChangeAdminOfGroup, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    groupId: groupId,
+                    adminId: adminId,
+                    newAdminId: newAdminId
+                }),
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            console.log(data); // Log response data
+            // You can handle the response data as needed
+            getAllMembers(); // Refresh the member list after changing admin
+        } catch (error) {
+            console.error("Error changing admin:", error);
+            // Handle error
+        }
+    };
+
+    const handleTransferAdmin = () => {
+        if (selectedMember) {
+            setConfirmModalVisibleAdmin(true); 
+        }
+    };
+
+    const confirmTransferAdmin = () => {
+        changeAdminOfGroup(groupId, userData._id, selectedMember._id);
+        closeModal(); // Close modal
+        setConfirmModalVisibleAdmin(false); 
+    };
+
+    const cancelTransferAdmin = () => {
+        setConfirmModalVisibleAdmin(false); // Ẩn modal xác nhận
+    };
 
     console.log("đây là", group.groupDeputy)
     return (
@@ -287,7 +331,7 @@ const ViewMember = () => {
                                     <TouchableOpacity style={styles.option2} onPress={handleSetDeputy}>
                                         <Text style={styles.optionText}>Bổ nhiệm làm phó nhóm</Text>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={styles.option2}>
+                                    <TouchableOpacity style={styles.option2} onPress={handleTransferAdmin}>
                                         <Text style={styles.optionText}>Chuyển quyền trưởng nhóm </Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={styles.option2} onPress={() => {
@@ -296,8 +340,9 @@ const ViewMember = () => {
                                     }}>
                                         <Text style={{ marginLeft: 10, color: 'red' }}>Xóa khỏi nhóm</Text>
                                     </TouchableOpacity>
-                                </> 
+                                </>
                             )}
+                            {/* Hiển thị các lựa chọn cho phó nhóm */}
                             {group.groupDeputy.includes(userData._id) && (
                                 <TouchableOpacity style={styles.option2} onPress={() => {
                                     removeMemberFromGroup(group._id, selectedMember._id);
@@ -308,8 +353,9 @@ const ViewMember = () => {
                         </View>
                     </View>
                 </Modal>
+
                 {/* Modal của bổ nhiệm phó nhóm */}
-                <Modal visible={confirmModalVisible} transparent animationType="fade">
+                <Modal visible={confirmModalVisibleDeputy} transparent animationType="fade">
                     <View style={styles.modalDeputyContainer}>
                         <Text style={{ ...FONTS.h4, marginBottom: 20 }}>Bổ nhiệm {selectedMember ? selectedMember.fullName : ''} làm phó nhóm?</Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -318,6 +364,21 @@ const ViewMember = () => {
                             </TouchableOpacity>
                             <TouchableOpacity style={[styles.option2, { marginRight: 10 }]} onPress={confirmSetDeputy}>
                                 <Text style={[styles.optionText, { color: 'blue' }]}>Bổ nhiệm</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+
+                {/* Modal của chuyển quyền nhóm trưởng */}
+                <Modal visible={confirmModalVisibleAdmin} transparent animationType="fade">
+                    <View style={styles.modalDeputyContainer}>
+                        <Text style={{ ...FONTS.h4, marginBottom: 20 }}>Chuyển quyền {selectedMember ? selectedMember.fullName : ''} làm trưởng nhóm?</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <TouchableOpacity style={[styles.option2, { marginLeft: 10 }]} onPress={cancelTransferAdmin}>
+                                <Text style={styles.optionText}>Hủy</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.option2, { marginRight: 10 }]} onPress={confirmTransferAdmin}>
+                                <Text style={[styles.optionText, { color: 'blue' }]}>Chuyển quyền</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
