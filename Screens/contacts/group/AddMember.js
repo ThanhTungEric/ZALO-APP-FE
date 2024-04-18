@@ -106,7 +106,7 @@ const AddMember = ({ navigation, route }) => {
             if (data.message === "Member already in group") {
                 Alert.alert("Thành viên đã có trong nhóm.");
             } else {
-                navigation.navigate('ViewMember', { group: group });
+                navigation.navigate('ViewMember', { group: group, userData: userData });
             }
 
         } catch (error) {

@@ -26,6 +26,7 @@ export const getAddMember = `${host}/api/group/add-member`;
 export const getRemoveMemberFromGroup = `${host}/api/group/remove-member`;
 export const getSetDeputyForGroup = `${host}/api/group/set-deputy`;
 export const getRemoveDeputyFromGroup = `${host}/api/group/remove-deputy`;// này chưa làm
+export const getChangeAdminOfGroup = `${host}/api/group/change-admin`;
 
 export const getMessagesGroup = `${host}/api/groupMessage/get-messages`
 export const sendMessageGroup = `${host}/api/groupMessage/send-message`
