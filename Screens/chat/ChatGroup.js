@@ -68,13 +68,8 @@ const ChatGroup = ({ route }) => {
     };
 
     const sendFile = async () => {
-        if (!file) {
-            console.log("No file selected");
-            return;
-        }
-    
         try {
-            let formData = new FormData();
+            const formData = new FormData();
             let fileType = '';
 
             if (file.endsWith('.pdf')) {
@@ -84,27 +79,25 @@ const ChatGroup = ({ route }) => {
             } else if (file.endsWith('.txt')) {
                 fileType = 'text/plain';
             }
+
             formData.append('file', {
                 uri: file,
                 type: fileType,
-                name: fileName || 'file',
+                name: file.split('/').pop(),
             });
-    
+
             const response = await axios.post(uploadImageRoute, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-    
-            if (response.status === 200) {
-                console.log("File uploaded successfully");
-                setFile(null);
-                setFileName(null);
-            } else {
-                console.log("Failed to upload file");
-            }
+            console.log('file uploaded', response.data);
+            const fileUrl = response.data;
+
+            await handleSendMsg(fileUrl);
+            setFile(null);
         } catch (error) {
-            console.error("An error occurred while uploading the file: ", error);
+            console.log('error upload file', error);
         }
     };
 
