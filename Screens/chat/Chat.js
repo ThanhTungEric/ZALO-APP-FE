@@ -184,7 +184,7 @@ const ChatBox = ({ route }) => {
 
     const handleForwardMessage = () => {
         // Xử lý chuyển tiếp tin nhắn
-        navigation.navigate('Forward', selectedMessage);
+        navigation.navigate('Forward', {message:selectedMessage, socket:socket});
         setIsOptionsVisible(false);
         console.log('Chuyển tiếp tin nhắn', selectedMessage);
     };

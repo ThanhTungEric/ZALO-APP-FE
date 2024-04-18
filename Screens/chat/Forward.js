@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import PageContainer from '../../Components/PageContainer'
 import { COLORS, FONTS } from '../../constrants/theme'
 import axios from 'axios'
+import { getAllGroupByMemberId, sendMessageGroup } from '../../router/APIRouter'
 
 //API router
 import { getFriendListRoute, sendMessageRoute } from '../../router/APIRouter';
@@ -13,32 +14,59 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Forward = ({ navigation, route }) => {
 
-    const { message} = route.params;
+    const { message , socket } = route.params;
 
     const [numberPhone, setPhoneNumber] = useState("");
     const [data1, setData1] = useState([]);
+    const [groups, setGroups] = useState([]);
 
     const [userData, setUserData] = useState('');
     console.log("message đã gửi qua", message);
+    console.log("socket đã gửi qua", socket);
 
     const handleSendMsg = async (message, userSelected) => {
         try {
             const response = await axios.post(sendMessageRoute, {
                 from: userData._id,
                 to: userSelected._id,
-                message: message,
+                message: message.message,
             });
             if (response.status === 200) {
                 console.log("Gửi tin nhắn thành công", response.data);
-                navigation.navigate('ChatBox', { selectedChat: userSelected });
+                navigation.navigate('ChatBox', { selectedChat: userSelected, socket: socket});
             }
         } catch (error) {
             console.error("Error fetching data:", error);
         }
     }
 
+
+    const handleSendMsgGr = async (message, GroupSelected) => {
+        try {
+            const response = await axios.post(`${sendMessageGroup}/${GroupSelected._id}`, {
+                from: userData._id,
+                to: GroupSelected._id,
+                message: message.message,
+            });
+            console.log("GroupSelected", GroupSelected);
+            if (response.status === 200) {
+                console.log("Gửi tin nhắn thành công", response.data);
+                
+                navigation.navigate('ChatGroup', { group: GroupSelected , socket: socket });
+                
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
+
     const sendChat = (userSelected) => {
         handleSendMsg(message, userSelected)
+    }
+
+    const sendChatGr = (GroupSelected) => {
+        handleSendMsgGr(message, GroupSelected)
     }
 
     const getUser = async () => {
@@ -86,6 +114,31 @@ const Forward = ({ navigation, route }) => {
         fetchData();
     }, [userData._id]);
 
+
+    const getAllGroups = async () => {
+        try {
+            const response = await fetch(`${getAllGroupByMemberId}/${userData._id}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            const data = await response.json();
+            setGroups(data); // Lưu danh sách nhóm vào state
+            console.log("Danh sách nhóm:", data);
+        } catch (error) {
+            console.error("Error fetching group data:", error);
+        }
+    };
+
+    useEffect(() => {
+        getUser();
+        getAllGroups();
+    }, [userData._id]);
+
     return (
         <SafeAreaView>
             <PageContainer>
@@ -98,7 +151,7 @@ const Forward = ({ navigation, route }) => {
                             <Text style={{ ...FONTS.h4, marginVertical: 6 }}>Gửi đến</Text>
                         </View>
                         <View>
-                            <Text style={{ ...FONTS.h4, marginVertical: 6 }}  onPress={() => navigation.navigate('CreateGroup')}>Tạo nhóm</Text>
+                            <Text style={{ ...FONTS.h4, marginVertical: 6 }} onPress={() => navigation.navigate('CreateGroup')}>Tạo nhóm</Text>
                         </View>
                     </View>
                     <View style={{
@@ -112,7 +165,7 @@ const Forward = ({ navigation, route }) => {
                         borderRadius: 20,
                     }}
                     >
-                        <Ionicons name="search-outline" size={24} color={COLORS.white}/>
+                        <Ionicons name="search-outline" size={24} color={COLORS.white} />
                         <TextInput style={{ width: '100%', height: '100%', marginHorizontal: 12, color: '#fff', }}
                             onChangeText={(text) => setPhoneNumber(text)}
                             value={numberPhone}
@@ -174,6 +227,43 @@ const Forward = ({ navigation, route }) => {
                                 )}
                             </View>
                         ))}
+                        {/* render danh sách nhóm */}
+                        <View>
+                            {groups.map((group, index) => (
+                                <View
+                                    key={index}
+                                    //onPress={() => navigator.navigate('ChatGroup', { group, socket })}
+                                    style={[
+                                        { width: '100%', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 22, borderBottomColor: COLORS.secondaryWhite, borderBottomWidth: 1, },
+                                        index % 2 !== 0
+                                            ? {
+                                                backgroundColor: COLORS.tertiaryWhite,
+                                            }
+                                            : null,
+                                    ]}
+                                >
+                                    <View style={{ paddingVertical: 15, marginRight: 22, }}>
+                                        <Image
+                                            source={{ uri: group.avatar }}
+                                            resizeMode="contain"
+                                            style={{ height: 50, width: 50, borderRadius: 25, }}
+                                        />
+                                    </View>
+                                    <View style={{ flexDirection: 'column', }}>
+                                        <Text style={{ ...FONTS.h4, marginBottom: 4 }}>
+                                            {group.groupName}
+                                        </Text>
+                                    </View>
+                                    <TouchableOpacity
+                                        style={{ width: 80, height: 35, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 30 }}
+                                        onPress={() => sendChatGr(group)}
+                                    >
+                                        <Text>Gửi</Text>
+                                    </TouchableOpacity>
+
+                                </View>
+                            ))}
+                        </View>
                     </View>
                 </View>
             </PageContainer>

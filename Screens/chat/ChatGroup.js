@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, Platform, Image, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, Platform, Image, SafeAreaView,Alert } from 'react-native';
 import axios from 'axios';
 import { COLORS, FONTS } from '../../constrants/theme';
 import { getMessagesGroup, sendMessageGroup, uploadImageRoute, getGroupMemberRoute,deleteMessageGroupRoute } from '../../router/APIRouter';
@@ -10,9 +10,9 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import { get } from 'firebase/database';
 
+
 const ChatGroup = ({  route }) => {
     const { group, socket } = route.params;
-    const navigation = useNavigation();
     const [messages, setMessages] = useState([]);
     const scrollViewRef = React.useRef();
     const [msg, setMsg] = useState('');
@@ -25,6 +25,7 @@ const ChatGroup = ({  route }) => {
     const [memberGroup, setMemberGroup] = useState([]);
     const [avatar, setAvatar] = useState([]);
     const [selectedMessage, setSelectedMessage] = useState(null);
+    const navigation = useNavigation();
     console.log('group', group);
 
     useEffect(() => {
@@ -254,7 +255,18 @@ const ChatGroup = ({  route }) => {
     }
 
     const handleDeleteMessage = () => {
-        deleteMessageById(selectedMessage._id);
+        Alert.alert('Xác nhận', 'Bạn có chắc chắn muốn xóa tin nhắn này không?', [
+            {
+                text: 'Hủy',
+                onPress: () => console.log('Hủy xóa tin nhắn'),
+                style: 'cancel'
+            },
+            {
+                text: 'Xóa',
+                onPress: () => deleteMessageById(selectedMessage._id)
+            }
+        ])
+        
         setIsOptionsVisible(false);
         setSelectedMessage(null);
     };
@@ -281,9 +293,17 @@ const ChatGroup = ({  route }) => {
         navigation.navigate('OptionGroup', { group, userData });
     };
 
+
+    const handleForwardMessage = () => {
+        // Xử lý chuyển tiếp tin nhắn
+        navigation.navigate('Forward', {message: selectedMessage, socket: socket});
+        setIsOptionsVisible(false);
+        console.log('Chuyển tiếp tin nhắn', selectedMessage);
+    };
+
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22,  backgroundColor: COLORS.white, height: 60,}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22,  backgroundColor: COLORS.white, height: 60,paddingTop:20}}>
                 <View style={{ flexDirection: 'row', alignItems: 'center',}}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black}/>
@@ -382,7 +402,7 @@ const ChatGroup = ({  route }) => {
                             <Text>Xóa tin nhắn</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            //onPress={handleForwardMessage} 
+                            onPress={handleForwardMessage} 
                             style={styles.modalButton}>
                             <Text>Chuyển tiếp tin nhắn</Text>
                         </TouchableOpacity>
