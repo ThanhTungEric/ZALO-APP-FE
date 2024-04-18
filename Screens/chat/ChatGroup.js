@@ -5,12 +5,14 @@ import { COLORS, FONTS } from '../../constrants/theme';
 import { getMessagesGroup, sendMessageGroup, uploadImageRoute, getGroupMemberRoute,deleteMessageGroupRoute } from '../../router/APIRouter';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'; // Import các icon cần sử dụng
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native'; 
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import { get } from 'firebase/database';
 
-const ChatGroup = ({ route }) => {
+const ChatGroup = ({  route }) => {
     const { group, socket } = route.params;
+    const navigation = useNavigation();
     const [messages, setMessages] = useState([]);
     const scrollViewRef = React.useRef();
     const [msg, setMsg] = useState('');
@@ -257,11 +259,44 @@ const ChatGroup = ({ route }) => {
         setSelectedMessage(null);
     };
 
+    const [userData, setUserData] = useState('');
+
+    const getUser = async () => {
+        try {
+            const value = await AsyncStorage.getItem('userData');
+            if (value !== null) {
+                const parsUser = JSON.parse(value);
+                setUserData(parsUser); 
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        getUser(); 
+    }, [userData._id]);  
+
+    const handleOptionsGroup = (group) => {
+        navigation.navigate('OptionGroup', { group, userData });
+    };
+
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>{group.groupName}</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22,  backgroundColor: COLORS.white, height: 60,}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center',}}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black}/>
+                    </TouchableOpacity>
+                    <Text style={{ ...FONTS.h4, marginLeft: 8 }}>{group.groupName}</Text>
+                </View>
+                <View style={{flexDirection: 'row',alignItems: 'center',}}>
+                    <TouchableOpacity   onPress={() => handleOptionsGroup(group)} style={{marginRight: 8}}>
+                        <MaterialIcons name="menu" size={24}color={COLORS.black}/>
+                    </TouchableOpacity>
+                </View>
             </View>
+
             <ScrollView
                 ref={scrollViewRef}
                 style={styles.scrollView}
