@@ -27,8 +27,8 @@ const Login = ({ navigation, route }) => {
 
     const handleLogin = async (e) => {
         const data = {
-            phoneNumber: '0123456789',
-            password: 'Trung123!'
+            phoneNumber: phoneNumber,
+            password: password
         };
         
         if (phoneNumber === '' || password === '' ) {

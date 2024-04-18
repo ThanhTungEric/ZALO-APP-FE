@@ -25,6 +25,7 @@ export const getDeleteGroup = `${host}/api/group/delete-group`;
 export const getAddMember = `${host}/api/group/add-member`;
 export const getRemoveMemberFromGroup = `${host}/api/group/remove-member`;
 export const getSetDeputyForGroup = `${host}/api/group/set-deputy`;
+export const getRemoveDeputyFromGroup = `${host}/api/group/remove-deputy`;
 
 
 //chat
