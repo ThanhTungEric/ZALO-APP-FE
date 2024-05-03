@@ -86,23 +86,7 @@ const ViewMember = () => {
         }
     };
 
-    // const handleDeleteMember = () => {
-    //     Alert.alert(
-    //         'Bạn có chắc chắn muốn xóa thành viên này không?', 
-    //         [
-    //             {
-    //                 text: 'Hủy',
-    //                 style: 'cancel'
-    //             },
-    //             {
-    //                 text: 'Xóa',
-    //                 onPress: () => removeMemberFromGroup(group._id, selectedMember._id)
-    //             }
-    //         ]
-    //     )
-    //     setIsOptionsVisible(false);
-    //     setSelectedMember(null);
-    // };
+
     const handleDeleteMember = () => {
         Alert.alert('Xác nhận', 'Bạn có chắc chắn muốn xóa thành viên này không?', [
             {
@@ -267,7 +251,7 @@ const ViewMember = () => {
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black} />
                     </TouchableOpacity>
-                    <Text style={{ ...FONTS.h4, marginLeft: 8 }}>Thành viên</Text>
+                    <Text style={{ ...FONTS.h4, marginLeft: 8 }}>Thành viên</Text> 
                 </View>
             </View>
 
@@ -448,10 +432,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     modalDeputyContainer: {
-        marginLeft: '20%',
-        marginTop: "90%",
-        width: 500,
-        height: 'auto',
+        // width: 'auto',
+        // height: 'auto',
+        // position: 'absolute',
+        // left: '50%',
+        top: '50%',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff'
