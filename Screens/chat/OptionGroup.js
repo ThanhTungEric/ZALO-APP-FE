@@ -11,7 +11,7 @@ import PageContainer from '../../Components/PageContainer';
 const OptionsGroup = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const { group, userData } = route.params; // Lấy thông tin group và userData từ route params
+    const { group, userData, socket } = route.params; // Lấy thông tin group và userData từ route params
     const groupId = group._id;
     console.log("...", group)
     const [user, setUser] = useState("");
@@ -39,13 +39,17 @@ const OptionsGroup = () => {
     // };
 
     const handleAddMember = (group) => {
-        navigation.navigate('AddMember', { group });
+        navigation.navigate('AddMember', { group, userData, socket });
     };
 
     const handleViewMember = (group) => {
-        navigation.navigate('ViewMember', { group, userData });
+        navigation.navigate('ViewMember', { group, userData, socket });
     };
     
+    const handleBackChatGroup = (group) => {
+        navigation.navigate('ChatGroup', { group, userData, socket });
+    };
+
     return (
         <SafeAreaView>
             <PageContainer>
@@ -53,7 +57,7 @@ const OptionsGroup = () => {
                     {/* Header */}
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22, height: 60, }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <TouchableOpacity onPress={() => handleBackChatGroup(group)}>
                                 <MaterialIcons name="keyboard-arrow-left" size={35} color={COLORS.black} />
                             </TouchableOpacity>
                             <Text style={{ ...FONTS.h4, marginLeft: 8 }}>Tùy chọn</Text>

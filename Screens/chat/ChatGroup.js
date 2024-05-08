@@ -290,7 +290,7 @@ const ChatGroup = ({  route }) => {
     }, [userData._id]);  
 
     const handleOptionsGroup = (group) => {
-        navigation.navigate('OptionGroup', { group, userData });
+        navigation.navigate('OptionGroup', { group, userData, socket });
     };
 
 

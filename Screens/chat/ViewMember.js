@@ -11,7 +11,7 @@ const ViewMember = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const isFocused = useIsFocused();
-    const { group, userData } = route.params; // Lấy thông tin group và userData từ route params
+    const { group, userData, socket } = route.params; // Lấy thông tin group và userData từ route params
     const [groupp, setGroupp] = useState(group);
     const groupId = group._id;
 
@@ -48,7 +48,7 @@ const ViewMember = () => {
     }, [isFocused]);
 
     const handleAddMember = (group) => {
-        navigation.navigate('AddMember', { group });
+        navigation.navigate('AddMember', { group, userData, socket });
     };
 
     /// MODAL của nhóm trưởng
@@ -250,7 +250,7 @@ const ViewMember = () => {
 
 
     const handleBackOptionGroup = (group) => {
-        navigation.navigate('OptionGroup', { group, userData });
+        navigation.navigate('OptionGroup', { group, userData, socket });
     };
     
     return (
