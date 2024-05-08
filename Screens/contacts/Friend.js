@@ -4,8 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getFriendListRoute } from '../../router/APIRouter';
 import { COLORS, FONTS } from '../../constrants/theme'
 import PageContainer from '../../Components/PageContainer';
+import { useIsFocused } from '@react-navigation/native';
 const Friend = () => {
-
+    const isFocused = useIsFocused();
     const [data1, setData1] = useState([]);
     const [userData, setUserData] = useState('');
     //lấy data từ local / lưu trữ thông tin người dùng đang đăng nhập
@@ -47,7 +48,7 @@ const Friend = () => {
         };
 
         fetchData();
-    }, [userData._id]);
+    }, [userData._id, isFocused]);
 
     return (
         <PageContainer>

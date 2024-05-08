@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, Pressable, FlatList, Modal } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Alert } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect, } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { COLORS, FONTS } from '../../constrants/theme'
@@ -12,6 +12,7 @@ import { getAllMemberByGroupId, getRemoveMemberFromGroup, getSetDeputyForGroup, 
 const ViewMember = () => {
     const navigation = useNavigation();
     const route = useRoute();
+    const isFocused = useIsFocused();
     const { group, userData } = route.params;; // Lấy thông tin group và userData từ route params
     const groupId = group._id;
 
@@ -40,9 +41,10 @@ const ViewMember = () => {
         }
     };
     console.log("groupId:", groupId)
+
     useEffect(() => {
         getAllMembers();
-    }, []);
+    }, [isFocused]);
 
     const handleAddMember = (group) => {
         navigation.navigate('AddMember', { group });
@@ -138,10 +140,11 @@ const ViewMember = () => {
     };
 
     // Hàm để xác nhận việc bổ nhiệm làm phó nhóm
-    const confirmSetDeputy = () => {
+    const confirmSetDeputy =  () => {
         setDeputyForGroup(groupId, selectedMember._id, userData._id);
         closeModal(); // Đóng modal
         setConfirmModalVisibleDeputy(false); // Ẩn modal xác nhận
+        getAllMembers();
     };
 
     // Hàm để hủy bỏ bổ nhiệm làm phó nhóm 

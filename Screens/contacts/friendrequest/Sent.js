@@ -41,7 +41,8 @@ const Sent = () => {
                     throw new Error("Network response was not ok");
                 }
                 const data = await response.json();
-                setData(data);
+                const filteredData = data.filter(item => item.friend.actionUserId == user._id);
+                setData(filteredData);
                 console.log("Danh sách đã gửi lời mời kết bạn", data);
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -68,15 +69,17 @@ const Sent = () => {
             if (!response.ok) {
                 throw new Error('Failed to reject friend.');
             }
-
-            const data = await response.json();
+            const updatedData = data.filter(item => item.friend.idUser2 !== userId2);
+            setData(updatedData);
+            //const data = await response.json();
         } catch (error) {
             console.error('Error rejecting friend:', error);
         }
         setIsRefuseModalOpen(false);
-        window.location.reload();
+        window.location.reload(); 
     };
 
+    
 
     return (
         <View style={styles.container}>

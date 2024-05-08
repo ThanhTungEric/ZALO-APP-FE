@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity, Image, FlatList, } from 'react-native';
 import { AntDesign, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import PageContainer from '../../Components/PageContainer'
@@ -18,6 +18,10 @@ const Messages = () => {
   const navigation = useNavigation();
   const [user, setUser] = useState(null);
   const [data, setData] = useState([]);
+
+  // Lưu trạng thái của thông báo đã xóa người bạn
+  const isFocused = useIsFocused();
+
   const socket = useRef();
 
   const getUser = async () => {
@@ -54,8 +58,9 @@ const Messages = () => {
         console.error('Error:', error);
       }
     };
-    fetchData();
-  }, [user]);
+    fetchData(); 
+  }, [user, isFocused]);
+
 
   useEffect(() => {
     if (user) {
@@ -130,7 +135,7 @@ const Messages = () => {
           >
             <Ionicons name="search-outline" size={24} color={COLORS.white} />
             <TextInput style={{ width: '100%', height: '100%', marginHorizontal: 12, color: '#fff', }}
-               onChangeText={(text) => setSearch(text)}
+              onChangeText={(text) => setSearch(text)}
               value={search}
               placeholder="Tìm kiếm tên..."
               placeholderTextColor={'#fff'}
