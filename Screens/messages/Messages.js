@@ -117,7 +117,7 @@ const Messages = () => {
                     <Text>{item.fullName.substring(0, 5)}...</Text>
                   </View>
                 )}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(item, index) => index.toString()} 
               />
             </View>
 
