@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, Pressable, FlatList, Modal } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Alert } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation, useRoute, useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect, } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { COLORS, FONTS } from '../../constrants/theme'
@@ -12,6 +12,7 @@ import { getAllMemberByGroupId, getRemoveMemberFromGroup, getSetDeputyForGroup, 
 const ViewMember = () => {
     const navigation = useNavigation();
     const route = useRoute();
+    const isFocused = useIsFocused();
     const { group, userData } = route.params;; // Lấy thông tin group và userData từ route params
     const groupId = group._id;
 
@@ -40,9 +41,10 @@ const ViewMember = () => {
         }
     };
     console.log("groupId:", groupId)
+
     useEffect(() => {
         getAllMembers();
-    }, []);
+    }, [isFocused]);
 
     const handleAddMember = (group) => {
         navigation.navigate('AddMember', { group });
@@ -86,23 +88,7 @@ const ViewMember = () => {
         }
     };
 
-    // const handleDeleteMember = () => {
-    //     Alert.alert(
-    //         'Bạn có chắc chắn muốn xóa thành viên này không?', 
-    //         [
-    //             {
-    //                 text: 'Hủy',
-    //                 style: 'cancel'
-    //             },
-    //             {
-    //                 text: 'Xóa',
-    //                 onPress: () => removeMemberFromGroup(group._id, selectedMember._id)
-    //             }
-    //         ]
-    //     )
-    //     setIsOptionsVisible(false);
-    //     setSelectedMember(null);
-    // };
+
     const handleDeleteMember = () => {
         Alert.alert('Xác nhận', 'Bạn có chắc chắn muốn xóa thành viên này không?', [
             {
@@ -154,10 +140,11 @@ const ViewMember = () => {
     };
 
     // Hàm để xác nhận việc bổ nhiệm làm phó nhóm
-    const confirmSetDeputy = () => {
+    const confirmSetDeputy =  () => {
         setDeputyForGroup(groupId, selectedMember._id, userData._id);
         closeModal(); // Đóng modal
         setConfirmModalVisibleDeputy(false); // Ẩn modal xác nhận
+        getAllMembers();
     };
 
     // Hàm để hủy bỏ bổ nhiệm làm phó nhóm 
@@ -267,7 +254,7 @@ const ViewMember = () => {
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black} />
                     </TouchableOpacity>
-                    <Text style={{ ...FONTS.h4, marginLeft: 8 }}>Thành viên</Text>
+                    <Text style={{ ...FONTS.h4, marginLeft: 8 }}>Thành viên</Text> 
                 </View>
             </View>
 
@@ -448,10 +435,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     modalDeputyContainer: {
-        marginLeft: '20%',
-        marginTop: "90%",
-        width: 500,
-        height: 'auto',
+        // width: 'auto',
+        // height: 'auto',
+        // position: 'absolute',
+        // left: '50%',
+        top: '50%',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff'

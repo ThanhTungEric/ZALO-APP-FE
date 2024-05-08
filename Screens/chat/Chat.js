@@ -110,6 +110,11 @@ const ChatBox = ({ route }) => {
         navigation.navigate('Option', { selectedChat: selectedChat });
     };
 
+    const handleNavigateToCall = () => {
+        // Điều hướng đến màn hình call
+        navigation.navigate('Call', { selectedChat: selectedChat });
+    };
+
     useEffect(() => {
         (async () => {
             if (Platform.OS !== 'web') {
@@ -185,7 +190,7 @@ const ChatBox = ({ route }) => {
 
     const handleForwardMessage = () => {
         // Xử lý chuyển tiếp tin nhắn
-        navigation.navigate('Forward', {message:selectedMessage, socket:socket});
+        navigation.navigate('Forward', { message: selectedMessage, socket: socket });
         setIsOptionsVisible(false);
         console.log('Chuyển tiếp tin nhắn', selectedMessage);
     };
@@ -273,16 +278,19 @@ const ChatBox = ({ route }) => {
     return (
         <SafeAreaView style={{ flex: 1, color: COLORS.secondaryWhite }}>
             {/* Header */}
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22,  backgroundColor: COLORS.white, height: 60,}}>
-                <View style={{ flexDirection: 'row', alignItems: 'center',}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22, backgroundColor: COLORS.white, height: 60, }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black}/>
+                        <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                     <Text style={{ ...FONTS.h4, marginLeft: 8 }}>{selectedChat.fullName}</Text>
                 </View>
-                <View style={{flexDirection: 'row',alignItems: 'center',}}>
-                    <TouchableOpacity  onPress={handleNavigateToOptions} style={{marginRight: 8}}>
-                        <MaterialIcons name="menu" size={24}color={COLORS.black}/>
+                <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                    <TouchableOpacity onPress={handleNavigateToCall} style={{ marginRight: 8 }}>
+                        <MaterialIcons name="call" size={24} color={COLORS.black} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleNavigateToOptions} style={{ marginRight: 8 }}>
+                        <MaterialIcons name="menu" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                 </View>
             </View>

@@ -5,9 +5,10 @@ import { getGetAddFriendRoute } from '../../../router/APIRouter';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getRejectFriend } from '../../../router/APIRouter';
 import { getAcceptFriendRoute } from '../../../router/APIRouter';
+import { useNavigation } from '@react-navigation/native';
 import { set } from 'firebase/database';
 const Received = () => {
-
+    const navigation = useNavigation();
     const [data1, setData1] = useState([]);
     const [user, setUser] = useState("");
 
@@ -52,7 +53,7 @@ const Received = () => {
 
         fetchData();
     }, [user._id]);
-    
+
     const handleRejectFriend = async ({ userId1, userId2 }) => {
         try {
             const response = await fetch(`${getRejectFriend}`, {
@@ -70,7 +71,8 @@ const Received = () => {
             if (!response.ok) {
                 throw new Error('Failed to reject friend.');
             }
-
+            const updatedData = data1.filter(item => item.friend.idUser2 !== userId2);
+            setData1(updatedData);
             const data = await response.json();
         } catch (error) {
             console.error('Error rejecting friend:', error);
@@ -96,6 +98,7 @@ const Received = () => {
             if (!response.ok) {
                 throw new Error('Failed to accept friend.');
             }
+            navigation.navigate('Bạn bè');
         } catch (error) {
             console.error('Error accepting friend:', error);
         }

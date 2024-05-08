@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FlatList, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput, View, Text, Image } from 'react-native'
 import auth from "@react-native-firebase/auth";
-import firestore from "@react-native-firebase/firestore";
+//import firestore from "@react-native-firebase/firestore";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SIZES, FONTS } from '../../constrants/theme';
 import Button from '../../Components/Button';
-import PageTitle from '../../Components/PageContainer';
+//import PageTitle from '../../Components/PageContainer';
 import { AntDesign } from '@expo/vector-icons';
 
 export default function AuthenOTP() {
@@ -31,27 +31,38 @@ export default function AuthenOTP() {
         }
     };
 
+    // const confirmCode = async () => {
+    //     try {
+    //         const userCredential = await confirm.confirm(code);
+    //         const user = userCredential.user;
+
+    //         // check if the user is new or existing
+    //         const userDocument = await firestore()
+    //             .collection("users")
+    //             .doc(user.uid)
+    //             .get();
+    //         if (userDocument.exists) {
+    //             // User is existing, navigate to Home
+    //             navigation.navigate("Home");
+    //         } else {
+    //             // User is new, navigate to Signup
+    //             navigation.navigate("Signup", { uid: user.uid });
+    //         }
+    //     } catch (error) {
+    //         console.log("Invalid code", error);
+    //     }
+    // };
     const confirmCode = async () => {
         try {
-            const userCredential = await confirm.confirm(code);
-            const user = userCredential.user;
-
-            // check if the user is new or existing
-            const userDocument = await firestore()
-                .collection("users")
-                .doc(user.uid)
-                .get();
-            if (userDocument.exists) {
-                // User is existing, navigate to Home
-                navigation.navigate("Home");
-            } else {
-                // User is new, navigate to Signup
-                navigation.navigate("Signup", { uid: user.uid });
-            }
+            await confirm.confirm(code);
+    
+            // Nếu mã OTP hợp lệ, điều hướng người dùng đến màn hình "Signup"
+            navigation.navigate("Signup");
         } catch (error) {
             console.log("Invalid code", error);
         }
     };
+    
 
     // fectch codes from rescountries api
 

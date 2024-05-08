@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity, Image, FlatList, } from 'react-native';
 import { AntDesign, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import PageContainer from '../../Components/PageContainer'
@@ -17,7 +17,14 @@ const Messages = () => {
   const navigation = useNavigation();
   const [user, setUser] = useState(null);
   const [data, setData] = useState([]);
+
   const [groups, setGroups] = useState([]);
+
+
+  // Lưu trạng thái của thông báo đã xóa người bạn
+  const isFocused = useIsFocused();
+
+
   const socket = useRef();
 
   useEffect(() => {
@@ -53,7 +60,8 @@ const Messages = () => {
       }
     };
     fetchFriendList();
-  }, [user]);
+  }, [user,isFocused]);
+
 
   useEffect(() => {
     if (user) {

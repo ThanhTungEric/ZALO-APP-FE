@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { getUnFriendRoute } from '../../router/APIRouter';
@@ -30,27 +30,66 @@ const Options = () => {
         getUser();
     }, []);
 
-    const handleUnFriend = async ({ userId1, userId2 }) => {
-        try {
-            const response = await fetch(`${getUnFriendRoute}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
+    // const handleUnFriend = async ({ userId1, userId2 }) => {
+    //     try {
+    //         const response = await fetch(`${getUnFriendRoute}`, {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify({
+    //                 idUser1: userId1,
+    //                 idUser2: userId2,
+    //             }),
+
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error('Failed to unfriend.');
+    //         }
+    //         navigation.navigate('Tin nhắn');
+    //         const data = await response.json();
+    //     } catch (error) {
+    //         console.error('Error unfriend:', error); 
+    //     }
+    // };
+
+    const handleUnFriend = ({ userId1, userId2 }) => {
+        Alert.alert(
+            "Xác nhận",
+            "Bạn có chắc chắn muốn xóa bạn này?",
+            [
+                {
+                    text: "Hủy",
+                    style: "cancel"
                 },
-                body: JSON.stringify({
-                    idUser1: userId1,
-                    idUser2: userId2,
-                }),
+                {
+                    text: "Xóa",
+                    onPress: async () => {
+                        try {
+                            const response = await fetch(`${getUnFriendRoute}`, {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                    idUser1: userId1,
+                                    idUser2: userId2,
+                                }),
+                            });
 
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to unfriend.');
-            }
-            const data = await response.json();
-        } catch (error) {
-            console.error('Error unfriend:', error);
-        }
+                            if (!response.ok) {
+                                throw new Error('Failed to unfriend.');
+                            }
+                            navigation.navigate('Tin nhắn');
+                        } catch (error) {
+                            console.error('Error unfriend:', error);
+                        }
+                    }
+                }
+            ],
+            { cancelable: false }
+        );
     };
     //////////////////////
     const handleNavigateToMessage = () => {
@@ -93,7 +132,7 @@ const Options = () => {
                             <TouchableOpacity onPress={() => navigation.goBack()}>
                                 <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black} />
                             </TouchableOpacity>
-                            <Text style={{ ...FONTS.h4, marginLeft: 8 }}>Thành viên</Text>
+                            <Text style={{ ...FONTS.h4, marginLeft: 8 }}>Tùy chọn</Text>
                         </View>
                     </View>
                     {/* Hình ảnh và tên */}

@@ -4,10 +4,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getAllGroup, host, getAllGroupByMemberId, getLeaveGroup, getDeleteGroup, getGroupById } from '../../router/APIRouter'
 import { COLORS, FONTS } from '../../constrants/theme'
 import PageContainer from '../../Components/PageContainer';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused  } from '@react-navigation/native';
 import { io } from "socket.io-client";
 const Group = () => {
     const navigator = useNavigation();
+    const isFocused = useIsFocused();
     const socket = useRef();
     const [userData, setUserData] = useState('');
 
@@ -75,7 +76,7 @@ const Group = () => {
     useEffect(() => {
         getUser();
         getAllGroups();
-    }, [userData._id]);
+    }, [userData._id, isFocused]);
     //lấy data từ local 
 
 
