@@ -13,7 +13,7 @@ const OptionsGroup = () => {
     const route = useRoute();
     const { group, userData } = route.params; // Lấy thông tin group và userData từ route params
     const groupId = group._id;
-
+    console.log("...", group)
     const [user, setUser] = useState("");
 
     const getUser = async () => {

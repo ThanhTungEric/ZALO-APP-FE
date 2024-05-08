@@ -180,7 +180,6 @@ const Group = () => {
                 {groups.map((group, index) => (
                     <TouchableOpacity
                         key={index}
-                        onPress={() => navigator.navigate('ChatGroup', { group, socket })}
                         style={[
                             { width: '100%', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 22, borderBottomColor: COLORS.secondaryWhite, borderBottomWidth: 1, },
                             index % 2 !== 0

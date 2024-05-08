@@ -255,7 +255,7 @@ const ChatGroup = ({  route }) => {
     }
 
     const handleDeleteMessage = () => {
-        Alert.alert('Xác nhận', 'Bạn có chắc chắn muốn xóa tin nhắn này không?', [
+        Alert.alert('Xác nhận', 'Bạn có chắc chắn muốn xóa tin nhắn này không???', [
             {
                 text: 'Hủy',
                 onPress: () => console.log('Hủy xóa tin nhắn'),

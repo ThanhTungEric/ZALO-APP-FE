@@ -1,19 +1,18 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, Pressable, FlatList, Modal } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Pressable, Modal } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Alert } from 'react-native';
 import { useNavigation, useRoute, useIsFocused } from '@react-navigation/native';
 import React, { useState, useEffect, } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import { COLORS, FONTS } from '../../constrants/theme'
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { getAllMemberByGroupId, getRemoveMemberFromGroup, getSetDeputyForGroup, getGroupById, getRemoveDeputyFromGroup, getChangeAdminOfGroup } from '../../router/APIRouter';
 
 const ViewMember = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const isFocused = useIsFocused();
-    const { group, userData } = route.params;; // Lấy thông tin group và userData từ route params
+    const { group, userData } = route.params; // Lấy thông tin group và userData từ route params
+    const [groupp, setGroupp] = useState(group);
     const groupId = group._id;
 
     const [members, setMembers] = useState([]);
@@ -36,11 +35,13 @@ const ViewMember = () => {
             }
             const data = await response.json();
             setMembers(data);
+            console.log("day la data", data)
         } catch (error) {
             console.error("Error fetching group members:", error);
         }
     };
     console.log("groupId:", groupId)
+
 
     useEffect(() => {
         getAllMembers();
@@ -82,6 +83,7 @@ const ViewMember = () => {
             }
             const data = await response.json();
             console.log(data.message);
+            setGroupp(data);
             getAllMembers();
         } catch (error) {
             console.error("Error removing member:", error);
@@ -101,10 +103,10 @@ const ViewMember = () => {
                 onPress: () => removeMemberFromGroup(group._id, selectedMember._id)
             }
         ])
-        
+
         setSelectedMember(null);
     };
-    
+
     // console.log("đây là user nhóm trưởng", userData._id)
 
     // bổ nhiệm làm phó nhóm
@@ -125,7 +127,8 @@ const ViewMember = () => {
                 throw new Error("Network response was not ok");
             }
             const data = await response.json();
-            console.log(data);
+            console.log("data sau khi bo nhiem", data);
+            setGroupp(data);
             getAllMembers();
         } catch (error) {
             console.error("Error setting deputy:", error);
@@ -140,7 +143,7 @@ const ViewMember = () => {
     };
 
     // Hàm để xác nhận việc bổ nhiệm làm phó nhóm
-    const confirmSetDeputy =  () => {
+    const confirmSetDeputy = () => {
         setDeputyForGroup(groupId, selectedMember._id, userData._id);
         closeModal(); // Đóng modal
         setConfirmModalVisibleDeputy(false); // Ẩn modal xác nhận
@@ -221,8 +224,8 @@ const ViewMember = () => {
             }
             const data = await response.json();
             console.log(data); // Log response data
-            // You can handle the response data as needed
-            getAllMembers(); // Refresh the member list after changing admin
+            setGroupp(data);
+            getAllMembers(); 
         } catch (error) {
             console.error("Error changing admin:", error);
             // Handle error
@@ -231,30 +234,34 @@ const ViewMember = () => {
 
     const handleTransferAdmin = () => {
         if (selectedMember) {
-            setConfirmModalVisibleAdmin(true); 
+            setConfirmModalVisibleAdmin(true);
         }
     };
 
     const confirmTransferAdmin = () => {
         changeAdminOfGroup(groupId, userData._id, selectedMember._id);
         closeModal(); // Close modal
-        setConfirmModalVisibleAdmin(false); 
+        setConfirmModalVisibleAdmin(false);
     };
 
     const cancelTransferAdmin = () => {
         setConfirmModalVisibleAdmin(false); // Ẩn modal xác nhận
     };
 
-    console.log("đây là", group.groupDeputy)
+
+    const handleBackOptionGroup = (group) => {
+        navigation.navigate('OptionGroup', { group, userData });
+    };
+    
     return (
         <SafeAreaView>
             {/* Header */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22, backgroundColor: COLORS.white, height: 60, }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <TouchableOpacity onPress={() => handleBackOptionGroup(groupp)}>
                         <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black} />
                     </TouchableOpacity>
-                    <Text style={{ ...FONTS.h4, marginLeft: 8 }}>Thành viên</Text> 
+                    <Text style={{ ...FONTS.h4, marginLeft: 8 }}>Thành viên</Text>
                 </View>
             </View>
 
@@ -271,17 +278,14 @@ const ViewMember = () => {
 
             <View style={{ backgroundColor: '#fff' }}>
                 <Text style={{ ...FONTS.h4, marginTop: 20, marginLeft: 22, color: 'blue' }}>Thành viên</Text>
-                <FlatList
-                    data={members}
-                    keyExtractor={(item) => item._id}
-                    renderItem={({ item }) => {
-                        // Kiểm tra xem item có trong danh sách phó nhóm hay không
-                        const isDeputy = group.groupDeputy.includes(item._id);
-                        // Kiểm tra xem item có phải là nhóm trưởng hay không
-                        const isAdmin = item._id === group.groupAdmin;
+                <View>
+                    {members.map((item) => {
+                        const isDeputy = groupp.groupDeputy.includes(item._id);
+                        const isAdmin = item._id === groupp.groupAdmin;
 
                         return (
                             <TouchableOpacity
+                                key={item._id}
                                 style={{
                                     width: '100%',
                                     flexDirection: 'row',
@@ -303,14 +307,16 @@ const ViewMember = () => {
                                     <Text style={{ ...FONTS.h4, marginBottom: 4 }}>
                                         {item.fullName}
                                     </Text>
-                                    {/* Hiển thị vai trò của thành viên */}
                                     {isDeputy && <Text style={{ color: 'grey' }}>Phó nhóm</Text>}
                                     {isAdmin && <Text style={{ color: 'green' }}>Trưởng nhóm</Text>}
                                 </View>
                             </TouchableOpacity>
                         );
-                    }}
-                />
+                    })}
+                </View>
+
+
+
 
                 {/* Modal */}
                 <Modal visible={modalVisible} transparent animationType="fade">
