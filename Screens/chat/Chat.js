@@ -11,6 +11,7 @@ import * as ImagePicker from 'expo-image-picker';
 // import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
 import { COLORS, FONTS } from '../../constrants/theme';
+import { set } from 'firebase/database';
 
 
 const ChatBox = ({ route }) => {
@@ -223,7 +224,7 @@ const ChatBox = ({ route }) => {
             formData.append('file', {
                 uri: file,
                 type: fileType,
-                name: file.split('/').pop(),
+                name: fileName,
             });
 
             const response = await axios.post(uploadImageRoute, formData, {
@@ -236,6 +237,7 @@ const ChatBox = ({ route }) => {
 
             await handleSendMsg(fileUrl);
             setFile(null);
+            setFileName(null);
         } catch (error) {
             console.log('error upload file', error);
         }

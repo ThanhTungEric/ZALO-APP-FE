@@ -1,4 +1,4 @@
-export const host = "http://192.168.137.9:8080";
+export const host = "http://192.168.137.12:8080";
 export const login = `${host}/user/login`;
 export const register = `${host}/user/`;
 export const forgotPassword = `${host}/user/forgotPassword`;
