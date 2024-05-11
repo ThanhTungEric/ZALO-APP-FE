@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Pressable, Image, FlatList } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
-import { getGetAddFriendRoute } from '../../../router/APIRouter';
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { getRejectFriend } from '../../../router/APIRouter';
-import { getAcceptFriendRoute } from '../../../router/APIRouter';
-import { set } from 'firebase/database';
+import React, { useEffect, useState } from 'react';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { getAcceptFriendRoute, getGetAddFriendRoute, getRejectFriend } from '../../../router/APIRouter';
+import { useTranslation } from 'react-i18next';
 const Received = () => {
 
     const [data1, setData1] = useState([]);
     const [user, setUser] = useState("");
+    const { t } = useTranslation('contact');
 
 
     const getUser = async () => {
@@ -52,7 +51,7 @@ const Received = () => {
 
         fetchData();
     }, [user._id]);
-    
+
     const handleRejectFriend = async ({ userId1, userId2 }) => {
         try {
             const response = await fetch(`${getRejectFriend}`, {
@@ -112,7 +111,7 @@ const Received = () => {
                                 <Image source={{ uri: item.friendInfo.avatar }} style={styles.avatar} />
                                 <View style={styles.infoContainer}>
                                     <Text style={styles.fullName}>{item.friendInfo.fullName}</Text>
-                                    <Text style={{ fontSize: 13, color: 'grey', marginTop: 5 }}>Có thể bạn quen</Text>
+                                    {/* <Text style={{ fontSize: 13, color: 'grey', marginTop: 5 }}>Có thể bạn quen</Text> */}
                                     <Text style={styles.phoneNumber}>{item.friendInfo.phoneNumber}</Text>
                                     <Text style={styles.email}>{item.friendInfo.email}</Text>
                                     <View style={{ flexDirection: 'row', marginTop: 10 }}>
@@ -120,13 +119,13 @@ const Received = () => {
                                             onPress={() => handleRejectFriend({ userId1: item.friend.idUser1, userId2: item.friend.idUser2 })}
                                             style={styles.button}
                                         >
-                                            <Text>Từ chối</Text>
+                                            <Text> {t('reject')} </Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity
                                             onPress={() => handleAcceptFriend({ userId1: item.friend.idUser1, userId2: item.friend.idUser2 })}
                                             style={[styles.button, { marginLeft: 10 }]}
                                         >
-                                            <Text style={{ color: 'purple' }}>Đồng ý</Text>
+                                            <Text style={{ color: 'purple' }}> {t('accept')}</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>

@@ -27,10 +27,10 @@ const Group = () => {
     }
     useEffect(() => {
         if (userData) {
-          socket.current = io(host);
-          socket.current.emit('add-user', userData._id);
+            socket.current = io(host);
+            socket.current.emit('add-user', userData._id);
         }
-      }, [userData]);
+    }, [userData]);
 
     const getAllGroups = async () => {
         try {
@@ -64,7 +64,7 @@ const Group = () => {
                 {groups.map((group, index) => (
                     <TouchableOpacity
                         key={index}
-                        onPress={() => navigator.navigate('ChatGroup', { group, socket})}
+                        onPress={() => navigator.navigate('ChatGroup', { group, socket })}
                         style={[
                             { width: '100%', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 22, borderBottomColor: COLORS.secondaryWhite, borderBottomWidth: 1, },
                             index % 2 !== 0

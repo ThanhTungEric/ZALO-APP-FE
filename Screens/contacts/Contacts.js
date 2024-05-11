@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import PageContainer from '../../Components/PageContainer'
 import { COLORS, FONTS } from '../../constrants/theme'
+import { useTranslation } from 'react-i18next';
 
 //API router
 import { getFriendByNumberPhoneRoute } from '../../router/APIRouter';
@@ -74,13 +75,14 @@ const Contacts = ({ navigation }) => {
     const handleSearch = () => {
         getFriendByNumberPhone();
     };
+    const { t } = useTranslation('contact');
 
     return (
         <SafeAreaView>
             <PageContainer>
                 <View >
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 22, marginTop: 22, }}>
-                        <Text style={{ ...FONTS.h4 }}>Danh sách bạn bè</Text>
+                        <Text style={{ ...FONTS.h4 }}> {t('friend list')} </Text>
                         <AntDesign name="plus" size={20} color={COLORS.secondaryBlack} />
                     </View>
                     <View style={{
@@ -100,7 +102,7 @@ const Contacts = ({ navigation }) => {
                         <TextInput style={{ width: '100%', height: '100%', marginHorizontal: 12, color: '#fff', }}
                             onChangeText={(text) => setPhoneNumber(text)}
                             value={numberPhone}
-                            placeholder="Tìm kiếm số điện thoại..."
+                            placeholder={t('enter number phone')}
                             placeholderTextColor={'#fff'}
                         />
                     </View>
@@ -116,7 +118,7 @@ const Contacts = ({ navigation }) => {
                             <View style={styles.viewHeader}>
                                 <MaterialIcons name="group" size={24} color="white" />
                             </View>
-                            <Text style={styles.textHeader}>Lời mời kết bạn</Text>
+                            <Text style={styles.textHeader}> {t('friend request')} </Text>
                         </Pressable>
                     </View>
                     <View style={{ backgroundColor: '#fff' }}>
@@ -125,7 +127,7 @@ const Contacts = ({ navigation }) => {
                             <View style={styles.viewHeader}>
                                 <MaterialIcons name="group-add" size={24} color="white" />
                             </View>
-                            <Text style={styles.textHeader}>Tạo nhóm mới</Text>
+                            <Text style={styles.textHeader}> {t('create group')} </Text>
                         </Pressable>
                     </View>
                     <View style={{
@@ -133,14 +135,14 @@ const Contacts = ({ navigation }) => {
                         height: 900,
                         flexDirection: 'row',
                     }}>
-                        <Tab.Navigator initialRouteName="Bạn bè"
+                        <Tab.Navigator initialRouteName={t('friend')}
                             screenOptions={{
                                 tabBarLabelStyle: { textTransform: 'none' },
                                 tabBarActiveTintColor: '#574E92',
                                 tabBarInactiveTintColor: 'grey',
                             }}>
-                            <Tab.Screen name="Bạn bè" component={Friend} />
-                            <Tab.Screen name="Nhóm" component={Group} />
+                            <Tab.Screen name={t('friend')} component={Friend} />
+                            <Tab.Screen name={t('group')} component={Group} />
                         </Tab.Navigator>
                     </View>
                 </View>

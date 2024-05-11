@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import { get } from 'firebase/database';
+import { useTranslation } from 'react-i18next';
 
 const ChatGroup = ({ route }) => {
     const { group, socket } = route.params;
@@ -20,6 +21,7 @@ const ChatGroup = ({ route }) => {
     const [isOptionsVisible, setIsOptionsVisible] = useState(false);
     const screenWidth = Dimensions.get('window').width;
     const [arrivalMessage, setArrivalMessage] = useState(null)
+    const { t } = useTranslation('chat');
     console.log('group', group);
 
     useEffect(() => {
@@ -92,7 +94,7 @@ const ChatGroup = ({ route }) => {
         if (image) {
             sendImage();
             setMsg('');
-        }   else if (msg) {
+        } else if (msg) {
             handleSendMsg(msg);
             setMsg('');
             console.log('message', msg);
@@ -212,7 +214,7 @@ const ChatGroup = ({ route }) => {
                 {/* Ô nhập tin nhắn */}
                 <TextInput
                     style={styles.input}
-                    placeholder="Nhập tin nhắn..."
+                    placeholder={t('enter message')}
                     value={msg}
                     onChangeText={setMsg}
                     multiline
@@ -235,7 +237,7 @@ const ChatGroup = ({ route }) => {
                     onPress={() => sendChat(msg)}
 
                     style={styles.sendButton}>
-                    <Text style={{ color: 'white' }}>Gửi</Text>
+                    <Text style={{ color: 'white' }}> {t('send')} </Text>
                 </TouchableOpacity>
 
                 {/* Modal tùy chọn */}
@@ -244,16 +246,16 @@ const ChatGroup = ({ route }) => {
                         <TouchableOpacity
                             //onPress={handleDeleteMessage} 
                             style={styles.modalButton}>
-                            <Text>Xóa tin nhắn</Text>
+                            <Text>{t('delete message')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             //onPress={handleForwardMessage} 
                             style={styles.modalButton}>
-                            <Text>Chuyển tiếp tin nhắn</Text>
+                            <Text>{t('forward message')}</Text>
                         </TouchableOpacity>
                         {/* Thêm các tùy chọn khác tại đây */}
                         <TouchableOpacity onPress={() => setIsOptionsVisible(false)} style={styles.modalButton}>
-                            <Text>Đóng</Text>
+                            <Text>{t('cancel')}</Text>
                         </TouchableOpacity>
                     </View>
                 </Modal>

@@ -3,13 +3,15 @@ import React, { useState, useEffect } from "react";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import PageContainer from '../../Components/PageContainer';
 import { COLORS, FONTS } from '../../constrants/theme'
-import { AntDesign, MaterialIcons, MaterialCommunityIcons, Ionicons, Entypo, FontAwesome, Feather,Octicons } from '@expo/vector-icons'
+import { AntDesign, MaterialIcons, MaterialCommunityIcons, Ionicons, Entypo, FontAwesome, Feather, Octicons } from '@expo/vector-icons'
+const { useTranslation } = require('react-i18next');
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Setting = ({ navigation }) => {
 
     const [user, setUser] = useState('');
+    const { t } = useTranslation('setting');
 
     const getUser = async () => {
         try {
@@ -49,83 +51,82 @@ const Setting = ({ navigation }) => {
                         <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                             <AntDesign name="user" size={24} color={COLORS.black} />
                             <Text style={{ ...FONTS.h4, marginLeft: 12 }}>
-                                {' '}
-                                Thông tin cá nhân
+                                {t('per info')}
                             </Text>
                         </View>
-                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black}/>
+                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 22, paddingVertical: 12, }}
                         onPress={() => navigation.navigate('Message')}
                     >
                         <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                            <Ionicons name="chatbubble-outline" size={24} color={COLORS.black}/>
+                            <Ionicons name="chatbubble-outline" size={24} color={COLORS.black} />
                             <Text style={{ ...FONTS.h4, marginLeft: 12 }}>
-                                {' '}
-                                Tin nhắn
+                                {t('message')}
+
                             </Text>
                         </View>
-                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black}/>
+                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 22, paddingVertical: 12, }}
                         onPress={() => navigation.navigate('AccountSecurity')}
                     >
                         <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                            <MaterialCommunityIcons name="shield-lock-open-outline" size={24} color={COLORS.black}/>
+                            <MaterialCommunityIcons name="shield-lock-open-outline" size={24} color={COLORS.black} />
                             <Text style={{ ...FONTS.h4, marginLeft: 12 }}>
-                                {' '}
-                                Tài khoản và bảo mật
+                                {t('account and security')}
+
                             </Text>
                         </View>
-                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black}/>
+                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 22, paddingVertical: 12, }}
                         onPress={() => navigation.navigate('Privacy')}
                     >
                         <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                            <Entypo  name="light-down" size={24} color={COLORS.black}/>
+                            <Entypo name="light-down" size={24} color={COLORS.black} />
                             <Text style={{ ...FONTS.h4, marginLeft: 12 }}>
-                                {' '}
-                                Quyền riêng tư
+                                {t('privacy')}
+
                             </Text>
                         </View>
-                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black}/>
+                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 22, paddingVertical: 12, }}
                         onPress={() => navigation.navigate('Notification')}
                     >
                         <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                            <Ionicons name="notifications-outline" size={24} color={COLORS.black}/>
+                            <Ionicons name="notifications-outline" size={24} color={COLORS.black} />
                             <Text style={{ ...FONTS.h4, marginLeft: 12 }}>
-                                {' '}
-                                Thông báo
+                                {t('notification')}
+
                             </Text>
                         </View>
-                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black}/>
+                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 22, paddingVertical: 12, }}
                         onPress={() => navigation.navigate('Theme')}
                     >
                         <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                            <Octicons name="paintbrush" size={24} color={COLORS.black}/>
+                            <Octicons name="paintbrush" size={24} color={COLORS.black} />
                             <Text style={{ ...FONTS.h4, marginLeft: 12 }}>
-                                {' '}
-                                Giao diện & ngôn ngữ
+                                {t('interface and language')}
+
                             </Text>
                         </View>
-                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black}/>
+                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 22, paddingVertical: 12, }}
                         onPress={() => navigation.navigate('About')}
                     >
                         <View style={{ flexDirection: 'row', alignItems: 'center', }}>
-                            <Ionicons name="help-circle-outline" size={24} color={COLORS.black}/>
+                            <Ionicons name="help-circle-outline" size={24} color={COLORS.black} />
                             <Text style={{ ...FONTS.h4, marginLeft: 12 }}>
-                                {' '}
-                                Thông tin về CoToTa
+                                {t('about us')}
+
                             </Text>
                         </View>
-                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black}/>
+                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 22, paddingVertical: 12, }}
                         onPress={() => navigation.navigate('SwitchAccount')}
@@ -133,11 +134,11 @@ const Setting = ({ navigation }) => {
                         <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                             <Feather name="user-plus" size={24} color={COLORS.black} />
                             <Text style={{ ...FONTS.h4, marginLeft: 12 }}>
-                                {' '}
-                                Chuyển tài khoản
+                                {t('transform account')}
+
                             </Text>
                         </View>
-                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black}/>
+                        <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                     <Pressable style={{ alignItems: 'center', justifyContent: 'center', height: 80, flexDirection: 'row', borderWidth: 1, borderColor: '#E8ECF4' }}
                         onPress={async () => {
@@ -147,7 +148,8 @@ const Setting = ({ navigation }) => {
                     >
                         <View style={{ flexDirection: 'row', display: "flex", width: 350, height: 50, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 30 }}>
                             <FontAwesome name="sign-out" size={24} color="black" />
-                            <Text style={{ fontWeight: 'bold', left: 10 }}>Đăng xuất</Text>
+                            <Text style={{ fontWeight: 'bold', left: 10 }}>{t('log out')}
+                            </Text>
                         </View>
                     </Pressable>
                 </View>

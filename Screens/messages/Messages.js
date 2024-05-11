@@ -11,6 +11,7 @@ import { COLORS, FONTS } from '../../constrants/theme'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getFriendListRoute, host } from '../../router/APIRouter';
 import { io } from "socket.io-client";
+import { useTranslation } from 'react-i18next';
 
 
 const Messages = () => {
@@ -19,6 +20,7 @@ const Messages = () => {
   const [user, setUser] = useState(null);
   const [data, setData] = useState([]);
   const socket = useRef();
+  const { t } = useTranslation('chat');
 
   const getUser = async () => {
     try {
@@ -88,7 +90,7 @@ const Messages = () => {
       <PageContainer>
         <View >
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 22, marginTop: 22, }}>
-            <Text style={{ ...FONTS.h4 }}>Tin nhắn </Text>
+            <Text style={{ ...FONTS.h4 }}> {t('message')} </Text>
             <View style={{ flexDirection: 'row' }}>
               <MaterialCommunityIcons name="message-badge-outline" size={20} color={COLORS.secondaryBlack} />
               <MaterialCommunityIcons name="playlist-check" size={20} color={COLORS.secondaryBlack} style={{ marginLeft: 12, }} />
@@ -130,9 +132,9 @@ const Messages = () => {
           >
             <Ionicons name="search-outline" size={24} color={COLORS.white} />
             <TextInput style={{ width: '100%', height: '100%', marginHorizontal: 12, color: '#fff', }}
-               onChangeText={(text) => setSearch(text)}
+              onChangeText={(text) => setSearch(text)}
               value={search}
-              placeholder="Tìm kiếm tên..."
+              placeholder={t('search with name')}
               placeholderTextColor={'#fff'}
             />
           </View>

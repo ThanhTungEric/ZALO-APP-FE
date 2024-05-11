@@ -4,9 +4,11 @@ import { AntDesign } from '@expo/vector-icons';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { COLORS } from '../../../constrants/theme';
+import { useTranslation } from 'react-i18next';
 
 const Me = ({ navigation }) => {
   const [user, setUser] = useState('');
+  const { t } = useTranslation('setting');
 
   const getUser = async () => {
     try {
@@ -30,31 +32,31 @@ const Me = ({ navigation }) => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <ImageBackground style={{ height: 300, paddingTop: 25 }}  source={{ uri: user.avatar }} >
+        <ImageBackground style={{ height: 300, paddingTop: 25 }} source={{ uri: user.avatar }} >
           <AntDesign name="arrowleft" size={25} color={COLORS.black} onPress={() => navigation.goBack()} style={styles.searchIcon} />
           <View style={styles.header}>
-            <Image style={styles.avatar}  source={{ uri: user.avatar }} />
+            <Image style={styles.avatar} source={{ uri: user.avatar }} />
             <Text style={styles.name}>{user.fullName}</Text>
           </View>
         </ImageBackground>
         <View style={{ backgroundColor: '#fff' }}>
           <Text style={{ fontWeight: 'bold', left: '3%' }}>Thông tin cá nhân</Text>
           <View style={{ alignItems: 'center', height: 70, flexDirection: 'row' }}>
-            <Text style={{ left: '35%' }}>Giới tính</Text>
+            <Text style={{ left: '35%' }}> {t('gender')} </Text>
             <Text style={styles.value}>Nam</Text>
           </View>
           <View style={{ alignItems: 'center', height: 70, flexDirection: 'row', borderWidth: 1, borderColor: '#E8ECF4' }}>
-            <Text style={{ left: '35%' }}>Ngày sinh</Text>
+            <Text style={{ left: '35%' }}> {t('birthday')} </Text>
             <Text style={styles.value}>{birthDateFormatted}</Text>
           </View>
           <View style={{ alignItems: 'center', height: 70, flexDirection: 'row' }}>
-            <Text style={{ left: '35%' }}>Điện thoại</Text>
+            <Text style={{ left: '35%' }}> {t('phone number')} </Text>
             <Text style={styles.value}>{user.phoneNumber}</Text>
           </View>
           <Pressable style={{ alignItems: 'center', justifyContent: 'center', height: 80, flexDirection: 'row' }}>
             <View style={{ flexDirection: 'row', display: "flex", width: 350, height: 50, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 30 }}>
               <AntDesign name="edit" size={24} color="black" />
-              <Text style={{ fontWeight: 'bold', left: 10 }}>Chỉnh sửa</Text>
+              <Text style={{ fontWeight: 'bold', left: 10 }}> {t('edit')} </Text>
             </View>
           </Pressable>
         </View>

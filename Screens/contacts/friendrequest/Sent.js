@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Pressable, Image, FlatList } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
-import { getGetAddFriendRoute } from '../../../router/APIRouter';
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { getRejectFriend } from '../../../router/APIRouter';
+import React, { useEffect, useState } from 'react';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { FONTS } from '../../../constrants/theme';
+import { getGetAddFriendRoute, getRejectFriend } from '../../../router/APIRouter';
+import { useTranslation } from 'react-i18next';
 const Sent = () => {
 
     const [data, setData] = useState([]);
     const [user, setUser] = useState("");
+    const { t } = useTranslation('contact');
 
 
     const getUser = async () => {
@@ -97,14 +98,14 @@ const Sent = () => {
                                         <Text style={{ ...FONTS.h4, marginBottom: 4 }}>
                                             {item.friendInfo.fullName}
                                         </Text>
-                                        <Text style={{ fontSize: 13, color: 'grey', marginTop: 5 }}>Có thể bạn quen</Text>
+                                        <Text style={{ fontSize: 13, color: 'grey', marginTop: 5 }}> {t('suggest')} </Text>
                                     </View>
-                                    <View  style={{ marginLeft: 'auto', width: 80, height: 35, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 30 }}>
+                                    <View style={{ marginLeft: 'auto', width: 80, height: 35, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 30 }}>
                                         <TouchableOpacity
                                             onPress={() => handleRejectFriend({ userId1: item.friend.idUser1, userId2: item.friend.idUser2 })}
                                             style={styles.button}
                                         >
-                                            <Text>Thu hồi</Text>
+                                            <Text> {t('recall')} </Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>

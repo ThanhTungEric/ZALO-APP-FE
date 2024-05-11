@@ -11,6 +11,7 @@ import * as ImagePicker from 'expo-image-picker';
 // import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
 import { COLORS, FONTS } from '../../constrants/theme';
+import { useTranslation } from 'react-i18next';
 
 
 const ChatBox = ({ route }) => {
@@ -27,6 +28,7 @@ const ChatBox = ({ route }) => {
     const [selectedMessage, setSelectedMessage] = useState(null);
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState(null);
+    const { t } = useTranslation('chat');
 
 
     const getMessages = async () => {
@@ -271,16 +273,16 @@ const ChatBox = ({ route }) => {
     return (
         <SafeAreaView style={{ flex: 1, color: COLORS.secondaryWhite }}>
             {/* Header */}
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22,  backgroundColor: COLORS.white, height: 60,}}>
-                <View style={{ flexDirection: 'row', alignItems: 'center',}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22, backgroundColor: COLORS.white, height: 60, }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black}/>
+                        <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                     <Text style={{ ...FONTS.h4, marginLeft: 8 }}>{selectedChat.fullName}</Text>
                 </View>
-                <View style={{flexDirection: 'row',alignItems: 'center',}}>
-                    <TouchableOpacity  onPress={handleNavigateToOptions} style={{marginRight: 8}}>
-                        <MaterialIcons name="menu" size={24}color={COLORS.black}/>
+                <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                    <TouchableOpacity onPress={handleNavigateToOptions} style={{ marginRight: 8 }}>
+                        <MaterialIcons name="menu" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -327,7 +329,7 @@ const ChatBox = ({ route }) => {
                 {/* Ô nhập tin nhắn */}
                 <TextInput
                     style={styles.input}
-                    placeholder="Nhập tin nhắn..."
+                    placeholder={t('enter message')}
                     value={msg}
                     onChangeText={setMsg}
                     multiline
@@ -347,21 +349,21 @@ const ChatBox = ({ route }) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => sendChat(msg)} style={styles.sendButton}>
-                    <Text style={{ color: 'white' }}>Gửi</Text>
+                    <Text style={{ color: 'white' }}> {t('send')} </Text>
                 </TouchableOpacity>
 
                 {/* Modal tùy chọn */}
                 <Modal visible={isOptionsVisible} animationType="slide" style={styles.modalContainer} transparent >
                     <View style={styles.modalContainer}>
                         <TouchableOpacity onPress={handleDeleteMessage} style={styles.modalButton}>
-                            <Text>Xóa tin nhắn</Text>
+                            <Text> {t('delete message')} </Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={handleForwardMessage} style={styles.modalButton}>
-                            <Text>Chuyển tiếp tin nhắn</Text>
+                            <Text>{t('forward message')}</Text>
                         </TouchableOpacity>
                         {/* Thêm các tùy chọn khác tại đây */}
                         <TouchableOpacity onPress={() => setIsOptionsVisible(false)} style={styles.modalButton}>
-                            <Text>Đóng</Text>
+                            <Text> {t('cancel')} </Text>
                         </TouchableOpacity>
                     </View>
                 </Modal>
