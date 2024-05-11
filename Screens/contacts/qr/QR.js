@@ -4,12 +4,12 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useState, useEffect, } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import PageContainer from '../../Components/PageContainer';
-import { COLORS } from '../../constrants/theme'
-const Call = () => {
+import PageContainer from '../../../Components/PageContainer';
+import { COLORS } from '../../../constrants/theme'
+const QR = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const selectedChat = route.params.selectedChat;
+    const selectedChat = route.params.item;
 
     const [user, setUser] = useState("");
 
@@ -28,7 +28,6 @@ const Call = () => {
     useEffect(() => {
         getUser();
     }, []);
-
 
     return (
         <SafeAreaView>
@@ -130,4 +129,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Call;
+export default QR;

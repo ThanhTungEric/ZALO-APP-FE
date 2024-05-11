@@ -60,7 +60,7 @@ const Messages = () => {
       }
     };
     fetchFriendList();
-  }, [user,isFocused]);
+  }, [user, isFocused]);
 
 
   useEffect(() => {
@@ -97,6 +97,10 @@ const Messages = () => {
     navigation.navigate('ChatBox', { selectedChat: item, socket });
   };
 
+  const handleNavigateToQR = (item) => {
+    navigation.navigate('QR', { item: item });
+  };
+
   // Search
   const [search, setSearch] = useState('')
   const [filteredData, setFilteredData] = useState([])
@@ -114,7 +118,8 @@ const Messages = () => {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 22, marginTop: 22 }}>
           <Text style={{ ...FONTS.h4 }}>Tin nhắn </Text>
           <View style={{ flexDirection: 'row' }}>
-            <MaterialCommunityIcons name="message-badge-outline" size={20} color={COLORS.secondaryBlack} />
+            <AntDesign name="qrcode" size={20} color={COLORS.secondaryBlack}  onPress={handleNavigateToQR}/>
+            <MaterialCommunityIcons name="message-badge-outline" size={20} color={COLORS.secondaryBlack} style={{ marginLeft: 12 }} />
             <MaterialCommunityIcons name="playlist-check" size={20} color={COLORS.secondaryBlack} style={{ marginLeft: 12 }} />
           </View>
         </View>

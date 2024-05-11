@@ -36,6 +36,7 @@ import OptionsGroup from "../Screens/chat/OptionGroup";
 
 import ChatGroup from "../Screens/chat/ChatGroup";
 import Call from "../Screens/chat/Call";
+import QR from "../Screens/contacts/qr/QR";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -142,6 +143,7 @@ const AppNavigation = () => (
             <Stack.Screen name="AddMember" component={AddMember} options={{ headerShown: false }} />
             <Stack.Screen name="ChatGroup" component={ChatGroup} options={{ headerShown: false }} />
             <Stack.Screen name="Call" component={Call} options={{ headerShown: false }} />
+            <Stack.Screen name="QR" component={QR} options={{ headerShown: false }} />
         </Stack.Navigator>
     </NavigationContainer>
 );
