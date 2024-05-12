@@ -8,6 +8,7 @@ import { COLORS, SIZES, FONTS } from '../../constrants/theme';
 import Button from '../../Components/Button';
 //import PageTitle from '../../Components/PageContainer';
 import { AntDesign } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next'
 
 export default function AuthenOTP() {
     const [phoneNumber, setPhoneNumber] = useState('+84 ');
@@ -16,6 +17,7 @@ export default function AuthenOTP() {
     const phoneInput = useRef(null);
     const [formattedValue, setFormattedValue] = useState("");
     const navigation = useNavigation();
+    const { t } = useTranslation("login")
 
     const [areas, setAreas] = useState([])
     const [selectedArea, setSelectedArea] = useState(null)
@@ -137,7 +139,7 @@ export default function AuthenOTP() {
                 <View style={{ flex: 1, alignItems: 'center' }}>
                     {!confirm ? (
                         <>
-                            <Text style={{ ...FONTS.h2, color: COLORS.white, marginTop: 80 }}>Nhập số điện thoại của bạn</Text>
+                            <Text style={{ ...FONTS.h2, color: COLORS.white, marginTop: 80 }}>{t('enter phone number')}</Text>
                             <View style={{ width: '100%', paddingHorizontal: 22, paddingVertical: 60, }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 88, }}>
                                     <TouchableOpacity style={{ width: 45, height: 48, marginHorizontal: 5, borderRadius: SIZES.padding, borderColor: COLORS.secondaryWhite, borderWidth: 1, backgroundColor: COLORS.secondaryWhite, flexDirection: 'row', fontSize: 12, }}
@@ -176,7 +178,7 @@ export default function AuthenOTP() {
                                     />
                                 </View>
                                 <Button
-                                    title="Gửi mã"
+                                    title={t('send code')}
                                     onPress={signInWithPhoneNumber}
                                     style={{
                                         width: '100%',

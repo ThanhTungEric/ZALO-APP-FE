@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, Platform, Image, SafeAreaView,Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, Image,Alert } from 'react-native';
 import axios from 'axios';
 import { COLORS, FONTS } from '../../constrants/theme';
 import { getMessagesGroup, sendMessageGroup, uploadImageRoute, getGroupMemberRoute,deleteMessageGroupRoute } from '../../router/APIRouter';
@@ -8,8 +8,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native'; 
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
-import { get } from 'firebase/database';
-
+import { useTranslation } from 'react-i18next';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ChatGroup = ({  route }) => {
     const { group, socket } = route.params;
@@ -26,6 +26,7 @@ const ChatGroup = ({  route }) => {
     const [avatar, setAvatar] = useState([]);
     const [selectedMessage, setSelectedMessage] = useState(null);
     const navigation = useNavigation();
+    const { t } = useTranslation('chat');
     console.log('group', group);
 
     useEffect(() => {
@@ -132,7 +133,7 @@ const ChatGroup = ({  route }) => {
         if (image) {
             sendImage();
             setMsg('');
-        }   else if (msg) {
+        } else if (msg) {
             handleSendMsg(msg);
             setMsg('');
             console.log('message', msg);
@@ -303,7 +304,7 @@ const ChatGroup = ({  route }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22,  backgroundColor: COLORS.white, height: 60,paddingTop:20}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22,  backgroundColor: COLORS.white, height: 60}}>
                 <View style={{ flexDirection: 'row', alignItems: 'center',}}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black}/>
@@ -367,7 +368,7 @@ const ChatGroup = ({  route }) => {
                 {/* Ô nhập tin nhắn */}
                 <TextInput
                     style={styles.input}
-                    placeholder="Nhập tin nhắn..."
+                    placeholder={t('enter message')}
                     value={msg}
                     onChangeText={setMsg}
                     multiline
@@ -390,7 +391,7 @@ const ChatGroup = ({  route }) => {
                     onPress={() => sendChat(msg)}
 
                     style={styles.sendButton}>
-                    <Text style={{ color: 'white' }}>Gửi</Text>
+                    <Text style={{ color: 'white' }}> {t('send')} </Text>
                 </TouchableOpacity>
 
                 {/* Modal tùy chọn */}
@@ -399,16 +400,16 @@ const ChatGroup = ({  route }) => {
                         <TouchableOpacity
                             onPress={handleDeleteMessage} 
                             style={styles.modalButton}>
-                            <Text>Xóa tin nhắn</Text>
+                            <Text>{t('delete message')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={handleForwardMessage} 
                             style={styles.modalButton}>
-                            <Text>Chuyển tiếp tin nhắn</Text>
+                            <Text>{t('forward message')}</Text>
                         </TouchableOpacity>
                         {/* Thêm các tùy chọn khác tại đây */}
                         <TouchableOpacity onPress={() => setIsOptionsVisible(false)} style={styles.modalButton}>
-                            <Text>Đóng</Text>
+                            <Text>{t('cancel')}</Text>
                         </TouchableOpacity>
                     </View>
                 </Modal>

@@ -1,7 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
-import { Pressable, StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import { AntDesign, MaterialCommunityIcons ,Ionicons , Feather, SimpleLineIcons, MaterialIcons, FontAwesome     } from '@expo/vector-icons'; 
+import { AntDesign, Feather, FontAwesome, Ionicons, MaterialCommunityIcons, MaterialIcons, SimpleLineIcons } from '@expo/vector-icons';
 import React, { useState } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 const Privacy = ({navigation}) => {
     const [Toggle, setToggle] = useState(true);
     const [ToggleDX, setToggleDX] = useState(true);

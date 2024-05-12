@@ -2,16 +2,18 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { getAddFriendRoute } from '../../router/APIRouter';
 import { FONTS } from '../../constrants/theme'
+const { useTranslation } = require('react-i18next');
 
 
 const PopupFriend = ({ userData, userId, closePopup }) => {
 
     const userId1 = userData._id;
     const userId2 = userId._id;
+    const { t } = useTranslation("contact");
 
     console.log("--", userData);
     console.log(userId);
-    
+
     const handleSendAddFriend = async ({ userId1, userId2 }) => {
         try {
             const response = await fetch(`${getAddFriendRoute}`, {
@@ -39,7 +41,7 @@ const PopupFriend = ({ userData, userId, closePopup }) => {
     return (
         <View>
             <View>
-                <View style={{alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', marginTop: 10}}>
+                <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff', marginTop: 10 }}>
                     <View style={{ paddingVertical: 15, marginRight: 22, }}>
                         <Image
                             source={{ uri: userId.avatar }}
@@ -62,13 +64,13 @@ const PopupFriend = ({ userData, userId, closePopup }) => {
                             onPress={() => handleSendAddFriend({ userId1: userId1, userId2: userId2 })}
                             style={styles.button}
                         >
-                            <Text>Kết bạn</Text>
+                            <Text> {t('add')} </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={closePopup}
                             style={[styles.button, { marginLeft: 10 }]}
                         >
-                            <Text style={{ color: 'purple' }}>Đóng</Text>
+                            <Text style={{ color: 'purple' }}> {t('close')} </Text>
                         </TouchableOpacity>
                     </View>
                 </View>

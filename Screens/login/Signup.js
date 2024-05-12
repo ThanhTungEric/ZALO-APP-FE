@@ -4,7 +4,8 @@ import { AntDesign } from '@expo/vector-icons';
 import React, { useState } from "react";
 import axios from 'axios';
 import { register } from '../../router/APIRouter';
-import { SafeAreaView } from 'react-native-safe-area-context'; 
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next'
 
 const Signup = ({ navigation }) => {
     const [fullName, setFullName] = useState('');
@@ -12,6 +13,8 @@ const Signup = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [birthDate, setBirthDate] = useState('');
     const [password, setPassword] = useState('');
+    //i18n translate
+    const { t } = useTranslation("login")
 
     //hide icon pass
     const [hideIconPass, setHideIconPass] = useState(true);
@@ -68,45 +71,45 @@ const Signup = ({ navigation }) => {
                     <Text style={{ color: '#4B5563', marginLeft: 16 }}>Họ và tên</Text>
                     <TextInput
                         style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20, marginBottom: 12 }}
-                        placeholder='Nhập họ và tên'
+                        placeholder={t('enter name')}
                         onChangeText={(text) => setFullName(text)}
                     />
                     <Text style={{ color: '#4B5563', marginLeft: 16 }}>Số điện thoại</Text>
                     <TextInput
                         style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20, marginBottom: 12 }}
-                        placeholder='Nhập số điện thoại'
+                        placeholder={t('enter phone number')}
                         onChangeText={(text) => setPhoneNumber(text)}
                     />
                     <Text style={{ color: '#4B5563', marginLeft: 16 }}>Email</Text>
                     <TextInput
-                        style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20, marginBottom: 12  }}
-                        placeholder='Nhập email'
+                        style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20, marginBottom: 12 }}
+                        placeholder={t('enter email')}
                         onChangeText={(text) => setEmail(text)}
                     />
                     <Text style={{ color: '#4B5563', marginLeft: 16 }}>Ngày sinh</Text>
                     <TextInput
-                        style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20, marginBottom: 12  }}
-                        placeholder='Nhập ngày sinh'
+                        style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20, marginBottom: 12 }}
+                        placeholder={t('enter birthday')}
                         onChangeText={(text) => setBirthDate(text)}
                     />
-                    <Text style={{ color: '#4B5563', marginLeft: 16 }}>Mật Khẩu</Text>
+                    <Text style={{ color: '#4B5563', marginLeft: 16 }}>{t('password')}</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#E5E7EB', borderRadius: 20 }}>
                         <TextInput
                             style={{ flex: 1, padding: 16, color: '#4B5563' }}
                             secureTextEntry={hidePass}
-                            placeholder='Nhập mật khẩu'
+                            placeholder={t('enter password')}
                             onChangeText={(text) => setPassword(text)}
                         />
                         <TouchableOpacity onPress={handleHidePass} style={{ padding: 16, color: '#4B5563' }}>
-                            <Image source={hidePass ? require('../../assets/hide.png') : require('../../assets/eye.png')} style={{ width: 20, height: 20}} />
+                            <Image source={hidePass ? require('../../assets/hide.png') : require('../../assets/eye.png')} style={{ width: 20, height: 20 }} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{ paddingVertical: 12, backgroundColor: '#FFEA00', borderRadius: 20, marginTop: 20 }}  onPress={handleSignup}>
-                        <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#4B5563' }}>Đăng ký</Text>
+                    <TouchableOpacity style={{ paddingVertical: 12, backgroundColor: '#FFEA00', borderRadius: 20, marginTop: 20 }} onPress={handleSignup}>
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#4B5563' }}>{t('register')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-            <StatusBar style="auto"/>
+            <StatusBar style="auto" />
         </View>
 
 

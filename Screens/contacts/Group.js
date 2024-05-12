@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Pressable, Image, FlatList, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getAllGroup, host, getAllGroupByMemberId, getLeaveGroup, getDeleteGroup, getGroupById } from '../../router/APIRouter'
 import { COLORS, FONTS } from '../../constrants/theme'

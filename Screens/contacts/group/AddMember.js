@@ -1,10 +1,9 @@
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { AntDesign, Ionicons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import PageContainer from '../../../Components/PageContainer'
 import { COLORS, FONTS } from '../../../constrants/theme'
-import axios from 'axios'
 
 //API router
 import { getFriendListRoute, getAddMember } from '../../../router/APIRouter';
