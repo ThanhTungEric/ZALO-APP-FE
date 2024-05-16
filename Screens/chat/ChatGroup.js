@@ -86,7 +86,7 @@ const ChatGroup = ({  route }) => {
             formData.append('file', {
                 uri: file,
                 type: fileType,
-                name: file.split('/').pop(),
+                name: file.split('/').pop(), 
             });
 
             const response = await axios.post(uploadImageRoute, formData, {

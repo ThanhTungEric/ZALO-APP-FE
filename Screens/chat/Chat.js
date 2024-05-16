@@ -291,7 +291,7 @@ const ChatBox = ({ route }) => {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleNavigateToOptions} style={{ marginRight: 8 }}>
                         <MaterialIcons name="menu" size={24} color={COLORS.black} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> 
                 </View>
             </View>
             {/* ScrollView cho nội dung tin nhắn */}
