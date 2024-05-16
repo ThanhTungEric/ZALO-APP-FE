@@ -1,10 +1,9 @@
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { AntDesign, Ionicons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import PageContainer from '../../../Components/PageContainer'
 import { COLORS, FONTS } from '../../../constrants/theme'
-import axios from 'axios'
 
 //API router
 import { getFriendListRoute, getAddMember } from '../../../router/APIRouter';
@@ -17,7 +16,7 @@ const AddMember = ({ navigation, route }) => {
     const [data1, setData1] = useState([]);
 
     const [userData, setUserData] = useState('');
-    const { group } = route.params; // Lấy thông tin group từ route params
+    const { group, socket } = route.params; // Lấy thông tin group từ route params
 
     const getUser = async () => {
         try {
@@ -114,6 +113,9 @@ const AddMember = ({ navigation, route }) => {
         }
     };
 
+    const handleBackViewMember = (group) => {
+        navigation.navigate('ViewMember', { group, userData, socket });
+    };
 
     return (
         <SafeAreaView>
@@ -121,7 +123,7 @@ const AddMember = ({ navigation, route }) => {
                 <View >
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 22, paddingTop: 20 }}>
                         <View style={{ height: 60, width: 60, alignItems: 'center', justifyContent: 'center', }}>
-                            <Text onPress={() => navigation.goBack()} style={{ ...FONTS.h4, marginVertical: 6, color: '#574E92' }}>X</Text>
+                            <Text onPress={() => handleBackViewMember(group)} style={{ ...FONTS.h4, marginVertical: 6, color: '#574E92' }}>X</Text>
                         </View>
                         <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'column', marginHorizontal: 22, }}>
                             <Text style={{ ...FONTS.h4, marginVertical: 6 }}>Thêm vào nhóm</Text>

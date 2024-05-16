@@ -1,7 +1,7 @@
-import React from "react";
-import { Pressable, StyleSheet, Text, View, ScrollView, Image } from "react-native";
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
+import React from "react";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import { styles } from "../../../CSS/styles";
 const SwitchAccount = ({ navigation }) => {
     return (

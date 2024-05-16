@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
 import { Pressable, StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import { AntDesign, MaterialCommunityIcons, Ionicons, Feather, SimpleLineIcons, MaterialIcons, FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import React, { useState } from "react";
 
 const Message = ({ navigation }) => {

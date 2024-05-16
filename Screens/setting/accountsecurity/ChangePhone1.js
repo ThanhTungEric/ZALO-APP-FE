@@ -1,7 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
-import { Pressable, StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { Pressable, StyleSheet, Text, View, TextInput } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
-import React, { useState } from "react";
+import React from "react";
 
 
 const ChangePhone1 = ({ navigation }) => {

@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome, Ionicons, Feather } from '@expo/vector-icons';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import Messages from "../Screens/messages/Messages";
 import Contacts from "../Screens/contacts/Contacts";
 import Me from "../Screens/setting/me/Me";
@@ -36,81 +36,88 @@ import OptionsGroup from "../Screens/chat/OptionGroup";
 
 import ChatGroup from "../Screens/chat/ChatGroup";
 import Call from "../Screens/chat/Call";
+import MyQR from "../Screens/contacts/qr/MyQR";
+
+import { useTranslation } from 'react-i18next';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => (
-    <Tab.Navigator
-        screenOptions={{
-            headerShown: false,
-            tabBarHideOnKeyboard: true,
-            tabBarStyle: {
-                position: 'absolute',
-                backgroundColor: COLORS.white,
-                bottom: 0,
-                right: 0,
-                left: 0,
-                elevation: 0,
-                height: 60,
-            },
-        }} >
-        <Tab.Screen name="Danh bạ" component={Contacts}
-            options={{
-                tabBarIcon: ({ focused }) => {
-                    return (
-                        <View style={{ alignItems: 'center', justifyContent: 'center',}}>
-                            {focused ? (
-                                <>
-                                    <FontAwesome name="circle" size={8} color={COLORS.black}/>
-                                </>
-                            ) : (
-                                <Feather name="users" size={24} color={COLORS.black}/>
-                            )}
-                        </View>
-                    )
-                },
-            }}
-        />
-        <Tab.Screen name="Tin nhắn" component={Messages}
-            options={{
-                tabBarIcon: ({ focused }) => {
-                    return (
-                        <View style={{alignItems: 'center', justifyContent: 'center',}}>
-                            {focused ? (
-                                <>
-                                    <FontAwesome name="circle" size={8} color={COLORS.black} />
-                                </>
-                            ) : (
-                                <Ionicons name="chatbubble-outline" size={24} color={COLORS.black}/>
-                            )}
-                        </View>
-                    )
-                },
-            }}
-        />
-        <Tab.Screen name="Thêm" component={Setting}
-            options={{
-                tabBarIcon: ({ focused }) => {
-                    return (
-                        <View style={{ alignItems: 'center',justifyContent: 'center',}}>
-                            {focused ? (
-                                <>
-                                    <FontAwesome name="circle" size={8} color={COLORS.black}/>
-                                </>
-                            ) : (
-                                <Feather name="more-horizontal" size={24} color={COLORS.black}/>
-                            )}
-                        </View>
-                    )
-                },
-            }}
-        />
-    </Tab.Navigator>
-);
+const TabNavigator = () => {
+    const { t } = useTranslation('navigation');
 
+    return (
+        <Tab.Navigator
+            screenOptions={{
+                headerShown: false,
+                tabBarHideOnKeyboard: true,
+                tabBarStyle: {
+                    position: 'absolute',
+                    backgroundColor: COLORS.white,
+                    bottom: 0,
+                    right: 0,
+                    left: 0,
+                    elevation: 0,
+                    height: 60,
+                },
+            }} >
+            <Tab.Screen name={t('phone book')} component={Contacts}
+                options={{
+                    tabBarIcon: ({ focused }) => {
+                        return (
+                            <View style={{ alignItems: 'center', justifyContent: 'center', }}>
+                                {focused ? (
+                                    <>
+                                        <FontAwesome name="circle" size={8} color={COLORS.black} />
+                                    </>
+                                ) : (
+                                    <Feather name="users" size={24} color={COLORS.black} />
+                                )}
+                            </View>
+                        )
+                    },
+                }}
+            />
+            <Tab.Screen name={t('message')} component={Messages}
+                options={{
+                    tabBarIcon: ({ focused }) => {
+                        return (
+                            <View style={{ alignItems: 'center', justifyContent: 'center', }}>
+                                {focused ? (
+                                    <>
+                                        <FontAwesome name="circle" size={8} color={COLORS.black} />
+                                    </>
+                                ) : (
+                                    <Ionicons name="chatbubble-outline" size={24} color={COLORS.black} />
+                                )}
+                            </View>
+                        )
+                    },
+                }}
+            />
+            <Tab.Screen name={t('more')} component={Setting}
+                options={{
+                    tabBarIcon: ({ focused }) => {
+                        return (
+                            <View style={{ alignItems: 'center', justifyContent: 'center', }}>
+                                {focused ? (
+                                    <>
+                                        <FontAwesome name="circle" size={8} color={COLORS.black} />
+                                    </>
+                                ) : (
+                                    <Feather name="more-horizontal" size={24} color={COLORS.black} />
+                                )}
+                            </View>
+                        )
+                    },
+                }}
+            />
+        </Tab.Navigator>
+    );
+};
 
 const AppNavigation = () => (
+
     <NavigationContainer>
         <Stack.Navigator initialRouteName="Welcome">
             <Stack.Screen name="Home" component={TabNavigator} options={{ headerShown: false }} />
@@ -142,6 +149,7 @@ const AppNavigation = () => (
             <Stack.Screen name="AddMember" component={AddMember} options={{ headerShown: false }} />
             <Stack.Screen name="ChatGroup" component={ChatGroup} options={{ headerShown: false }} />
             <Stack.Screen name="Call" component={Call} options={{ headerShown: false }} />
+            <Stack.Screen name="MyQR" component={MyQR} options={{ headerShown: false }} />
         </Stack.Navigator>
     </NavigationContainer>
 );

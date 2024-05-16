@@ -1,15 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, TouchableOpacity, TextInput, Image, Alert  } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput, Image, Alert } from 'react-native';
 import React, { useState } from "react";
 import { AntDesign } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context'; 
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { forgotPassword } from '../../router/APIRouter';
+const { useTranslation } = require('react-i18next');
 
-const Forgotpw = ({ navigation}) => {
+const Forgotpw = ({ navigation }) => {
     const [email, setEmail] = useState('');
+    const { t } = useTranslation("login");
     const handleForgotPassword = async () => {
         if (email === '') {
-            Alert.alert('Vui lòng nhập email');
+            Alert.alert(t('please enter email'));
             return;
         }
         try {
@@ -23,7 +25,7 @@ const Forgotpw = ({ navigation}) => {
             if (response.status === 200) {
                 Alert.alert('Vui lòng kiểm tra email để lấy lại mật khẩu');
             } else {
-                Alert.alert('Email không tồn tại');
+                Alert.alert(t('email does not exist'));
             }
         } catch (error) {
             console.error(error);
@@ -47,13 +49,13 @@ const Forgotpw = ({ navigation}) => {
                     <Text style={{ color: '#4B5563', marginLeft: 16 }}>Email</Text>
                     <TextInput
                         style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20 }}
-                        placeholder='Nhập email'
+                        placeholder={t('enter email')}
                         value={email}
                         onChangeText={setEmail}
                     />
-                   <TouchableOpacity onPress={handleForgotPassword}
-                    style={{ paddingVertical: 12, backgroundColor: '#FFEA00', borderRadius: 20, marginTop: 50 }} >
-                        <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#4B5563' }}>Quên mật khẩu</Text>
+                    <TouchableOpacity onPress={handleForgotPassword}
+                        style={{ paddingVertical: 12, backgroundColor: '#FFEA00', borderRadius: 20, marginTop: 50 }} >
+                        <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', color: '#4B5563' }}> {t('forgot password')} </Text>
                     </TouchableOpacity>
                 </View>
             </View>

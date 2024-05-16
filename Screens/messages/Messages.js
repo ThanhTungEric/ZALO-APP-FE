@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity, Image, FlatList, } from 'react-native';
-import { AntDesign, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity, Image, FlatList } from 'react-native';
+import { AntDesign, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -10,6 +10,7 @@ import { COLORS, FONTS } from '../../constrants/theme'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { getFriendListRoute, host, getAllGroupByMemberId } from '../../router/APIRouter'; // Combine API imports
 import { io } from "socket.io-client";
+import { useTranslation } from 'react-i18next';
 
 
 const Messages = () => {
@@ -20,12 +21,11 @@ const Messages = () => {
 
   const [groups, setGroups] = useState([]);
 
-
   // Lưu trạng thái của thông báo đã xóa người bạn
   const isFocused = useIsFocused();
 
-
   const socket = useRef();
+  const { t } = useTranslation('chat');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +60,7 @@ const Messages = () => {
       }
     };
     fetchFriendList();
-  }, [user,isFocused]);
+  }, [user, isFocused]);
 
 
   useEffect(() => {
@@ -97,6 +97,10 @@ const Messages = () => {
     navigation.navigate('ChatBox', { selectedChat: item, socket });
   };
 
+  const handleNavigateToQR = () => {
+    navigation.navigate('MyQR');
+  };
+
   // Search
   const [search, setSearch] = useState('')
   const [filteredData, setFilteredData] = useState([])
@@ -111,11 +115,14 @@ const Messages = () => {
   return (
     <SafeAreaView>
       <PageContainer>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 22, marginTop: 22 }}>
-          <Text style={{ ...FONTS.h4 }}>Tin nhắn </Text>
-          <View style={{ flexDirection: 'row' }}>
-            <MaterialCommunityIcons name="message-badge-outline" size={20} color={COLORS.secondaryBlack} />
-            <MaterialCommunityIcons name="playlist-check" size={20} color={COLORS.secondaryBlack} style={{ marginLeft: 12 }} />
+        <View >
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 22, marginTop: 22, }}>
+            <Text style={{ ...FONTS.h4 }}> {t('message')} </Text>
+            <View style={{ flexDirection: 'row' }}>
+              <AntDesign name="qrcode" size={20} color={COLORS.secondaryBlack} onPress={handleNavigateToQR} />
+              <MaterialCommunityIcons name="message-badge-outline" size={20} color={COLORS.secondaryBlack} style={{ marginLeft: 12, }} />
+              <MaterialCommunityIcons name="playlist-check" size={20} color={COLORS.secondaryBlack} style={{ marginLeft: 12, }} />
+            </View>
           </View>
         </View>
         <View style={{ marginHorizontal: 22, flexDirection: 'row', alignItems: 'center' }}>
@@ -139,7 +146,7 @@ const Messages = () => {
               keyExtractor={(item, index) => index.toString()}
             />
           </View>
-        </View>
+        </View >
         <View style={{
           marginHorizontal: 22,
           flexDirection: 'row',
@@ -154,13 +161,13 @@ const Messages = () => {
           <TextInput style={{ width: '100%', height: '100%', marginHorizontal: 12, color: '#fff' }}
             onChangeText={(text) => setSearch(text)}
             value={search}
-            placeholder="Tìm kiếm tên..."
+            placeholder={t('search with name')}
             placeholderTextColor={'#fff'}
           />
         </View>
         <View style={{ height: '60%' }}>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 22, marginTop: 22 }}>
-            <Text style={{ ...FONTS.h4 }}>Danh sách bạn bè </Text>
+            <Text style={{ ...FONTS.h4 }}>{t('friend')}</Text>
           </View>
           <ScrollView style={{ paddingBottom: 100, backgroundColor: '#fff', marginTop: 10, height: '20%' }}>
             {data.map((item, index) => (
@@ -208,10 +215,10 @@ const Messages = () => {
 
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 22, marginTop: 22 }}>
-            <Text style={{ ...FONTS.h4 }}>Nhóm </Text>
+            <Text style={{ ...FONTS.h4 }}>{t('group')} </Text>
           </View>
           {/* Render danh sách nhóm */}
-          <ScrollView style={{ height: '20%' }}>
+          <ScrollView style={{ height: '25%' }}>
             {groups.map((group, index) => (
               <TouchableOpacity
                 key={index}
@@ -231,8 +238,8 @@ const Messages = () => {
             ))}
           </ScrollView>
         </View>
-      </PageContainer>
-    </SafeAreaView>
+      </PageContainer >
+    </SafeAreaView >
   )
 }
 

@@ -11,7 +11,7 @@ import * as ImagePicker from 'expo-image-picker';
 // import * as FileSystem from 'expo-file-system';
 import * as DocumentPicker from 'expo-document-picker';
 import { COLORS, FONTS } from '../../constrants/theme';
-import { set } from 'firebase/database';
+import { useTranslation } from 'react-i18next';
 
 
 const ChatBox = ({ route }) => {
@@ -28,6 +28,7 @@ const ChatBox = ({ route }) => {
     const [selectedMessage, setSelectedMessage] = useState(null);
     const [file, setFile] = useState(null);
     const [fileName, setFileName] = useState(null);
+    const { t } = useTranslation('chat');
 
 
     const getMessages = async () => {
@@ -337,7 +338,7 @@ const ChatBox = ({ route }) => {
                 {/* Ô nhập tin nhắn */}
                 <TextInput
                     style={styles.input}
-                    placeholder="Nhập tin nhắn..."
+                    placeholder={t('enter message')}
                     value={msg}
                     onChangeText={setMsg}
                     multiline
@@ -357,21 +358,21 @@ const ChatBox = ({ route }) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => sendChat(msg)} style={styles.sendButton}>
-                    <Text style={{ color: 'white' }}>Gửi</Text>
+                    <Text style={{ color: 'white' }}> {t('send')} </Text>
                 </TouchableOpacity>
 
                 {/* Modal tùy chọn */}
                 <Modal visible={isOptionsVisible} animationType="slide" style={styles.modalContainer} transparent >
                     <View style={styles.modalContainer}>
                         <TouchableOpacity onPress={handleDeleteMessage} style={styles.modalButton}>
-                            <Text>Xóa tin nhắn</Text>
+                            <Text> {t('delete message')} </Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={handleForwardMessage} style={styles.modalButton}>
-                            <Text>Chuyển tiếp tin nhắn</Text>
+                            <Text>{t('forward message')}</Text>
                         </TouchableOpacity>
                         {/* Thêm các tùy chọn khác tại đây */}
                         <TouchableOpacity onPress={() => setIsOptionsVisible(false)} style={styles.modalButton}>
-                            <Text>Đóng</Text>
+                            <Text> {t('cancel')} </Text>
                         </TouchableOpacity>
                     </View>
                 </Modal>

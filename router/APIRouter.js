@@ -1,4 +1,4 @@
-export const host = "http://192.168.137.12:8080";
+export const host = "http://192.168.1.16:8080";
 export const login = `${host}/user/login`;
 export const register = `${host}/user/`;
 export const forgotPassword = `${host}/user/forgotPassword`;
@@ -9,7 +9,7 @@ export const changePassword = `${host}/user/changePassword`;
 export const getFriendListRoute = `${host}/friend/get-friend`;
 export const getAddFriendRoute = `${host}/friend/add-friend`;
 export const getGetAddFriendRoute = `${host}/friend/get-add-friend`;
-export const getRejectFriend =  `${host}/friend/reject-friend`;
+export const getRejectFriend = `${host}/friend/reject-friend`;
 export const getAcceptFriendRoute = `${host}/friend/accept-friend`;
 export const getUnFriendRoute = `${host}/friend/unfriend-friend`;
 export const getFriendByNumberPhoneRoute = `${host}/user/phoneNumber`;

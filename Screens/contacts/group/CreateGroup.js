@@ -1,11 +1,11 @@
 import { View, Text, TouchableOpacity, TextInput, StyleSheet, Image,Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
-import { AntDesign, Ionicons } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import PageContainer from '../../../Components/PageContainer'
 import { COLORS, FONTS } from '../../../constrants/theme'
 import axios from 'axios'
-
+import { useTranslation } from 'react-i18next';
 
 //API router
 import { getFriendListRoute, getCreateGroup } from '../../../router/APIRouter';
@@ -16,6 +16,7 @@ const CreateGroup = ({ navigation, route }) => {
 
     const [numberPhone, setPhoneNumber] = useState("");
     const [data1, setData1] = useState([]);
+    const { t } = useTranslation("contact");
 
     const [userData, setUserData] = useState('');
 
@@ -27,7 +28,7 @@ const CreateGroup = ({ navigation, route }) => {
     // Hàm gửi yêu cầu tạo nhóm
     const createGroup = async () => {
         try {
-             // Thêm ID của admin vào mảng groupMembers
+            // Thêm ID của admin vào mảng groupMembers
             const updatedGroupMembers = [...groupMembers, groupAdmin];
 
             const response = await axios.post(getCreateGroup, {
@@ -97,20 +98,20 @@ const CreateGroup = ({ navigation, route }) => {
                 <View >
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginHorizontal: 22, paddingTop: 20 }}>
                         <View style={{ height: 60, width: 60, alignItems: 'center', justifyContent: 'center', }}>
-                            <Text onPress={() => navigation.goBack()} style={{ ...FONTS.h4, marginVertical: 6, color: '#574E92' }} >Hủy</Text>
+                            <Text onPress={() => navigation.goBack()} style={{ ...FONTS.h4, marginVertical: 6, color: '#574E92' }} > {t('cancel')} </Text>
                         </View>
                         <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'column', marginHorizontal: 22, }}>
-                            <Text style={{ ...FONTS.h4, marginVertical: 6, fontWeight: 'bold' }}>Nhóm mới</Text>
+                            <Text style={{ ...FONTS.h4, marginVertical: 6, fontWeight: 'bold' }}> {t('new group')} </Text>
                         </View>
                         <View>
-                            <Text style={{ ...FONTS.h4, marginVertical: 6 }} onPress={createGroup}>Tạo</Text>
+                            <Text style={{ ...FONTS.h4, marginVertical: 6 }} onPress={createGroup}>{t('create')}</Text>
                         </View>
                     </View>
                     <View style={{ marginHorizontal: 22, flexDirection: 'row', alignItems: 'center', height: 48, marginVertical: 22, paddingHorizontal: 12, borderRadius: 20, }}>
                         <TextInput style={{ width: '100%', height: '100%', marginHorizontal: 12, color: 'grey', }}
                             value={groupName}
                             onChangeText={text => setGroupName(text)}
-                            placeholder="Tên nhóm (không bắt buộc)"
+                            placeholder={t('group name')}
                             placeholderTextColor={'grey'}
                         />
                     </View>
@@ -119,12 +120,12 @@ const CreateGroup = ({ navigation, route }) => {
                         <TextInput style={{ width: '100%', height: '100%', marginHorizontal: 12, color: '#fff', }}
                             onChangeText={(text) => setPhoneNumber(text)}
                             value={numberPhone}
-                            placeholder="Tìm kiếm..."
+                            placeholder={t('search')}
                             placeholderTextColor={'#fff'}
                         />
                     </View>
                     <View>
-                        <Text style={{ ...FONTS.h4, marginVertical: 10, marginLeft: 15 }}>Gợi ý</Text>
+                        <Text style={{ ...FONTS.h4, marginVertical: 10, marginLeft: 15 }}> {t('suggest')} </Text>
                     </View>
                     <View style={{ paddingBottom: 100, backgroundColor: '#fff', marginTop: 10 }}>
                         {data1.map((item, index) => (

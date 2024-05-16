@@ -1,12 +1,11 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { MaterialIcons, AntDesign } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { getUnFriendRoute } from '../../router/APIRouter';
 import React, { useState, useEffect, } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import PageContainer from '../../Components/PageContainer';
-import { COLORS, FONTS } from '../../constrants/theme'
+import { COLORS } from '../../constrants/theme'
 const Call = () => {
     const navigation = useNavigation();
     const route = useRoute();
@@ -29,30 +28,6 @@ const Call = () => {
     useEffect(() => {
         getUser();
     }, []);
-
-    const handleUnFriend = async ({ userId1, userId2 }) => {
-        try {
-            const response = await fetch(`${getUnFriendRoute}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    idUser1: userId1,
-                    idUser2: userId2,
-                }),
-
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to unfriend.');
-            }
-            const data = await response.json();
-        } catch (error) {
-            console.error('Error unfriend:', error);
-        }
-    };
-
 
 
     return (

@@ -1,16 +1,18 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, Alert } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { getUnFriendRoute } from '../../router/APIRouter';
 import React, { useState, useEffect, } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import PageContainer from '../../Components/PageContainer';
 import { COLORS, FONTS } from '../../constrants/theme'
 const Options = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const selectedChat = route.params.selectedChat;
+    const { t } = useTranslation('chat');
 
     const [user, setUser] = useState("");
 
@@ -29,30 +31,6 @@ const Options = () => {
     useEffect(() => {
         getUser();
     }, []);
-
-    // const handleUnFriend = async ({ userId1, userId2 }) => {
-    //     try {
-    //         const response = await fetch(`${getUnFriendRoute}`, {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //             },
-    //             body: JSON.stringify({
-    //                 idUser1: userId1,
-    //                 idUser2: userId2,
-    //             }),
-
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error('Failed to unfriend.');
-    //         }
-    //         navigation.navigate('Tin nhắn');
-    //         const data = await response.json();
-    //     } catch (error) {
-    //         console.error('Error unfriend:', error); 
-    //     }
-    // };
 
     const handleUnFriend = ({ userId1, userId2 }) => {
         Alert.alert(
@@ -132,7 +110,7 @@ const Options = () => {
                             <TouchableOpacity onPress={() => navigation.goBack()}>
                                 <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black} />
                             </TouchableOpacity>
-                            <Text style={{ ...FONTS.h4, marginLeft: 8 }}>Tùy chọn</Text>
+                            <Text style={{ ...FONTS.h4, marginLeft: 8 }}>{t('option')}</Text>
                         </View>
                     </View>
                     {/* Hình ảnh và tên */}
@@ -145,15 +123,15 @@ const Options = () => {
                     <View style={styles.optionsContainer}>
                         <TouchableOpacity onPress={handleNavigateToMessage} style={styles.option}>
                             <MaterialIcons name="message" size={24} color="#574E92" />
-                            <Text style={styles.optionText}>Tìm tin nhắn</Text>
+                            <Text style={styles.optionText}>{t('search message')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={handleNavigateToProfile} style={styles.option}>
                             <MaterialIcons name="person" size={24} color="#574E92" />
-                            <Text style={styles.optionText}>Trang cá nhân</Text>
+                            <Text style={styles.optionText}>{t('personal page')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={handleNavigateToChangeBackground} style={styles.option}>
                             <MaterialIcons name="image" size={24} color="#574E92" />
-                            <Text style={styles.optionText}>Đổi hình nền</Text>
+                            <Text style={styles.optionText}>{t('change background')}</Text>
                         </TouchableOpacity>
                     </View>
                     {/* Tùy chọn hàng dọc */}
@@ -162,23 +140,24 @@ const Options = () => {
 
                         <TouchableOpacity onPress={handleNavigateToCreateGroup} style={styles.option2}>
                             <MaterialIcons name="group-add" size={24} color="#574E92" />
-                            <Text style={styles.optionText}>Tạo nhóm</Text>
+                            <Text style={styles.optionText}>{t('create group')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={handleNavigateToAddToGroup} style={styles.option2}>
                             <MaterialIcons name="person-add" size={24} color="#574E92" />
-                            <Text style={styles.optionText}>Thêm vào nhóm</Text>
+                            <Text style={styles.optionText}>{t('add to group')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={handleNavigateToViewGroup} style={styles.option2}>
                             <MaterialIcons name="group" size={24} color="#574E92" />
-                            <Text style={styles.optionText}>Xem nhóm chung</Text>
+                            <Text style={styles.optionText}>{t('general group')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.option2}
                             onPress={() => handleUnFriend({ userId1: user._id, userId2: selectedChat._id })}
                         >
                             <MaterialIcons name="delete" size={24} color="red" />
-                            <Text style={{ marginLeft: 10, color: 'red', }}>Xóa bạn</Text>
+                            <Text style={{ marginLeft: 10, color: 'red', }}>{t('delete friend')}</Text>
                         </TouchableOpacity>
                     </View>
+
                 </View>
             </PageContainer>
         </SafeAreaView>

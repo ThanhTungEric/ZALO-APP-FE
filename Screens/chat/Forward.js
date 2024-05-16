@@ -6,6 +6,7 @@ import PageContainer from '../../Components/PageContainer'
 import { COLORS, FONTS } from '../../constrants/theme'
 import axios from 'axios'
 import { getAllGroupByMemberId, sendMessageGroup } from '../../router/APIRouter'
+const { useTranslation } = require('react-i18next');
 
 //API router
 import { getFriendListRoute, sendMessageRoute } from '../../router/APIRouter';
@@ -15,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 const Forward = ({ navigation, route }) => {
 
     const { message , socket } = route.params;
+    const { t } = useTranslation('chat');
 
     const [numberPhone, setPhoneNumber] = useState("");
     const [data1, setData1] = useState([]);
@@ -148,10 +150,10 @@ const Forward = ({ navigation, route }) => {
                             <AntDesign name="arrowleft" size={24} color="black" onPress={() => navigation.goBack()} />
                         </View>
                         <View style={{ alignItems: 'center', justifyContent: 'center', flexDirection: 'column', marginHorizontal: 22, }}>
-                            <Text style={{ ...FONTS.h4, marginVertical: 6 }}>Gửi đến</Text>
+                            <Text style={{ ...FONTS.h4, marginVertical: 6 }}> {t('send to')} </Text>
                         </View>
                         <View>
-                            <Text style={{ ...FONTS.h4, marginVertical: 6 }} onPress={() => navigation.navigate('CreateGroup')}>Tạo nhóm</Text>
+                            <Text style={{ ...FONTS.h4, marginVertical: 6 }} onPress={() => navigation.navigate('CreateGroup')}> {t('create group')} </Text>
                         </View>
                     </View>
                     <View style={{
@@ -169,12 +171,12 @@ const Forward = ({ navigation, route }) => {
                         <TextInput style={{ width: '100%', height: '100%', marginHorizontal: 12, color: '#fff', }}
                             onChangeText={(text) => setPhoneNumber(text)}
                             value={numberPhone}
-                            placeholder="Tìm kiếm..."
+                            placeholder={t('search')}
                             placeholderTextColor={'#fff'}
                         />
                     </View>
                     <View>
-                        <Text style={{ ...FONTS.h4, marginVertical: 6, marginLeft: 15 }}>Gửi tới</Text>
+                        <Text style={{ ...FONTS.h4, marginVertical: 6, marginLeft: 15 }}> {t('send to')} </Text>
                     </View>
                     <View style={{ paddingBottom: 100, backgroundColor: '#fff', marginTop: 10 }}>
                         {data1.map((item, index) => (
@@ -218,7 +220,7 @@ const Forward = ({ navigation, route }) => {
                                                 style={{ width: 80, height: 35, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 30 }}
                                                 onPress={() => sendChat(item.friendInfo)}
                                             >
-                                                <Text>Gửi</Text>
+                                                <Text>{t('send')}</Text>
                                             </TouchableOpacity>
 
 
