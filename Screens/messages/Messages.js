@@ -2,30 +2,24 @@ import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, ScrollView, TextInput, TouchableOpacity, Image, FlatList } from 'react-native';
 import { AntDesign, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation, useIsFocused } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context'
-
-import PageContainer from '../../Components/PageContainer'
-import { COLORS, FONTS } from '../../constrants/theme'
-
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { getFriendListRoute, host, getAllGroupByMemberId } from '../../router/APIRouter'; // Combine API imports
-import { io } from "socket.io-client";
+import { SafeAreaView } from 'react-native-safe-area-context';
+import PageContainer from '../../Components/PageContainer';
+import { COLORS, FONTS } from '../../constrants/theme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getFriendListRoute, host, getAllGroupByMemberId } from '../../router/APIRouter';
+import { io } from 'socket.io-client';
 import { useTranslation } from 'react-i18next';
-
+import Toast from 'react-native-toast-message';
 
 const Messages = () => {
-
   const navigation = useNavigation();
   const [user, setUser] = useState(null);
   const [data, setData] = useState([]);
-
   const [groups, setGroups] = useState([]);
-
-  // Lưu trạng thái của thông báo đã xóa người bạn
   const isFocused = useIsFocused();
-
   const socket = useRef();
   const { t } = useTranslation('chat');
+  const [newMessage, setNewMessage] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,11 +56,22 @@ const Messages = () => {
     fetchFriendList();
   }, [user, isFocused]);
 
-
   useEffect(() => {
     if (user) {
       socket.current = io(host);
       socket.current.emit('add-user', user._id);
+
+      socket.current.on('msg-recieve', () => {
+        setNewMessage(true);
+        Toast.show({
+          type: 'success',
+          text1: 'Bạn có tin nhắn mới',
+          position: 'top',
+          autoHide: true,
+          topOffset: 50,
+          visibilityTime: 5000,
+        });
+      });
     }
   }, [user]);
 
@@ -75,19 +80,19 @@ const Messages = () => {
       try {
         if (user && user._id) {
           const response = await fetch(`${getAllGroupByMemberId}/${user._id}`, {
-            method: "GET",
+            method: 'GET',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
           });
           if (!response.ok) {
-            throw new Error("Network response was not ok");
+            throw new Error('Network response was not ok');
           }
           const data = await response.json();
           setGroups(data);
         }
       } catch (error) {
-        console.error("Error fetching group data:", error);
+        console.error('Error fetching group data:', error);
       }
     };
     fetchGroups();
@@ -101,9 +106,8 @@ const Messages = () => {
     navigation.navigate('MyQR');
   };
 
-  // Search
-  const [search, setSearch] = useState('')
-  const [filteredData, setFilteredData] = useState([])
+  const [search, setSearch] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     const filtered = data.filter((item) =>
@@ -115,154 +119,182 @@ const Messages = () => {
   return (
     <SafeAreaView>
       <PageContainer>
-        <View >
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 22, marginTop: 22, }}>
-            <Text style={{ ...FONTS.h4 }}> {t('message')} </Text>
-            <View style={{ flexDirection: 'row' }}>
+        <View>
+          <View style={styles.headerContainer}>
+            <Text style={FONTS.h4}>{t('message')}</Text>
+            <View style={styles.iconsContainer}>
               <AntDesign name="qrcode" size={20} color={COLORS.secondaryBlack} onPress={handleNavigateToQR} />
-              <MaterialCommunityIcons name="message-badge-outline" size={20} color={COLORS.secondaryBlack} style={{ marginLeft: 12, }} />
-              <MaterialCommunityIcons name="playlist-check" size={20} color={COLORS.secondaryBlack} style={{ marginLeft: 12, }} />
+              <MaterialCommunityIcons name="message-badge-outline" size={20} color={COLORS.secondaryBlack} style={styles.iconMargin} />
+              <MaterialCommunityIcons name="playlist-check" size={20} color={COLORS.secondaryBlack} style={styles.iconMargin} />
             </View>
           </View>
         </View>
-        <View style={{ marginHorizontal: 22, flexDirection: 'row', alignItems: 'center' }}>
-          <View style={{ flexDirection: 'column', alignItems: 'center', marginRight: 4 }}>
-            <TouchableOpacity style={{ height: 50, width: 50, borderRadius: 25, alignItems: 'center', justifyContent: 'center', backgroundColor: '#e6edff', marginBottom: 4 }}>
-              <AntDesign name="plus" size={24} color={COLORS.black} />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <FlatList
-              data={data}
-              horizontal={true}
-              renderItem={({ item, index }) => (
-                <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                  <TouchableOpacity style={{ paddingVertical: 15, marginRight: 22 }}>
-                    <Image source={{ uri: item.avatar }} resizeMode="contain" style={{ height: 50, width: 50, borderRadius: 25 }} />
-                  </TouchableOpacity>
-                  <Text>{item.fullName.substring(0, 5)}...</Text>
-                </View>
-              )}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          </View>
-        </View >
-        <View style={{
-          marginHorizontal: 22,
-          flexDirection: 'row',
-          alignItems: 'center',
-          backgroundColor: '#574E92',
-          height: 48,
-          marginVertical: 22,
-          paddingHorizontal: 12,
-          borderRadius: 20,
-        }}>
+        <View style={styles.searchContainer}>
+          <TouchableOpacity style={styles.addButton}>
+            <AntDesign name="plus" size={24} color={COLORS.black} />
+          </TouchableOpacity>
+          <FlatList
+            data={data}
+            horizontal={true}
+            renderItem={({ item }) => (
+              <View style={styles.friendItemContainer}>
+                <TouchableOpacity style={styles.friendAvatarContainer}>
+                  <Image source={{ uri: item.avatar }} resizeMode="contain" style={styles.friendAvatar} />
+                </TouchableOpacity>
+                <Text>{item.fullName.substring(0, 5)}...</Text>
+              </View>
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+        <View style={styles.searchBar}>
           <Ionicons name="search-outline" size={24} color={COLORS.white} />
-          <TextInput style={{ width: '100%', height: '100%', marginHorizontal: 12, color: '#fff' }}
+          <TextInput
+            style={styles.searchInput}
             onChangeText={(text) => setSearch(text)}
             value={search}
             placeholder={t('search with name')}
-            placeholderTextColor={'#fff'}
+            placeholderTextColor="#fff"
           />
         </View>
         <View style={{ height: '60%' }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 22, marginTop: 22 }}>
-            <Text style={{ ...FONTS.h4 }}>{t('friend')}</Text>
+          <View style={styles.sectionHeader}>
+            <Text style={FONTS.h4}>{t('friend')}</Text>
           </View>
-          <ScrollView style={{ paddingBottom: 100, backgroundColor: '#fff', marginTop: 10, height: '20%' }}>
-            {data.map((item, index) => (
+          <ScrollView style={styles.scrollContainer}>
+            {filteredData.map((item, index) => (
               <TouchableOpacity
                 key={index}
                 onPress={() => handlePress(item)}
                 style={[
-                  {
-                    width: '100%',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingHorizontal: 22,
-                    borderBottomColor: COLORS.secondaryWhite,
-                    borderBottomWidth: 1,
-                  },
-                  index % 2 !== 0
-                    ? {
-                      backgroundColor: COLORS.tertiaryWhite,
-                    }
-                    : null,
+                  styles.listItem,
+                  index % 2 !== 0 && { backgroundColor: COLORS.tertiaryWhite },
                 ]}
               >
-                <View style={{ paddingVertical: 15, marginRight: 22 }}>
-                  {/* {item.status === 'online' && (
-                    <View style={{ height: 14, width: 14, borderRadius: 7, backgroundColor: COLORS.green, borderColor: COLORS.white, borderWidth: 2, position: 'absolute', top: 14, right: 2, zIndex: 1000 }} />
-                  )} */}
-                  <Image
-                    source={{ uri: item.avatar }}
-                    resizeMode="contain"
-                    style={{ height: 50, width: 50, borderRadius: 25 }}
-                  />
+                <View style={styles.listItemAvatarContainer}>
+                  <Image source={{ uri: item.avatar }} resizeMode="contain" style={styles.listItemAvatar} />
                 </View>
-                <View style={{ flexDirection: 'column' }}>
-                  <Text style={{ ...FONTS.h4, marginBottom: 4 }}>
-                    {item.fullName}
-                  </Text>
-                  {/* <Text style={{ fontSize: 14, color: COLORS.secondaryGray }}>
-                    {item.status}
-                  </Text> */}
+                <View>
+                  <Text style={FONTS.h4}>{item.fullName}</Text>
                 </View>
               </TouchableOpacity>
             ))}
           </ScrollView>
-
-
-
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginHorizontal: 22, marginTop: 22 }}>
-            <Text style={{ ...FONTS.h4 }}>{t('group')} </Text>
+          <View style={styles.sectionHeader}>
+            <Text style={FONTS.h4}>{t('group')}</Text>
           </View>
-          {/* Render danh sách nhóm */}
-          <ScrollView style={{ height: '25%' }}>
+          <ScrollView style={styles.scrollContainer}>
             {groups.map((group, index) => (
               <TouchableOpacity
                 key={index}
                 onPress={() => navigation.navigate('ChatGroup', { group, socket })}
                 style={[
-                  { width: '100%', flexDirection: 'row', alignItems: 'center', paddingHorizontal: 22, borderBottomColor: COLORS.secondaryWhite, borderBottomWidth: 1, },
-                  index % 2 !== 0 ? { backgroundColor: COLORS.tertiaryWhite } : null,
+                  styles.listItem,
+                  index % 2 !== 0 && { backgroundColor: COLORS.tertiaryWhite },
                 ]}
               >
-                <View style={{ paddingVertical: 15, marginRight: 22, }}>
-                  <Image source={{ uri: group.avatar }} resizeMode="contain" style={{ height: 50, width: 50, borderRadius: 25, }} />
+                <View style={styles.listItemAvatarContainer}>
+                  <Image source={{ uri: group.avatar }} resizeMode="contain" style={styles.listItemAvatar} />
                 </View>
-                <View style={{ flexDirection: 'column', }}>
-                  <Text style={{ ...FONTS.h4, marginBottom: 4 }}>{group.groupName}</Text>
+                <View>
+                  <Text style={FONTS.h4}>{group.groupName}</Text>
                 </View>
               </TouchableOpacity>
             ))}
           </ScrollView>
         </View>
-      </PageContainer >
-    </SafeAreaView >
-  )
-}
+      </PageContainer>
+      <Toast />
+    </SafeAreaView>
+  );
+};
 
 export default Messages;
 
 const styles = StyleSheet.create({
-  header: {
-    alignItems: 'center',
-    height: 60,
+  headerContainer: {
     flexDirection: 'row',
-    paddingHorizontal: 15,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 22,
+    marginTop: 22,
   },
-  viewHeader: {
-    display: 'flex',
-    width: 45,
-    height: 45,
-    backgroundColor: "#7E57C2",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 22.5,
-    left: 10,
+  iconsContainer: {
+    flexDirection: 'row',
   },
-  textHeader: {
-    left: 25
+  iconMargin: {
+    marginLeft: 12,
+  },
+  searchContainer: {
+    marginHorizontal: 22,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  addButton: {
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#e6edff',
+    marginBottom: 4,
+  },
+  friendItemContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  friendAvatarContainer: {
+    paddingVertical: 15,
+    marginRight: 22,
+  },
+  friendAvatar: {
+    height: 50,
+    width: 50,
+    borderRadius: 25,
+  },
+  searchBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#574E92',
+    height: 48,
+    marginVertical: 22,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+  },
+  searchInput: {
+    width: '100%',
+    height: '100%',
+    marginHorizontal: 12,
+    color: '#fff',
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 22,
+    marginTop: 22,
+  },
+  scrollContainer: {
+    paddingBottom: 100,
+    backgroundColor: '#fff',
+    marginTop: 10,
+  },
+  listItem: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 22,
+    borderBottomColor: COLORS.secondaryWhite,
+    borderBottomWidth: 1,
+  },
+  listItemAvatarContainer: {
+    paddingVertical: 15,
+    marginRight: 22,
+  },
+  listItemAvatar: {
+    height: 50,
+    width: 50,
+    borderRadius: 25,
   },
 });
