@@ -6,7 +6,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import PageContainer from '../../Components/PageContainer'
 import { COLORS, FONTS } from '../../constrants/theme'
 import { useTranslation } from 'react-i18next';
-
+import { useNotification } from './NotificationContext';
 //API router
 import { getFriendByNumberPhoneRoute } from '../../router/APIRouter';
 import PopupFriend from './PopupFriend';
@@ -19,6 +19,7 @@ const Tab = createMaterialTopTabNavigator();
 
 const Contacts = ({ navigation }) => {
 
+    const { friendRequestCount } = useNotification();
     const [numberPhone, setPhoneNumber] = useState("");
     const [userData, setUserData] = useState('');
 
@@ -117,6 +118,11 @@ const Contacts = ({ navigation }) => {
                             onPress={() => navigation.navigate('FriendRequest')}>
                             <View style={styles.viewHeader}>
                                 <MaterialIcons name="group" size={24} color="white" />
+                                {friendRequestCount > 0 && (
+                                    <View style={styles.badge}>
+                                        <Text style={styles.badgeText}>{friendRequestCount}</Text>
+                                    </View>
+                                )}
                             </View>
                             <Text style={styles.textHeader}> {t('friend request')} </Text>
                         </Pressable>
@@ -173,4 +179,20 @@ const styles = StyleSheet.create({
     textHeader: {
         left: 25
     },
+    badge: {
+        position: 'absolute',
+        right: -10,
+        top: -10,
+        backgroundColor: 'red',
+        borderRadius: 10,
+        width: 20,
+        height: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    badgeText: {
+        color: 'white',
+        fontSize: 12,
+    },
+
 });

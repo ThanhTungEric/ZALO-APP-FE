@@ -38,8 +38,12 @@ export const sendMessageRoute = `${host}/api/messages/addmsg`;
 export const recieveMessageRoute = `${host}/api/messages/getmsg`;
 export const deleteMessageRoute = `${host}/api/messages/deletemsg`;
 export const recallMessageRoute = `${host}/api/messages/recallmsg`;
+
 //upload file
 export const uploadImageRoute = `${host}/api/upload/file`;
+
+//information
+export const updateInfoRoute = `${host}/user/phoneNumber`;
 
 // //group
 // export const findAllgroupRoute = `${host}/group/member`;

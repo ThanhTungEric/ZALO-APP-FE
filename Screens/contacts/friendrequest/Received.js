@@ -5,13 +5,15 @@ import React, { useEffect, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { getAcceptFriendRoute, getGetAddFriendRoute, getRejectFriend } from '../../../router/APIRouter';
 import { useTranslation } from 'react-i18next';
+import { useNotification } from '../NotificationContext';
 const Received = () => {
     const navigation = useNavigation();
     const [data1, setData1] = useState([]);
     const [user, setUser] = useState("");
     const { t } = useTranslation('contact');
+    const { setFriendRequestCount } = useNotification();
 
-
+    
     const getUser = async () => {
         try {
             const value = await AsyncStorage.getItem('userData');
@@ -44,6 +46,7 @@ const Received = () => {
                 const data = await response.json();
                 const filteredData = data.filter(item => item.friend.actionUserId !== user._id);
                 setData1(filteredData);
+                setFriendRequestCount(filteredData.length);
                 console.log("Danh sách đã nhận lời mời kết bạn", data);
             } catch (error) {
                 console.error("Error fetching data:", error);

@@ -9,8 +9,12 @@
     "transform account": "Chuyển đổi tài khoản",
     "log out": "Đăng xuất",
 
+    "information": "Thông tin cá nhân",
+    "save": "Lưu",
+    "name": "Họ và tên",
     "gender": "Giới tính",
     "birthday": "Sinh nhật",
-    "phone number": "Số điện thoại",
+    "phonenumber": "Số điện thoại",
+    "email": "Địa chỉ email",
     "edit": "Chỉnh sửa"
 }

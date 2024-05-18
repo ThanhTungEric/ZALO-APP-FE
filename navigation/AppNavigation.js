@@ -1,4 +1,5 @@
 import React from "react";
+import { NotificationProvider } from '../Screens/contacts/NotificationContext';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -42,6 +43,9 @@ import { useTranslation } from 'react-i18next';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
+
+
 
 const TabNavigator = () => {
     const { t } = useTranslation('navigation');
@@ -117,41 +121,42 @@ const TabNavigator = () => {
 };
 
 const AppNavigation = () => (
-
-    <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcome">
-            <Stack.Screen name="Home" component={TabNavigator} options={{ headerShown: false }} />
-            <Stack.Screen name="Setting" component={Setting} options={{ headerShown: false }} />
-            <Stack.Screen name="About" component={About} options={{ headerShown: false }} />
-            <Stack.Screen name="SwitchAccount" component={SwitchAccount} options={{ headerShown: false }} />
-            <Stack.Screen name="Theme" component={Theme} options={{ headerShown: false }} />
-            <Stack.Screen name="Message" component={Message} options={{ headerShown: false }} />
-            <Stack.Screen name="Notification" component={Notification} options={{ headerShown: false }} />
-            <Stack.Screen name="Privacy" component={Privacy} options={{ headerShown: false }} />
-            <Stack.Screen name="Birthday" component={Birthday} options={{ headerShown: false }} />
-            <Stack.Screen name="AccountSecurity" component={AccountSecurity} options={{ headerShown: false }} />
-            <Stack.Screen name="ChangePhone" component={ChangePhone} options={{ headerShown: false }} />
-            <Stack.Screen name="ChangePhone1" component={ChangePhone1} options={{ headerShown: false }} />
-            <Stack.Screen name="ChangePassword" component={ChangePassword} options={{ headerShown: false }} />
-            <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
-            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-            <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
-            <Stack.Screen name="Forgotpw" component={Forgotpw} options={{ headerShown: false }} />
-            <Stack.Screen name="AuthenOTP" component={AuthenOTP} options={{ headerShown: false }} />
-            <Stack.Screen name="Me" component={Me} options={{ headerShown: false }} />
-            <Stack.Screen name="FriendRequest" component={FriendRequest} options={{ headerShown: false }} />
-            <Stack.Screen name="ChatBox" component={Chat} options={{ headerShown: false }} />
-            <Stack.Screen name="Option" component={Options} options={{ headerShown: false }} />
-            <Stack.Screen name="OptionGroup" component={OptionsGroup} options={{ headerShown: false }} />
-            <Stack.Screen name="Forward" component={Forward} options={{ headerShown: false }} />
-            <Stack.Screen name="CreateGroup" component={CreateGroup} options={{ headerShown: false }} />
-            <Stack.Screen name="ViewMember" component={ViewMember} options={{ headerShown: false }} />
-            <Stack.Screen name="AddMember" component={AddMember} options={{ headerShown: false }} />
-            <Stack.Screen name="ChatGroup" component={ChatGroup} options={{ headerShown: false }} />
-            <Stack.Screen name="Call" component={Call} options={{ headerShown: false }} />
-            <Stack.Screen name="MyQR" component={MyQR} options={{ headerShown: false }} />
-        </Stack.Navigator>
-    </NavigationContainer>
+    <NotificationProvider>
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="Welcome">
+                <Stack.Screen name="Home" component={TabNavigator} options={{ headerShown: false }} />
+                <Stack.Screen name="Setting" component={Setting} options={{ headerShown: false }} />
+                <Stack.Screen name="About" component={About} options={{ headerShown: false }} />
+                <Stack.Screen name="SwitchAccount" component={SwitchAccount} options={{ headerShown: false }} />
+                <Stack.Screen name="Theme" component={Theme} options={{ headerShown: false }} />
+                <Stack.Screen name="Message" component={Message} options={{ headerShown: false }} />
+                <Stack.Screen name="Notification" component={Notification} options={{ headerShown: false }} />
+                <Stack.Screen name="Privacy" component={Privacy} options={{ headerShown: false }} />
+                <Stack.Screen name="Birthday" component={Birthday} options={{ headerShown: false }} />
+                <Stack.Screen name="AccountSecurity" component={AccountSecurity} options={{ headerShown: false }} />
+                <Stack.Screen name="ChangePhone" component={ChangePhone} options={{ headerShown: false }} />
+                <Stack.Screen name="ChangePhone1" component={ChangePhone1} options={{ headerShown: false }} />
+                <Stack.Screen name="ChangePassword" component={ChangePassword} options={{ headerShown: false }} />
+                <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
+                <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+                <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
+                <Stack.Screen name="Forgotpw" component={Forgotpw} options={{ headerShown: false }} />
+                <Stack.Screen name="AuthenOTP" component={AuthenOTP} options={{ headerShown: false }} />
+                <Stack.Screen name="Me" component={Me} options={{ headerShown: false }} />
+                <Stack.Screen name="FriendRequest" component={FriendRequest} options={{ headerShown: false }} />
+                <Stack.Screen name="ChatBox" component={Chat} options={{ headerShown: false }} />
+                <Stack.Screen name="Option" component={Options} options={{ headerShown: false }} />
+                <Stack.Screen name="OptionGroup" component={OptionsGroup} options={{ headerShown: false }} />
+                <Stack.Screen name="Forward" component={Forward} options={{ headerShown: false }} />
+                <Stack.Screen name="CreateGroup" component={CreateGroup} options={{ headerShown: false }} />
+                <Stack.Screen name="ViewMember" component={ViewMember} options={{ headerShown: false }} />
+                <Stack.Screen name="AddMember" component={AddMember} options={{ headerShown: false }} />
+                <Stack.Screen name="ChatGroup" component={ChatGroup} options={{ headerShown: false }} />
+                <Stack.Screen name="Call" component={Call} options={{ headerShown: false }} />
+                <Stack.Screen name="MyQR" component={MyQR} options={{ headerShown: false }} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    </NotificationProvider>
 );
 
 export default AppNavigation

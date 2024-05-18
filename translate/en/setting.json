@@ -9,9 +9,13 @@
     "transform account": "Transform account",
     "log out": "Log out",
 
+    "information": "Information",
+    "save": "Save",
+    "name": "Name",
     "gender": "Gender",
     "birthday": "Birthday",
-    "phone number": "Phone number",
+    "phonenumber": "Phone number",
+    "email": "Email",
     "edit": "Edit"
 
 }

@@ -1,11 +1,12 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import React, { useState, useEffect, } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState, } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import PageContainer from '../../../Components/PageContainer';
-import { COLORS, FONTS } from '../../../constrants/theme'
+import { COLORS, FONTS } from '../../../constrants/theme';
+
 const MyQR = () => {
     const navigation = useNavigation();
     const [user, setUser] = useState("");
@@ -37,15 +38,24 @@ const MyQR = () => {
                     {/* Hình ảnh và tên */}
                     <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <View style={{ width: 500, height: 500, backgroundColor: "#574E92", borderRadius: 30 }}>
-                            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', marginTop: 15, marginLeft: 15}}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', marginTop: 15, marginLeft: 15 }}>
                                 <Image source={{ uri: user.avatar }} style={{ width: 60, height: 60 }} />
                                 <Text style={{ color: "white", marginLeft: 5 }}>Danh thiếp CoToTa</Text>
                             </View>
-                            <View style={{alignItems: 'center', justifyContent: 'center',  borderTopWidth: 1, borderBottomWidth: 0, borderColor: '#E8ECF4', marginTop: 15}}>
-                            <Image source={require('../../../assets/qrtrung.png')} style={{ width: 230, height: 230, marginTop: 25 }}/>
+                            <View style={{ alignItems: 'center', justifyContent: 'center', borderTopWidth: 1, borderBottomWidth: 0, borderColor: '#E8ECF4', marginTop: 15 }}>
+                                <Image source={require('../../../assets/qrtrung.png')} style={{ width: 230, height: 230, marginTop: 25 }} />
                                 <Text style={{ ...FONTS.h4, marginVertical: 6, color: "white", marginTop: 25 }}>{user.fullName}</Text>
                                 <Text style={{ color: "white", marginTop: 5 }}>Quét mã để thêm bạn CoToTa với tôi</Text>
-                            </View> 
+                            </View>
+                            <View style={styles.barcodebox}>
+                                <BarCodeScanner
+                                    onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                                    style={{ height: 400, width: 400 }} />
+                            </View>
+                            <Text style={styles.maintext}>{text}</Text>
+
+                            {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />}
+
                         </View>
                     </View>
 
@@ -92,6 +102,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    maintext: {
+        fontSize: 16,
+        margin: 20,
+    },
+    barcodebox: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 300,
+        width: 300,
+        overflow: 'hidden',
+        borderRadius: 30,
+        backgroundColor: 'tomato'
+    }
 });
 
 export default MyQR;

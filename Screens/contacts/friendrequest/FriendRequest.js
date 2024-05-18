@@ -3,7 +3,7 @@ import { Text, View, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { AntDesign } from '@expo/vector-icons';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import Received from './Reveived';
+import Received from './Received';
 import Sent from './Sent';
 import { styles } from '../../../CSS/styles';
 import { StatusBar } from 'expo-status-bar';
@@ -25,7 +25,7 @@ function FriendRequest({ navigation }) {
                         <Text style={styles.title}> {t('friend request')} </Text>
                         <AntDesign name="setting" size={22} color="white" />
                     </View>
-                    <Tab.Navigator initialRouteName="Đã nhận"
+                    <Tab.Navigator initialRouteName="Đã gửi"
                         screenOptions={{
                             tabBarLabelStyle: { textTransform: 'none' },
                             tabBarActiveTintColor: '#574E92',
