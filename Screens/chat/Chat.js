@@ -4,7 +4,7 @@ import { MaterialIcons, FontAwesome } from '@expo/vector-icons'; // Import các 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native'; // Hook để sử dụng các hàm điều hướng của React Navigation
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { sendMessageRoute, recieveMessageRoute, uploadImageRoute, deleteMessageRoute } from '../../router/APIRouter';
+import { sendMessageRoute, recieveMessageRoute, uploadImageRoute, deleteMessageRoute, recallMessageRoute } from '../../router/APIRouter';
 import axios from 'axios';
 import * as ImagePicker from 'expo-image-picker';
 // import { set } from 'firebase/database';
@@ -40,6 +40,74 @@ const ChatBox = ({ route }) => {
         setMessages(reponse.data);
         console.log("day la tin nhan", reponse.data)
     }
+
+    //recall API
+    const recallMessageById = async messageId => {
+        socket.current.emit('recall-msg', { messageId })
+        const url = `${recallMessageRoute}/${messageId}`
+        try {
+            const response = await axios.post(url, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            getMessages();
+        } catch (error) {
+            console.error('Lỗi khi thu hồi tin nhắn:', error.message)
+        }
+    }
+    useEffect(() => {
+        getMessages();
+    }, [selectedChat]);
+
+
+
+    const handleRecallMessage = async () => {
+        if (selectedMessage) {
+            try {
+                await recallMessageById(selectedMessage._id);
+                setIsOptionsVisible(false);
+                setSelectedMessage(null);
+            } catch (error) {
+                console.error('Lỗi khi thu hồi tin nhắn:', error.message);
+            }
+        }
+    };
+
+
+
+    socket.current.on('msg-recall', data => {
+        const { messageId } = data;
+        const recalledMessageIndex = messages.findIndex(message => message._id === messageId);
+        if (recalledMessageIndex !== -1) {
+            setMessages(prevMessages => {
+                const updatedMessages = [...prevMessages];
+                updatedMessages[recalledMessageIndex] = { ...updatedMessages[recalledMessageIndex], recalled: true };
+                return updatedMessages;
+            });
+        }
+    });
+
+    useEffect(() => {
+        if (socket.current) {
+            socket.current.on('msg-recall', data => {
+                const { messageId } = data
+                setMessages(prevMessages =>
+                    prevMessages.map(message =>
+                        message._id === messageId ? { ...message, recalled: true } : message
+                    )
+                )
+            })
+        }
+        // Cleanup: ngừng lắng nghe khi component unmount
+        return () => {
+            if (socket.current) {
+                socket.current.off('msg-recall')
+            }
+        }
+    }, [socket.current])
+
+
 
     useEffect(() => {
         if (selectedChat) {
@@ -292,7 +360,7 @@ const ChatBox = ({ route }) => {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handleNavigateToOptions} style={{ marginRight: 8 }}>
                         <MaterialIcons name="menu" size={24} color={COLORS.black} />
-                    </TouchableOpacity> 
+                    </TouchableOpacity>
                 </View>
             </View>
             {/* ScrollView cho nội dung tin nhắn */}
@@ -303,11 +371,15 @@ const ChatBox = ({ route }) => {
                 onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
             >
                 {messages.map((msg, index) => (
-                    <TouchableOpacity key={index}
+                    <TouchableOpacity
+                        key={index}
                         onLongPress={() => handleLongPress(msg)}
-                        style={[styles.messageContainer, { alignSelf: msg.fromSelf ? 'flex-end' : 'flex-start' }]}>
+                        style={[styles.messageContainer, { alignSelf: msg.fromSelf ? 'flex-end' : 'flex-start' }]}
+                    >
                         <View style={[styles.messageBubble, { backgroundColor: msg.fromSelf ? '#574E92' : '#ccc', maxWidth: screenWidth * 0.7 }]}>
-                            {msg.message.includes('.jpg') || msg.message.includes('.png') ? (
+                            {msg.message === "" ? (
+                                <Text style={{ color: 'red', fontStyle: 'italic' }}>Tin nhắn đã được thu hồi</Text>
+                            ) : msg.message.includes('.jpg') || msg.message.includes('.png') ? (
                                 <Image resizeMode='contain' source={{ uri: msg.message }} style={{ width: 200, height: 200, borderRadius: 10, marginVertical: 5 }} />
                             ) : msg.message.includes('.pdf') ? (
                                 <TouchableOpacity onPress={() => handleFileDownload(msg.message)} style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -330,6 +402,9 @@ const ChatBox = ({ route }) => {
                         </View>
                     </TouchableOpacity>
                 ))}
+
+
+
 
             </ScrollView>
 
@@ -364,6 +439,9 @@ const ChatBox = ({ route }) => {
                 {/* Modal tùy chọn */}
                 <Modal visible={isOptionsVisible} animationType="slide" style={styles.modalContainer} transparent >
                     <View style={styles.modalContainer}>
+                        <TouchableOpacity onPress={handleRecallMessage} style={styles.modalButton}>
+                            <Text> {t('recall message')} </Text>
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={handleDeleteMessage} style={styles.modalButton}>
                             <Text> {t('delete message')} </Text>
                         </TouchableOpacity>
