@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, Image,Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, Modal, Image, Alert } from 'react-native';
 import axios from 'axios';
 import { COLORS, FONTS } from '../../constrants/theme';
-import { getMessagesGroup, sendMessageGroup, uploadImageRoute, getGroupMemberRoute,deleteMessageGroupRoute } from '../../router/APIRouter';
+import { getMessagesGroup, sendMessageGroup, uploadImageRoute, getGroupMemberRoute, deleteMessageGroupRoute, recallMessageGroupRoute } from '../../router/APIRouter';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'; // Import các icon cần sử dụng
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native';
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const ChatGroup = ({  route }) => {
+const ChatGroup = ({ route }) => {
     const { group, socket } = route.params;
     const [messages, setMessages] = useState([]);
     const scrollViewRef = React.useRef();
@@ -142,7 +142,7 @@ const ChatGroup = ({  route }) => {
             setMsg('');
         }
     };
-    
+
     const sendImage = async () => {
         try {
             const formData = new FormData();
@@ -267,7 +267,7 @@ const ChatGroup = ({  route }) => {
                 onPress: () => deleteMessageById(selectedMessage._id)
             }
         ])
-        
+
         setIsOptionsVisible(false);
         setSelectedMessage(null);
     };
@@ -279,7 +279,7 @@ const ChatGroup = ({  route }) => {
             const value = await AsyncStorage.getItem('userData');
             if (value !== null) {
                 const parsUser = JSON.parse(value);
-                setUserData(parsUser); 
+                setUserData(parsUser);
             }
         } catch (error) {
             console.error(error);
@@ -287,33 +287,99 @@ const ChatGroup = ({  route }) => {
     }
 
     useEffect(() => {
-        getUser(); 
-    }, [userData._id]);  
+        getUser();
+    }, [userData._id]);
 
     const handleOptionsGroup = (group) => {
         navigation.navigate('OptionGroup', { group, userData, socket });
     };
 
-
-    const handleForwardMessage = () => {
+ 
+    const handleForwardMessage = () => { 
         // Xử lý chuyển tiếp tin nhắn
-        navigation.navigate('Forward', {message: selectedMessage, socket: socket});
+        navigation.navigate('Forward', { message: selectedMessage, socket: socket });
         setIsOptionsVisible(false);
         console.log('Chuyển tiếp tin nhắn', selectedMessage);
     };
 
+    //API recall message with messageId and socket
+    const recallMessageById = async messageId => {
+        socket.current.emit('recall-group-msg', { messageId })
+        const url = `${recallMessageGroupRoute}/${messageId}`
+        try {
+            const response = await axios.put(url, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            console.log('Tin nhắn đã được thu hồi', response.data)
+            getMessages();
+        } catch (error) {
+            console.error('Lỗi khi thu hồi tin nhắn:', error.message)
+        }
+    }
+    useEffect(() => {
+        getMessages();
+    }, [selectedMessage]);
+    
+    const handleRecallMessage = async () => {
+        if (selectedMessage) {
+            try {
+                await recallMessageById(selectedMessage._id);
+                setIsOptionsVisible(false);
+                setSelectedMessage(null);
+            } catch (error) {
+                console.error('Lỗi khi thu hồi tin nhắn:', error.message);
+            }
+        }
+    };
+    socket.current.on('group-msg-recall', data => {
+        const { messageId } = data;
+        const recalledMessageIndex = messages.findIndex(message => message._id === messageId);
+        if (recalledMessageIndex !== -1) {
+            setMessages(prevMessages => {
+                const updatedMessages = [...prevMessages];
+                updatedMessages[recalledMessageIndex] = { ...updatedMessages[recalledMessageIndex], recalled: true };
+                return updatedMessages;
+            });
+        }
+    });
+
+
+
+    useEffect(() => { 
+        if (socket.current) {
+            socket.current.on('group-msg-recall', data => {
+                const { messageId } = data
+                setMessages(prevMessages =>
+                    prevMessages.map(message =>
+                        message._id === messageId ? { ...message, recalled: true } : message
+                    )
+                )
+            })
+
+        }
+        // Cleanup: ngừng lắng nghe khi component unmount
+        return () => {
+            if (socket.current) {
+                socket.current.off('group-msg-recall')
+            }
+        }
+    }, [socket.current])
+
+
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22,  backgroundColor: COLORS.white, height: 60}}>
-                <View style={{ flexDirection: 'row', alignItems: 'center',}}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 22, backgroundColor: COLORS.white, height: 60 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black}/>
+                        <MaterialIcons name="keyboard-arrow-left" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                     <Text style={{ ...FONTS.h4, marginLeft: 8 }}>{group.groupName}</Text>
                 </View>
-                <View style={{flexDirection: 'row',alignItems: 'center',}}>
-                    <TouchableOpacity   onPress={() => handleOptionsGroup(group)} style={{marginRight: 8}}>
-                        <MaterialIcons name="menu" size={24}color={COLORS.black}/>
+                <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                    <TouchableOpacity onPress={() => handleOptionsGroup(group)} style={{ marginRight: 8 }}>
+                        <MaterialIcons name="menu" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -325,7 +391,7 @@ const ChatGroup = ({  route }) => {
                 onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
             >
                 {messages.map((msg, index) => (
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         key={index}
                         onLongPress={() => handleLongPress(msg)}
                         style={[styles.messageContainer, { alignSelf: msg.fromSelf ? 'flex-end' : 'flex-start' }]}
@@ -337,7 +403,9 @@ const ChatGroup = ({  route }) => {
                             </View>
                         )}
                         <View style={[styles.messageBubble, { backgroundColor: msg.fromSelf ? '#574E92' : '#ccc', maxWidth: screenWidth * 0.7 }]}>
-                            {msg.message.includes('.jpg') || msg.message.includes('.png') ? (
+                            {msg.message === "" ? (
+                                <Text style={{ color: 'red', fontStyle: 'italic' }}>Tin nhắn đã được thu hồi</Text>
+                            ) : msg.message.includes('.jpg') || msg.message.includes('.png') ? (
                                 <Image resizeMode='contain' source={{ uri: msg.message }} style={{ width: 200, height: 200, borderRadius: 10, marginVertical: 5 }} />
                             ) : msg.message.includes('.pdf') ? (
                                 <TouchableOpacity onPress={() => handleFileDownload(msg.message)} style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -397,13 +465,16 @@ const ChatGroup = ({  route }) => {
                 {/* Modal tùy chọn */}
                 <Modal visible={isOptionsVisible} animationType="slide" style={styles.modalContainer} transparent >
                     <View style={styles.modalContainer}>
+                    <TouchableOpacity onPress={handleRecallMessage} style={styles.modalButton}>
+                            <Text> {t('recall message')} </Text>
+                        </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={handleDeleteMessage} 
+                            onPress={handleDeleteMessage}
                             style={styles.modalButton}>
                             <Text>{t('delete message')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={handleForwardMessage} 
+                            onPress={handleForwardMessage}
                             style={styles.modalButton}>
                             <Text>{t('forward message')}</Text>
                         </TouchableOpacity>

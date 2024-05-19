@@ -9,6 +9,7 @@
     "password": "Password",
 
     "enter message": "Enter message...",
+    "recall message": "Recall message",
     "delete message": "Delete message",
     "forward message": "Forward message",
     "cancel":"Cancel",
