@@ -82,7 +82,7 @@ const TabNavigator = () => {
                     },
                 }}
             />
-            <Tab.Screen name={t('message')} component={Messages}
+            <Tab.Screen name={t('messages')} component={Messages}
                 options={{
                     tabBarIcon: ({ focused }) => {
                         return (

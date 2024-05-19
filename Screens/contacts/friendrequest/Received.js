@@ -100,7 +100,7 @@ const Received = () => {
             if (!response.ok) {
                 throw new Error('Failed to accept friend.');
             }
-            navigation.navigate('Bạn bè');
+            navigation.navigate(t('friend'));
         } catch (error) {
             console.error('Error accepting friend:', error);
         }

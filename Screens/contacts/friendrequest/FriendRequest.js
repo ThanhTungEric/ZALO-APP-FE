@@ -25,7 +25,7 @@ function FriendRequest({ navigation }) {
                         <Text style={styles.title}> {t('friend request')} </Text>
                         <AntDesign name="setting" size={22} color="white" />
                     </View>
-                    <Tab.Navigator initialRouteName="Đã gửi"
+                    <Tab.Navigator initialRouteName="Đã nhận"
                         screenOptions={{
                             tabBarLabelStyle: { textTransform: 'none' },
                             tabBarActiveTintColor: '#574E92',

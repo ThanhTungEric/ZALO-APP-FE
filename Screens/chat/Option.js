@@ -59,7 +59,7 @@ const Options = () => {
                             if (!response.ok) {
                                 throw new Error('Failed to unfriend.');
                             }
-                            navigation.navigate('Tin nhắn');
+                            navigation.navigate(t('Messages'));
                         } catch (error) {
                             console.error('Error unfriend:', error);
                         }
