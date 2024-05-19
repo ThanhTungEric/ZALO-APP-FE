@@ -47,14 +47,6 @@ const MyQR = () => {
                                 <Text style={{ ...FONTS.h4, marginVertical: 6, color: "white", marginTop: 25 }}>{user.fullName}</Text>
                                 <Text style={{ color: "white", marginTop: 5 }}>Quét mã để thêm bạn CoToTa với tôi</Text>
                             </View>
-                            <View style={styles.barcodebox}>
-                                <BarCodeScanner
-                                    onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-                                    style={{ height: 400, width: 400 }} />
-                            </View>
-                            <Text style={styles.maintext}>{text}</Text>
-
-                            {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />}
 
                         </View>
                     </View>

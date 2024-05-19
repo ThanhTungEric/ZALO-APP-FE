@@ -31,8 +31,8 @@ function FriendRequest({ navigation }) {
                             tabBarActiveTintColor: '#574E92',
                             tabBarInactiveTintColor: 'grey',
                         }}>
-                        <Tab.Screen name={t('sent')} component={Received} />
-                        <Tab.Screen name={t('receive')} component={Sent} />
+                        <Tab.Screen name={t('receive')} component={Received} />
+                        <Tab.Screen name={t('sent')} component={Sent} />
                     </Tab.Navigator>
                     <StatusBar style="auto" />
                 </View>
