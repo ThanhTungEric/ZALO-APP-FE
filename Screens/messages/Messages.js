@@ -103,7 +103,7 @@ const Messages = () => {
   };
 
   const handleNavigateToQR = () => {
-    navigation.navigate('MyQR');
+    navigation.navigate('ScanQR');
   };
 
   const [search, setSearch] = useState('');

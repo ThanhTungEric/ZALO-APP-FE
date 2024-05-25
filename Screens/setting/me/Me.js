@@ -35,7 +35,7 @@ const Me = ({ navigation }) => {
     getUser();
   }, []);
 
-  const updateUserInfo = async () => {
+  const updateUserInfo = async (imageUrl) => {
     try {
       const response = await fetch(`${updateInfoRoute}/${phoneNumber}`, {
         method: 'PUT',

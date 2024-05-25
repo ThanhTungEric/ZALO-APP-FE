@@ -38,6 +38,7 @@ import OptionsGroup from "../Screens/chat/OptionGroup";
 import ChatGroup from "../Screens/chat/ChatGroup";
 import Call from "../Screens/chat/Call";
 import MyQR from "../Screens/contacts/qr/MyQR";
+import ScanQR from "../Screens/contacts/qr/ScanQR";
 
 import { useTranslation } from 'react-i18next';
 
@@ -154,6 +155,7 @@ const AppNavigation = () => (
                 <Stack.Screen name="ChatGroup" component={ChatGroup} options={{ headerShown: false }} />
                 <Stack.Screen name="Call" component={Call} options={{ headerShown: false }} />
                 <Stack.Screen name="MyQR" component={MyQR} options={{ headerShown: false }} />
+                <Stack.Screen name="ScanQR" component={ScanQR} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     </NotificationProvider>
