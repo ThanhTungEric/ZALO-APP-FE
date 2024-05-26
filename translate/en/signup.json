@@ -1,0 +1,13 @@
+{
+    "fullname": "Full name",
+    "phonenumber": "Phonenumber",
+    "email":"Email",
+    "birthday": "Birthday",
+    "password": "Password",
+    "register": "Register",
+    "enter name": "Enter name...",
+    "enter email": "Enter email...",
+    "enter birthday": "Enter birthday...",
+    "enter phone number": "Enter phone number...",
+    "enter password": "Enter password..."
+}

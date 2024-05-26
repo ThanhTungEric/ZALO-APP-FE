@@ -12,7 +12,8 @@ import SETTINGS_EN from "../translate/en/setting.json"
 import SETTINGS_VI from "../translate/vn/setting.json"
 import NAVIGATION_EN from "../translate/en/navigation.json"
 import NAVIGATION_VI from "../translate/vn/navigation.json"
-
+import SIGNUP_EN from "../translate/en/signup.json";
+import SIGNUP_VI from "../translate/vn/signup.json";
 export const locales = {
     en: 'English',
     vi: 'Tiếng Việt',
@@ -23,15 +24,16 @@ const resources = {
         login: LOGIN_EN,
         contact: CONTACT_EN,
         setting: SETTINGS_EN,
-        navigation: NAVIGATION_EN
-
+        navigation: NAVIGATION_EN,
+        signup: SIGNUP_EN
     },
     vi: {
         chat: CHAT_VI,
         login: LOGIN_VI,
         contact: CONTACT_VI,
         setting: SETTINGS_VI,
-        navigation: NAVIGATION_VI
+        navigation: NAVIGATION_VI,
+        signup: SIGNUP_VI
     }
 }
 const defaultNS = 'login';

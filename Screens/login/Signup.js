@@ -14,7 +14,7 @@ const Signup = ({ navigation }) => {
     const [birthDate, setBirthDate] = useState('');
     const [password, setPassword] = useState('');
     //i18n translate
-    const { t } = useTranslation("login")
+    const { t } = useTranslation("signup")
 
     //hide icon pass
     const [hideIconPass, setHideIconPass] = useState(true);
@@ -68,25 +68,25 @@ const Signup = ({ navigation }) => {
             </SafeAreaView>
             <View style={{ flex: 1, backgroundColor: 'white', paddingHorizontal: 8, paddingTop: 8, borderTopLeftRadius: 50, borderTopRightRadius: 50 }}>
                 <View style={{ marginTop: 8 }}>
-                    <Text style={{ color: '#4B5563', marginLeft: 16 }}>Họ và tên</Text>
+                    <Text style={{ color: '#4B5563', marginLeft: 16 }}>{t('fullname')}</Text>
                     <TextInput
                         style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20, marginBottom: 12 }}
                         placeholder={t('enter name')}
                         onChangeText={(text) => setFullName(text)}
                     />
-                    <Text style={{ color: '#4B5563', marginLeft: 16 }}>Số điện thoại</Text>
+                    <Text style={{ color: '#4B5563', marginLeft: 16 }}>{t('phonenumber')}</Text>
                     <TextInput
                         style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20, marginBottom: 12 }}
                         placeholder={t('enter phone number')}
                         onChangeText={(text) => setPhoneNumber(text)}
                     />
-                    <Text style={{ color: '#4B5563', marginLeft: 16 }}>Email</Text>
+                    <Text style={{ color: '#4B5563', marginLeft: 16 }}>{t('email')}</Text>
                     <TextInput
                         style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20, marginBottom: 12 }}
                         placeholder={t('enter email')}
                         onChangeText={(text) => setEmail(text)}
                     />
-                    <Text style={{ color: '#4B5563', marginLeft: 16 }}>Ngày sinh</Text>
+                    <Text style={{ color: '#4B5563', marginLeft: 16 }}>{t('phonenumber')}</Text>
                     <TextInput
                         style={{ padding: 16, backgroundColor: '#E5E7EB', color: '#4B5563', borderRadius: 20, marginBottom: 12 }}
                         placeholder={t('enter birthday')}

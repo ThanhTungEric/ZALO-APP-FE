@@ -46,6 +46,9 @@ export const uploadImageRoute = `${host}/api/upload/file`;
 //information
 export const updateInfoRoute = `${host}/user/phoneNumber`;
 
+//logout
+export const logoutRoute = `${host}/user/logout`;
+
 // //group
 // export const findAllgroupRoute = `${host}/group/member`;
 

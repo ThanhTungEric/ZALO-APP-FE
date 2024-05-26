@@ -5,12 +5,13 @@ import PageContainer from '../../Components/PageContainer';
 import { COLORS, FONTS } from '../../constrants/theme'
 import { AntDesign, MaterialIcons, MaterialCommunityIcons, Ionicons, Entypo, FontAwesome, Feather, Octicons } from '@expo/vector-icons'
 const { useTranslation } = require('react-i18next');
-
+import { logoutRoute } from '../../router/APIRouter';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Setting = ({ navigation }) => {
 
     const [user, setUser] = useState('');
+    const userId = user ? user._id : null;
     const { t } = useTranslation('setting');
 
     const getUser = async () => {
@@ -28,6 +29,23 @@ const Setting = ({ navigation }) => {
         getUser();
     }, []);
 
+    const handleLogout = () => {
+        fetch(logoutRoute, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId }),
+        }).then(async (response) => {
+          if (response.status === 200) {
+            await AsyncStorage.removeItem('userData');
+            navigation.navigate('Login');
+          }
+        });
+      };
+
+    console.log("đây là", userId)
+    
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <PageContainer>
@@ -141,10 +159,11 @@ const Setting = ({ navigation }) => {
                         <MaterialIcons name="keyboard-arrow-right" size={24} color={COLORS.black} />
                     </TouchableOpacity>
                     <Pressable style={{ alignItems: 'center', justifyContent: 'center', height: 80, flexDirection: 'row', borderWidth: 1, borderColor: '#E8ECF4' }}
-                        onPress={async () => {
-                            await AsyncStorage.removeItem('userData');
-                            navigation.navigate('Login');
-                        }}
+                        // onPress={async () => {
+                        //     await AsyncStorage.removeItem('userData');
+                        //     navigation.navigate('Login');
+                        // }}
+                        onPress={handleLogout}
                     >
                         <View style={{ flexDirection: 'row', display: "flex", width: 350, height: 50, backgroundColor: "#EAECF0", alignItems: "center", justifyContent: "center", borderRadius: 30 }}>
                             <FontAwesome name="sign-out" size={24} color="black" />

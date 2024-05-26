@@ -1,0 +1,14 @@
+{
+    "fullname": "Họ và tên",
+    "phonenumber": "Số điện thoại",
+    "email":"Email",
+    "birthday": "Ngày sinh",
+    "password": "Mật khẩu",
+    "register": "Đăng ký",
+    "enter name": "Nhập tên...",
+    "enter email": "Nhập email...",
+    "enter birthday": "Nhập ngày sinh...",
+    "enter phone number": "Nhập số điện thoại...",
+    "enter password": "Nhập mật khẩu..."
+
+}
